@@ -9,7 +9,8 @@ namespace DacTools.Deployment.Core.Logging
 	public sealed class Log : ILog
 	{
 		private readonly StringBuilder _stringBuilder;
-		private IEnumerable<ILogAppender> _logAppenders;
+
+		public IEnumerable<ILogAppender> LogAppenders { get; private set; }
 
 		public Log() : this(Array.Empty<ILogAppender>())
 		{
@@ -17,8 +18,9 @@ namespace DacTools.Deployment.Core.Logging
 
 		public Log(params ILogAppender[] logAppenders)
 		{
-			_logAppenders = logAppenders;
+			LogAppenders = logAppenders;
 			_stringBuilder = new StringBuilder();
+			LogLevel = LogLevel.Info;
 		}
 
 		public LogLevel LogLevel { get; set; }
@@ -28,9 +30,9 @@ namespace DacTools.Deployment.Core.Logging
 			if (logLevel > LogLevel)
 				return;
 
-			var formattedMessage = FormatMessage(string.Format(format, args), logLevel.ToString().ToUpperInvariant());
+			string formattedMessage = FormatMessage(string.Format(format, args), logLevel.ToString().ToUpperInvariant());
 
-			foreach (var logAppender in _logAppenders)
+			foreach (var logAppender in LogAppenders)
 				logAppender.WriteTo(logLevel, formattedMessage);
 
 			_stringBuilder.Append(formattedMessage);
@@ -38,7 +40,7 @@ namespace DacTools.Deployment.Core.Logging
 
 		public void AddLogAppender(ILogAppender logAppender)
 		{
-			_logAppenders = _logAppenders.Concat(new[] {logAppender});
+			LogAppenders = LogAppenders.Concat(new[] {logAppender});
 		}
 
 		public override string ToString() => _stringBuilder.ToString();
