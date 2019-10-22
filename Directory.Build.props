@@ -7,4 +7,11 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>$(Authors)</Company>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageVersion_MicrosoftTestSdk>16.3.0</PackageVersion_MicrosoftTestSdk>
+    <PackageVersion_xunit>2.4.1</PackageVersion_xunit>
+    <PackageVersion_Shouldly>3.0.2</PackageVersion_Shouldly>
+    <PackageVersion_Moq>4.13.1</PackageVersion_Moq>
+  </PropertyGroup>
 </Project>
