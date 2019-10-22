@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <Authors>DrBarnabus and Contributors</Authors>
+    <PackageProjectUrl>https://github.com/DrBarnabus/DacTools</PackageProjectUrl>
+    <PackageRequiresLicenseAcceptance>false</PackageRequiresLicenseAcceptance>
+    <Copyright>Copyright DrBarnabus 2019.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Company>$(Authors)</Company>
+  </PropertyGroup>
+</Project>
