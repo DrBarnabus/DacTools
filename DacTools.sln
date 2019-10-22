@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A175C68D-268E-40EC-BADD-B9E7E0657949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DacTools.Deployment.Core", "src\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj", "{539AFFCA-7334-494C-9C32-A2A2FB50D41D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{539AFFCA-7334-494C-9C32-A2A2FB50D41D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{539AFFCA-7334-494C-9C32-A2A2FB50D41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{539AFFCA-7334-494C-9C32-A2A2FB50D41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{539AFFCA-7334-494C-9C32-A2A2FB50D41D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{539AFFCA-7334-494C-9C32-A2A2FB50D41D} = {A175C68D-268E-40EC-BADD-B9E7E0657949}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1CA76AC-92BC-4F96-9275-316B53EAAD40}
+	EndGlobalSection
+EndGlobal
