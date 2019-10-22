@@ -6,6 +6,9 @@
     <Copyright>Copyright DrBarnabus 2019.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>$(Authors)</Company>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <PropertyGroup>
