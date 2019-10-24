@@ -90,6 +90,7 @@ public class BuildParameters
             context.Information("Build will use FrameworkPathOverride={0} since not building on Windows.", frameworkPathOverride);
             msBuildSettings.WithProperty("FrameworkPathOverride", frameworkPathOverride);
             msBuildSettings.WithProperty("POSIX", "true");
+            msBuildSettings.WithProperty("ExcludeXUnitTestRunner", "true");
         }
 
         return msBuildSettings;

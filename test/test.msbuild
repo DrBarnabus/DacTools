@@ -4,9 +4,30 @@
     <PackageReference Include="Shouldly" Version="$(PackageVersion_Shouldly)" />
     <PackageReference Include="Moq" Version="$(PackageVersion_Moq)" />
     <PackageReference Include="xunit" Version="$(PackageVersion_XUnit)" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net472' ">
     <PackageReference Include="xunit.runner.visualstudio" Version="$(PackageVersion_XUnitRunnerVisualStudio)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <Choose>
+    <When Condition=" '$(TargetFramework)' == 'net472' ">
+      <ItemGroup Condition=" '$(ExcludeXUnitTestRunner)' != 'true' ">
+        <PackageReference Include="xunit.runner.visualstudio" Version="$(PackageVersion_XUnitRunnerVisualStudio)">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+      </ItemGroup>
+
+      <ItemGroup Condition=" '$(ExcludeXUnitTestRunner)' == 'true' ">
+        <PackageReference Include="xunit.runner.msbuild" Version="$(PackageVersion_XUnitRunnerMSBuild)">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>
