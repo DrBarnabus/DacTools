@@ -47,7 +47,7 @@ Task("Test")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.EnabledUnitTests, "Unit Tests were disabled.")
     .IsDependentOn("Build")
     .Does<BuildParameters>(parameters => {
-        var frameworks = new [] { parameters.CoreFxVersion21, parameters.CoreFxVersion30, parameters.FullFxVersion472 };
+        var frameworks = new [] { parameters.CoreFxVersion21, parameters.CoreFxVersion30 };
         var testResultsPath = parameters.Paths.Directories.TestResultsOutput;
 
         foreach (var framework in frameworks)
@@ -105,7 +105,7 @@ Task("Test")
                 var data = new TFBuildPublishTestResultsData
                 {
                     TestResultsFiles = testResultsFiles.ToArray(),
-                    TestRunner = TFTestRunnerType.XUnit
+                    TestRunner = TFTestRunnerType.VSTest
                 };
 
                 TFBuild.Commands.PublishTestResults(data);
