@@ -24,10 +24,14 @@ Setup<BuildParameters>(context =>
     var gitVersion = GetVersion(parameters);
     parameters.Initialize(context, gitVersion);
 
-    Information("Building version {0} of DacTools ({1}, {2})",
+    Information("Building Version {0} of DacTools ({1}, {2})",
         parameters.Version.SemVersion,
         parameters.Configuration,
         parameters.Target);
+
+    Information("Repository Info: IsMainRepo {0}, IsPullRequest: {1}",
+        parameters.IsMainRepo,
+        parameters.IsPullRequest);
 
     return parameters;
 });
@@ -53,5 +57,5 @@ Task("Default")
     .IsDependentOn("Pack");
 
 // Execution
-var target = Argument("targett", "Default");
+var target = Argument("target", "Default");
 RunTarget(target);

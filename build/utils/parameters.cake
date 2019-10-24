@@ -6,6 +6,9 @@ public class BuildParameters
     public string Target { get; private set; }
     public string Configuration { get; private set; }
 
+    public const string MainRepoOwner = "DrBarnabus";
+    public const string MainRepoName = "DacTools";
+
     public string CoreFxVersion21 { get; private set; } = "netcoreapp2.1";
     public string CoreFxVersion30 { get; private set; } = "netcoreapp3.0";
 
@@ -20,6 +23,7 @@ public class BuildParameters
     public bool IsLocalBuild { get; private set; }
     public bool IsRunningOnAzurePipelines { get; private set; }
 
+    public bool IsMainRepo { get; private set; }
     public bool IsPullRequest { get; private set; }
 
     public DotNetCoreMSBuildSettings MSBuildSettings { get; private set; }
@@ -52,6 +56,7 @@ public class BuildParameters
             IsLocalBuild = buildSystem.IsLocalBuild,
             IsRunningOnAzurePipelines = buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted,
 
+            IsMainRepo = IsOnMainRepo(context),
             IsPullRequest = buildSystem.IsPullRequest,
 
             MSBuildSettings = GetMSBuildSettings(context)
@@ -89,5 +94,20 @@ public class BuildParameters
         msBuildSettings.WithProperty("AssemblyVersion", version.Version);
         msBuildSettings.WithProperty("FileVersion", version.Version);
         msBuildSettings.WithProperty("NoPackageAnalysis", "true");
+    }
+
+    private static bool IsOnMainRepo(ICakeContext context)
+    {
+        var buildSystem = context.BuildSystem();
+        string repositoryName = null;
+        
+        if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
+        {
+            repositoryName = buildSystem.TFBuild.Environment.Repository.RepoName;
+        }
+
+        context.Information("Repository Name: {0}" , repositoryName);
+
+        return !string.IsNullOrWhiteSpace(repositoryName) && StringComparer.OrdinalIgnoreCase.Equals($"{BuildParameters.MainRepoOwner}/{BuildParameters.MainRepoName}", repositoryName);
     }
 }
