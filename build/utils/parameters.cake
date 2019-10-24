@@ -20,6 +20,8 @@ public class BuildParameters
     public bool IsLocalBuild { get; private set; }
     public bool IsRunningOnAzurePipelines { get; private set; }
 
+    public bool IsPullRequest { get; private set; }
+
     public DotNetCoreMSBuildSettings MSBuildSettings { get; private set; }
 
     public BuildVersion Version { get; private set; }
@@ -49,6 +51,8 @@ public class BuildParameters
             IsLocalBuild = buildSystem.IsLocalBuild,
             IsRunningOnAzurePipelines = buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted,
 
+            IsPullRequest = buildSystem.IsPullRequest,
+
             MSBuildSettings = GetMSBuildSettings(context)
         };
     }
@@ -73,25 +77,7 @@ public class BuildParameters
     {
         var msBuildSettings = new DotNetCoreMSBuildSettings();
 
-        if (!context.IsRunningOnWindows())
-        {
-            var frameworkPathOverride = context.Environment.Runtime.IsCoreClr
-                                        ?   new []{
-                                                new DirectoryPath("/Library/Frameworks/Mono.framework/Versions/Current/lib/mono"),
-                                                new DirectoryPath("/usr/lib/mono"),
-                                                new DirectoryPath("/usr/local/lib/mono")
-                                            }
-                                            .Select(directory =>directory.Combine("4.5"))
-                                            .FirstOrDefault(directory => context.DirectoryExists(directory))
-                                            ?.FullPath + "/"
-                                        : new FilePath(typeof(object).Assembly.Location).GetDirectory().FullPath + "/";
-
-            // Use FrameworkPathOverride when not running on Windows.
-            context.Information("Build will use FrameworkPathOverride={0} since not building on Windows.", frameworkPathOverride);
-            msBuildSettings.WithProperty("FrameworkPathOverride", frameworkPathOverride);
-            msBuildSettings.WithProperty("POSIX", "true");
-            msBuildSettings.WithProperty("ExcludeXUnitTestRunner", "true");
-        }
+        // Custom Parameters May Be Added Here in the Future
 
         return msBuildSettings;
     }

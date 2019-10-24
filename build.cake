@@ -21,7 +21,7 @@ Setup<BuildParameters>(context =>
 {
     EnsureDirectoryExists("artifacts");
     var parameters = BuildParameters.GetParameters(context);
-    var gitVersion = GetVersion();
+    var gitVersion = GetVersion(parameters);
     parameters.Initialize(context, gitVersion);
 
     Information("Building version {0} of DacTools ({1}, {2})",

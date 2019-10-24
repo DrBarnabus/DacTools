@@ -7,7 +7,7 @@ FilePath FindToolInPath(string tool)
     return paths.Select(path => new DirectoryPath(path).CombineWithFilePath(tool)).FirstOrDefault(FilePath => FileExists(FilePath.FullPath));
 }
 
-GitVersion GetVersion()
+GitVersion GetVersion(BuildParameters parameters)
 {
     var settings = new GitVersionSettings
     {
@@ -15,6 +15,15 @@ GitVersion GetVersion()
     };
 
     var gitVersion = GitVersion(settings);
+
+    if (!parameters.IsLocalBuild && !(parameters.IsRunningOnAzurePipelines && parameters.IsPullRequest))
+    {
+        settings.UpdateAssemblyInfo = true;
+        settings.LogFilePath = "console";
+        settings.OutputType = GitVersionOutput.BuildServer;
+
+        GitVersion(settings);
+    }
 
     return gitVersion;
 }
