@@ -8,7 +8,6 @@ public class BuildParameters
 
     public string CoreFxVersion21 { get; private set; } = "netcoreapp2.1";
     public string CoreFxVersion30 { get; private set; } = "netcoreapp3.0";
-    public string FullFxVersion472 {get; private set; } = "net472";
 
     public bool EnabledUnitTests { get; private set; }
 
@@ -16,6 +15,7 @@ public class BuildParameters
     public bool IsRunningOnWindows { get; private set; }
     public bool IsRunningOnLinux { get; private set; }
     public bool IsRunningOnMacOS { get; private set; }
+    public PlatformFamily PlatformFamily { get; private set; }
 
     public bool IsLocalBuild { get; private set; }
     public bool IsRunningOnAzurePipelines { get; private set; }
@@ -47,6 +47,7 @@ public class BuildParameters
             IsRunningOnWindows = context.IsRunningOnWindows(),
             IsRunningOnLinux = context.Environment.Platform.Family == PlatformFamily.Linux,
             IsRunningOnMacOS = context.Environment.Platform.Family == PlatformFamily.OSX,
+            PlatformFamily = context.Environment.Platform.Family,
 
             IsLocalBuild = buildSystem.IsLocalBuild,
             IsRunningOnAzurePipelines = buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted,

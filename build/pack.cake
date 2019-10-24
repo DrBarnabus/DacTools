@@ -100,16 +100,19 @@ Task("Test")
         var testResultsFiles = GetFiles(parameters.Paths.Directories.TestResultsOutput + "/*.results.xml");
 
         if (parameters.IsRunningOnAzurePipelines)
+        {
             if (testResultsFiles.Any())
             {
                 var data = new TFBuildPublishTestResultsData
                 {
+                    TestRunTitle = $"Tests_{parameters.Configuration}_{parameters.PlatformFamily.ToString()}",
                     TestResultsFiles = testResultsFiles.ToArray(),
                     TestRunner = TFTestRunnerType.VSTest
                 };
 
                 TFBuild.Commands.PublishTestResults(data);
             }
+        }
     });
 
 #endregion
