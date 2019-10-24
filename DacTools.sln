@@ -5,11 +5,14 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A175C68D-268E-40EC-BADD-B9E7E0657949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DacTools.Deployment.Core", "src\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj", "{539AFFCA-7334-494C-9C32-A2A2FB50D41D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DacTools.Deployment.Core", "src\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj", "{539AFFCA-7334-494C-9C32-A2A2FB50D41D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{995A82DE-7DA0-4E09-AAB5-FA03286494E5}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		build.cake = build.cake
+		build.ps1 = build.ps1
 		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
 		NuGet.config = NuGet.config
@@ -21,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D37FE9A8-A
 		test\test.msbuild = test\test.msbuild
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DacTools.Deployment.Core.Tests", "test\DacTools.Deployment.Core.Tests\DacTools.Deployment.Core.Tests.csproj", "{B4223620-862B-47FD-9EA7-F02C24C08DA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DacTools.Deployment.Core.Tests", "test\DacTools.Deployment.Core.Tests\DacTools.Deployment.Core.Tests.csproj", "{B4223620-862B-47FD-9EA7-F02C24C08DA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

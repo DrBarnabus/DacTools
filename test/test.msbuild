@@ -3,8 +3,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(PackageVersion_MicrosoftTestSdk)" />
     <PackageReference Include="Shouldly" Version="$(PackageVersion_Shouldly)" />
     <PackageReference Include="Moq" Version="$(PackageVersion_Moq)" />
-    <PackageReference Include="xunit" Version="$(PackageVersion_xunit)" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="$(PackageVersion_xunit)">
+    <PackageReference Include="xunit" Version="$(PackageVersion_XUnit)" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="$(PackageVersion_XUnitRunnerVisualStudio)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
