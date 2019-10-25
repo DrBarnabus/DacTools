@@ -1,11 +1,12 @@
 ﻿using DacTools.Deployment.Core.BuildServers.Common;
+using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core.BuildServers
 {
 	public class AzurePipelines : BuildServerBase
 	{
-		public AzurePipelines(ILog log) : base(log)
+		public AzurePipelines(IEnvironment environment, ILog log) : base(environment, log)
 		{
 		}
 

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core.BuildServers.Common
@@ -6,10 +6,12 @@ namespace DacTools.Deployment.Core.BuildServers.Common
 	public abstract class BuildServerBase : IBuildServer
 	{
 		protected readonly ILog Log;
+		protected IEnvironment Environment { get;  }
 
-		protected BuildServerBase(ILog log)
+		protected BuildServerBase(IEnvironment environment, ILog log)
 		{
 			Log = log;
+			Environment = environment;
 		}
 
 		protected abstract string EnvironmentVariable { get; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DacTools.Deployment.Core.BuildServers.Common;
+using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core.BuildServers
@@ -32,11 +33,11 @@ namespace DacTools.Deployment.Core.BuildServers
 			return buildServices;
 		}
 
-		public static void Init(ILog log)
+		public static void Init(IEnvironment environment, ILog log)
 		{
 			_supportedBuildServers = new List<IBuildServer>
 			{
-				new AzurePipelines(log)
+				new AzurePipelines(environment, log)
 			};
 		}
 	}
