@@ -10,9 +10,7 @@ namespace DacTools.Deployment.Core.BuildServers
 		{
 		}
 
-		public const string EnvironmentVariableValue = "TF_BUILD";
-
-		protected override string EnvironmentVariable { get; } = EnvironmentVariableValue;
+		protected override string EnvironmentVariable { get; } = "TF_BUILD";
 
 		public override string GenerateSetProgressMessage(int current, int total, string message) =>
 			$"##vso[task.setprogress value={(int) (current / (double) total * 100.0f)};] {message}";
