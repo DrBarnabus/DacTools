@@ -1,0 +1,13 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=crlf
+
+# Declare files that will always have LF line endings on checkout.
+*.sh text eol=lf
+
+# Custom for Visual Studio
+*.cs     diff=csharp
+*.sln
+*.csproj
+
+# Don't check for trailing whitespace at end of lines in the doc pages
+*.md -whitespace=blank-at-eol
