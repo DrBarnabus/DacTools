@@ -1,18 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
 
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DebugSymbols>true</DebugSymbols>
-    <LangVersion>8.0</LangVersion>
-  </PropertyGroup>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <DebugSymbols>true</DebugSymbols>
+        <LangVersion>8.0</LangVersion>
+    </PropertyGroup>
 
-  <Import Project="..\test.msbuild" />
+    <PropertyGroup Condition=" '$(ExcludeFramework)' != 'true'">
+        <TargetFrameworks>net472;$(TargetFrameworks);</TargetFrameworks>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj" />
-  </ItemGroup>
+    <Import Project="..\test.msbuild" />
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj" />
+    </ItemGroup>
 
 </Project>

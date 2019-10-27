@@ -11,6 +11,7 @@ public class BuildParameters
 
     public string CoreFxVersion21 { get; private set; } = "netcoreapp2.1";
     public string CoreFxVersion30 { get; private set; } = "netcoreapp3.0";
+    public string FullFxVersion472 { get; private set; } = "net472";
 
     public bool EnabledUnitTests { get; private set; }
 
@@ -40,7 +41,7 @@ public class BuildParameters
         var target = context.Argument("target", "Default");
         var buildSystem = context.BuildSystem();
 
-        return new BuildParameters 
+        return new BuildParameters
         {
             Target = target,
             Configuration = context.Argument("configuration", "Release"),
@@ -83,7 +84,8 @@ public class BuildParameters
     {
         var msBuildSettings = new DotNetCoreMSBuildSettings();
 
-        // Custom Parameters May Be Added Here in the Future
+        if (!context.IsRunningOnWindows())
+            msBuildSettings.WithProperty("ExcludeFramework", "true");
 
         return msBuildSettings;
     }
@@ -100,7 +102,7 @@ public class BuildParameters
     {
         var buildSystem = context.BuildSystem();
         string repositoryName = null;
-        
+
         if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
         {
             repositoryName = buildSystem.TFBuild.Environment.Repository.RepoName;

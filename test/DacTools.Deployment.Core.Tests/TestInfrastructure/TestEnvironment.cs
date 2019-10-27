@@ -3,17 +3,17 @@ using DacTools.Deployment.Core.Common;
 
 namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 {
-	public class TestEnvironment : IEnvironment
-	{
-		private readonly Dictionary<string, string> _variableDictionary;
+    public class TestEnvironment : IEnvironment
+    {
+        private readonly Dictionary<string, string> _variableDictionary;
 
-		public TestEnvironment()
-		{
-			_variableDictionary = new Dictionary<string, string>();
-		}
+        public TestEnvironment()
+        {
+            _variableDictionary = new Dictionary<string, string>();
+        }
 
-		public string GetEnvironmentVariable(string variableName) => _variableDictionary.TryGetValue(variableName, out string value) ? value : null;
+        public string GetEnvironmentVariable(string variableName) => _variableDictionary.TryGetValue(variableName, out string value) ? value : null;
 
-		public void SetEnvironmentVariable(string variableName, string value) => _variableDictionary[variableName] = value;
-	}
+        public void SetEnvironmentVariable(string variableName, string value) => _variableDictionary[variableName] = value;
+    }
 }
