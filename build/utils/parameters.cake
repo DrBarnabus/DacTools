@@ -1,5 +1,7 @@
+#load "./credentials.cake"
 #load "./paths.cake"
 #load "./version.cake"
+#load "./utils.cake"
 
 public class BuildParameters
 {
@@ -33,6 +35,7 @@ public class BuildParameters
 
     public DotNetCoreMSBuildSettings MSBuildSettings { get; private set; }
 
+    public BuildCredentials Credentials { get; private set; }
     public BuildVersion Version { get; private set; }
     public BuildPaths Paths { get; private set; }
     public string[] Artifacts { get; private set; }
@@ -75,6 +78,8 @@ public class BuildParameters
 
     public void Initialize(ICakeContext context, GitVersion gitVersion)
     {
+        Credentials = BuildCredentials.GetCredentials(context);
+
         Version = BuildVersion.Calculate(context, gitVersion);
 
         Paths = BuildPaths.GetPaths(context, this, Configuration, Version);

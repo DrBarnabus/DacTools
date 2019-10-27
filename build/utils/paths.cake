@@ -1,3 +1,5 @@
+#load "./parameters.cake"
+
 public class BuildPaths
 {
     public BuildDirectories Directories { get; private set; }

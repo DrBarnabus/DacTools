@@ -1,3 +1,5 @@
+#load "../build.cake"
+
 #region Build
 
 Task("Clean")
@@ -80,7 +82,15 @@ Task("Test")
                         settings.Logger = $"trx;LogFileName={resultsPath}";
                     }
 
-                    DotNetCoreTest(project.FullPath, settings);
+                    var coverletSettings = new CoverletSettings
+                    {
+                        CollectCoverage = true,
+                        CoverletOutputFormat = CoverletOutputFormat.opencover,
+                        CoverletOutputDirectory = testResultsPath,
+                        CoverletOutputName = $"{projectName}.coverage.xml"
+                    };
+
+                    DotNetCoreTest(project.FullPath, settings, coverletSettings);
                 });
             }
 

@@ -1,3 +1,5 @@
+#load "./parameters.cake"
+
 FilePath FindToolInPath(string tool)
 {
     var pathEnv = EnvironmentVariable("PATH");

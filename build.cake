@@ -2,12 +2,15 @@
 #module nuget:?package=Cake.DotNetTool.Module&version=0.3.1
 
 // Install addins.
+#addin "nuget:?package=Cake.Codecov&version=0.7.0"
 #addin "nuget:?package=Cake.Compression&version=0.2.4"
+#addin "nuget:?package=Cake.Coverlet&version=2.3.4"
 #addin "nuget:?package=Cake.Incubator&version=5.1.0"
 
 #addin "nuget:?package=SharpZipLib&version=1.2.0"
 
 // Install .NET Core Global Tools
+#tool "dotnet:?package=Codecov.Tool&version=1.7.2"
 #tool "dotnet:?package=GitVersion.Tool&version=5.0.1"
 
 // Load Other Scripts
@@ -85,10 +88,11 @@ Task("Pack")
 
 Task("Publish")
     .IsDependentOn("Publish-AzurePipelines")
+    .IsDependentOn("Publish-Coverage")
     .Finally(() =>
     {
         if (publishingError)
-            throw new Exception("An error ocurred during the publiushing of DacTools. All publishing tasks have been attempted, but at least one failed with an error.");
+            throw new Exception("An error ocurred during the publishing of DacTools. All publishing tasks have been attempted, but at least one failed with an error.");
     });
 
 Task("Default")
