@@ -178,7 +178,7 @@ Task("Zip-Files")
         {
             var sourceDir = parameters.Paths.Directories.Native.Combine(runtime.Value);
             var fileName = $"dactools-deployment-{runtime.Key}-{parameters.Version.SemVersion}.tar.gz".ToLower();
-            var tarFile = parameters.Paths.Directories.Artifacts.CombineWithFilePath(fileName);
+            var tarFile = parameters.Paths.Directories.BuildArtifact.CombineWithFilePath(fileName);
             GZipCompress(sourceDir, tarFile);
         }
     });

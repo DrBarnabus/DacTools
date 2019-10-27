@@ -35,6 +35,7 @@ public class BuildParameters
 
     public BuildVersion Version { get; private set; }
     public BuildPaths Paths { get; private set; }
+    public string[] Artifacts { get; private set; }
     public Dictionary<PlatformFamily, string> NativeRuntimes { get; private set; }
 
     public static BuildParameters GetParameters(ICakeContext context)
@@ -77,6 +78,9 @@ public class BuildParameters
         Version = BuildVersion.Calculate(context, gitVersion);
 
         Paths = BuildPaths.GetPaths(context, this, Configuration, Version);
+
+        var buildArtifacts = context.GetFiles(Paths.Directories.BuildArtifact + "/*.*");
+        Artifacts = buildArtifacts.Select(ba => ba.FullPath).ToArray();
 
         NativeRuntimes = new Dictionary<PlatformFamily, string>
         {

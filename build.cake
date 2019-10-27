@@ -15,8 +15,12 @@
 #load "./build/utils/utils.cake"
 
 #load "./build/pack.cake"
+#load "./build/publish.cake"
 
 using System.Diagnostics;
+
+// Parameters
+bool publishingError = false;
 
 // Setup / Teardown
 Setup<BuildParameters>(context =>
@@ -77,6 +81,14 @@ Task("Pack")
     .ReportError(exception =>
     {
         Error(exception.Dump());
+    });
+
+Task("Publish")
+    .IsDependentOn("Publish-AzurePipelines")
+    .Finally(() =>
+    {
+        if (publishingError)
+            throw new Exception("An error ocurred during the publiushing of DacTools. All publishing tasks have been attempted, but at least one failed with an error.");
     });
 
 Task("Default")

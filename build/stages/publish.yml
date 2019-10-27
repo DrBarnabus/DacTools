@@ -1,0 +1,9 @@
+steps:
+- template: common-steps.yml
+- task: DownloadPipelineArtifact@2
+  displayName: 'Download Pipeline Artifacts'
+  inputs:
+    source: current
+    path: $(Build.SourcesDirectory)
+    artifact: storage
+- script: dotnet cake build.cake --bootstrap && dotnet cake build.cake --target=Publish
