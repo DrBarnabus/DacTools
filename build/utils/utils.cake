@@ -33,3 +33,11 @@ public static bool IsEnabled(ICakeContext context, string envVar, bool nullOrEmp
     var value = context.EnvironmentVariable(envVar);
     return string.IsNullOrEmpty(value) ? nullOrEmptyAsEnabled : bool.Parse(value);
 }
+
+public static List<string> ExecGitCmd(ICakeContext context, string cmd)
+{
+    var gitPath = context.Tools.Resolve(context.IsRunningOnWindows() ? "git.exe" : "git");
+    context.StartProcess(gitPath, new ProcessSettings { Arguments = cmd, RedirectStandardOutput = true }, out var redirectedOutput);
+
+    return redirectedOutput.ToList();
+}

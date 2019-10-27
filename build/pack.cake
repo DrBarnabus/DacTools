@@ -46,9 +46,9 @@ Task("Build")
 Task("Test")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.EnabledUnitTests, "Unit Tests were disabled.")
     .IsDependentOn("Build")
-    .Does<BuildParameters>(parameters => {
+    .Does<BuildParameters>(parameters =>
+    {
         var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion30 };
-
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -116,6 +116,70 @@ Task("Test")
 
                 TFBuild.Commands.PublishTestResults(data);
             }
+        }
+    });
+
+#endregion
+
+#region Pack
+
+Task("Pack-Prepare")
+    .IsDependentOn("Test")
+    .Does<BuildParameters>(parameters =>
+    {
+        // Publish Single File for all Native Runtimes (self-contained)
+        foreach (var runtime in parameters.NativeRuntimes)
+        {
+            var runtimeName = runtime.Value;
+
+            var settings = new DotNetCorePublishSettings
+            {
+                Framework = parameters.CoreFxVersion30,
+                Runtime = runtimeName,
+                NoRestore = false,
+                Configuration = parameters.Configuration,
+                OutputDirectory = parameters.Paths.Directories.Native.Combine(runtimeName),
+                MSBuildSettings = parameters.MSBuildSettings
+            };
+
+            settings.ArgumentCustomization =
+                arg => arg
+                .Append("/p:PublishSingleFile=true")
+                .Append("/p:IncldueSymbolsInSingleFile=true");
+
+            DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
+        }
+
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion30 };
+        if (parameters.IsRunningOnWindows)
+            frameworks.Add(parameters.FullFxVersion472);
+
+        // Publish Framework-Dependent Deployment
+        foreach (var framework in frameworks)
+        {
+            var settings = new DotNetCorePublishSettings
+            {
+                Framework = framework,
+                NoRestore = false,
+                Configuration = parameters.Configuration,
+                OutputDirectory = parameters.Paths.Directories.ArtifactsBin.Combine(framework),
+                MSBuildSettings = parameters.MSBuildSettings
+            };
+
+            DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
+        }
+    });
+
+Task("Zip-Files")
+    .IsDependentOn("Pack-Prepare")
+    .Does<BuildParameters>(parameters =>
+    {
+        foreach (var runtime in parameters.NativeRuntimes)
+        {
+            var sourceDir = parameters.Paths.Directories.Native.Combine(runtime.Value);
+            var fileName = $"dactools-deployment-{runtime.Key}-{parameters.Version.SemVersion}.tar.gz".ToLower();
+            var tarFile = parameters.Paths.Directories.Artifacts.CombineWithFilePath(fileName);
+            GZipCompress(sourceDir, tarFile);
         }
     });
 

@@ -25,6 +25,10 @@ public class BuildParameters
     public bool IsRunningOnAzurePipelines { get; private set; }
 
     public bool IsMainRepo { get; private set; }
+    public bool IsMasterBranch { get; private set; }
+    public bool IsReleaseBranch { get; private set; }
+    public bool IsDevelopBranch { get; private set; }
+    public bool IsTagged { get; private set; }
     public bool IsPullRequest { get; private set; }
 
     public DotNetCoreMSBuildSettings MSBuildSettings { get; private set; }
@@ -58,6 +62,10 @@ public class BuildParameters
             IsRunningOnAzurePipelines = buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted,
 
             IsMainRepo = IsOnMainRepo(context),
+            IsMasterBranch = IsOnBranch(context, "master", true),
+            IsReleaseBranch = IsOnBranchStartingWith(context, "release"),
+            IsDevelopBranch = IsOnBranch(context, "develop"),
+            IsTagged = IsBuildTagged(context),
             IsPullRequest = buildSystem.IsPullRequest,
 
             MSBuildSettings = GetMSBuildSettings(context)
@@ -104,12 +112,41 @@ public class BuildParameters
         string repositoryName = null;
 
         if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-        {
             repositoryName = buildSystem.TFBuild.Environment.Repository.RepoName;
-        }
 
         context.Information("Repository Name: {0}" , repositoryName);
 
         return !string.IsNullOrWhiteSpace(repositoryName) && StringComparer.OrdinalIgnoreCase.Equals($"{BuildParameters.MainRepoOwner}/{BuildParameters.MainRepoName}", repositoryName);
+    }
+
+    private static bool IsOnBranch(ICakeContext context, string branch, bool logBranch = false)
+    {
+        var buildSystem = context.BuildSystem();
+        string repositoryBranch = ExecGitCmd(context, "rev-parse --abbrev-ref HEAD").Single();
+
+        if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
+            repositoryBranch = buildSystem.TFBuild.Environment.Repository.Branch;
+
+        if (logBranch)
+            context.Information("Repository Branch: {0}", repositoryBranch);
+
+        return !string.IsNullOrWhiteSpace(repositoryBranch) && StringComparer.OrdinalIgnoreCase.Equals(branch, repositoryBranch);
+    }
+
+    private static bool IsOnBranchStartingWith(ICakeContext context, string branchPrefix)
+    {
+        var buildSystem = context.BuildSystem();
+        string repositoryBranch = ExecGitCmd(context, "rev-parse --abbrev-ref HEAD").Single();
+
+        if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
+            repositoryBranch = buildSystem.TFBuild.Environment.Repository.Branch;
+
+        return !string.IsNullOrWhiteSpace(repositoryBranch) && repositoryBranch.StartsWith(branchPrefix, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsBuildTagged(ICakeContext context)
+    {
+        var sha = ExecGitCmd(context, "rev-parse --verify HEAD").Single();
+        return ExecGitCmd(context, "tag --points-at " + sha).Any();
     }
 }
