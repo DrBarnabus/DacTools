@@ -1,3 +1,5 @@
+// Copyright (c) 2019 DrBarnabus
+
 using DacTools.Deployment.Core.BuildServers;
 using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
@@ -11,13 +13,28 @@ namespace DacTools.Deployment.Core.Tests.Common
     public class BuildServerResolverTests
     {
         [Fact]
+        public void ShouldReturnNullWhenBuildServerDoesNotApply()
+        {
+            // Setup
+            var environment = new TestEnvironment();
+            var log = new Mock<ILog>().Object;
+            var buildServerResolver = new BuildServerResolver(new[] { new AzurePipelines(environment, log) }, log);
+
+            // Act
+            var result = buildServerResolver.Resolve();
+
+            // Assert
+            result.ShouldBeNull();
+        }
+
+        [Fact]
         public void ShouldReturnTheTheCorrectInstanceWhenBuildServerDoesApply()
         {
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
             var azurePipelines = new AzurePipelines(environment, log);
-            var buildServerResolver = new BuildServerResolver(new[] {azurePipelines}, log);
+            var buildServerResolver = new BuildServerResolver(new[] { azurePipelines }, log);
 
             environment.SetEnvironmentVariable("TF_BUILD", "True");
 
@@ -27,21 +44,6 @@ namespace DacTools.Deployment.Core.Tests.Common
             // Assert
             result.ShouldNotBeNull();
             result.ShouldBe(azurePipelines);
-        }
-
-        [Fact]
-        public void ShouldReturnNullWhenBuildServerDoesNotApply()
-        {
-            // Setup
-            var environment = new TestEnvironment();
-            var log = new Mock<ILog>().Object;
-            var buildServerResolver = new BuildServerResolver(new[] {new AzurePipelines(environment, log)}, log);
-
-            // Act
-            var result = buildServerResolver.Resolve();
-
-            // Assert
-            result.ShouldBeNull();
         }
     }
 }

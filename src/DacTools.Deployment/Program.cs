@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using System;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core;
 using DacTools.Deployment.Core.Extensions;

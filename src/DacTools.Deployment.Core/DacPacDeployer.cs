@@ -1,13 +1,15 @@
+// Copyright (c) 2019 DrBarnabus
+
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core
 {
-    class DacPacDeployer : IDacPacDeployer
+    internal class DacPacDeployer : IDacPacDeployer
     {
-        private readonly ILog _log;
         private readonly IBuildServerResolver _buildServerResolver;
+        private readonly ILog _log;
 
         public DacPacDeployer(ILog log, IBuildServerResolver buildServerResolver)
         {

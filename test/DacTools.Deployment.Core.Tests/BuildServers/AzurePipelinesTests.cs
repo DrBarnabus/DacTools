@@ -1,4 +1,6 @@
-﻿using DacTools.Deployment.Core.BuildServers;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using DacTools.Deployment.Core.BuildServers;
 using DacTools.Deployment.Core.Logging;
 using DacTools.Deployment.Core.Tests.TestInfrastructure;
 using Moq;

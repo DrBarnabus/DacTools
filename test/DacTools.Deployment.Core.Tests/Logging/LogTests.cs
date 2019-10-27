@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using System;
 using DacTools.Deployment.Core.Logging;
 using Moq;
 using Shouldly;
@@ -14,7 +16,7 @@ namespace DacTools.Deployment.Core.Tests.Logging
             var consoleAppender = new ConsoleAppender();
             var log = new Log();
             log.AddLogAppender(consoleAppender);
-            log.LogAppenders.ShouldBe(new[] {consoleAppender});
+            log.LogAppenders.ShouldBe(new[] { consoleAppender });
         }
 
         [Fact]
@@ -39,7 +41,7 @@ namespace DacTools.Deployment.Core.Tests.Logging
         {
             var consoleAppender = new ConsoleAppender();
             var log = new Log(consoleAppender);
-            log.LogAppenders.ShouldBe(new[] {consoleAppender});
+            log.LogAppenders.ShouldBe(new[] { consoleAppender });
             log.LogLevel.ShouldBe(LogLevel.Info);
         }
 
@@ -57,7 +59,7 @@ namespace DacTools.Deployment.Core.Tests.Logging
         [Fact]
         public void ShouldReturnWithoutWritingWhenLogLevelIsNotActive()
         {
-            var log = new Log {LogLevel = LogLevel.Warn};
+            var log = new Log { LogLevel = LogLevel.Warn };
             log.Write(LogLevel.Info, "Message");
 
             string result = log.ToString();

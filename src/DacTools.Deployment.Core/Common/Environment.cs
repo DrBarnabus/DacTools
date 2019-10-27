@@ -1,4 +1,6 @@
-﻿namespace DacTools.Deployment.Core.Common
+﻿// Copyright (c) 2019 DrBarnabus
+
+namespace DacTools.Deployment.Core.Common
 {
     public class Environment : IEnvironment
     {

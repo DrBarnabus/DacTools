@@ -1,3 +1,5 @@
+// Copyright (c) 2019 DrBarnabus
+
 using System;
 using System.Collections.Generic;
 using DacTools.Deployment.Core.Logging;

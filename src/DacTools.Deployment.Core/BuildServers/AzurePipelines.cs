@@ -1,4 +1,6 @@
-﻿using DacTools.Deployment.Core.Common;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core.BuildServers
@@ -12,7 +14,7 @@ namespace DacTools.Deployment.Core.BuildServers
         protected override string EnvironmentVariable { get; } = "TF_BUILD";
 
         public override string GenerateSetProgressMessage(int current, int total, string message) =>
-            $"##vso[task.setprogress value={(int) (current / (double) total * 100.0f)};] {message}";
+            $"##vso[task.setprogress value={(int)(current / (double)total * 100.0f)};] {message}";
 
         public override string GenerateLogIssueWarningMessage(string issueMessage) =>
             $"##vso[task.logissue type=warning;] {issueMessage}";

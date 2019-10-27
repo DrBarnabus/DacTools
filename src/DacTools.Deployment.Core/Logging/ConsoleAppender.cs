@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using System;
 using System.Collections.Generic;
 
 namespace DacTools.Deployment.Core.Logging
@@ -40,10 +42,10 @@ namespace DacTools.Deployment.Core.Logging
         private static IDictionary<LogLevel, (ConsoleColor, ConsoleColor)> CreateColorPalette() =>
             new Dictionary<LogLevel, (ConsoleColor, ConsoleColor)>
             {
-                {LogLevel.Error, (ConsoleColor.DarkRed, ConsoleColor.White)},
-                {LogLevel.Warn, (Console.BackgroundColor, ConsoleColor.Yellow)},
-                {LogLevel.Info, (Console.BackgroundColor, ConsoleColor.White)},
-                {LogLevel.Debug, (Console.BackgroundColor, ConsoleColor.DarkGray)}
+                { LogLevel.Error, (ConsoleColor.DarkRed, ConsoleColor.White) },
+                { LogLevel.Warn, (Console.BackgroundColor, ConsoleColor.Yellow) },
+                { LogLevel.Info, (Console.BackgroundColor, ConsoleColor.White) },
+                { LogLevel.Debug, (Console.BackgroundColor, ConsoleColor.DarkGray) }
             };
     }
 }

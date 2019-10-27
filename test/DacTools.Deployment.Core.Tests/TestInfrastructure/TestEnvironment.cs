@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using System.Collections.Generic;
 using DacTools.Deployment.Core.Common;
 
 namespace DacTools.Deployment.Core.Tests.TestInfrastructure

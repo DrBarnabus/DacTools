@@ -1,4 +1,6 @@
-﻿using DacTools.Deployment.Core.Logging;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core.Common
 {

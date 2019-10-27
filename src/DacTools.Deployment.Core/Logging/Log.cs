@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -40,7 +42,7 @@ namespace DacTools.Deployment.Core.Logging
 
         public void AddLogAppender(ILogAppender logAppender)
         {
-            LogAppenders = LogAppenders.Concat(new[] {logAppender});
+            LogAppenders = LogAppenders.Concat(new[] { logAppender });
         }
 
         public override string ToString() => _stringBuilder.ToString();

@@ -1,4 +1,6 @@
-﻿using DacTools.Deployment.Core.Common;
+﻿// Copyright (c) 2019 DrBarnabus
+
+using DacTools.Deployment.Core.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DacTools.Deployment.Core.Extensions

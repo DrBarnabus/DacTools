@@ -1,3 +1,5 @@
+// Copyright (c) 2019 DrBarnabus
+
 using DacTools.Deployment.Core.BuildServers;
 using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;

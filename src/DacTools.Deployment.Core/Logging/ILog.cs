@@ -1,4 +1,6 @@
-﻿namespace DacTools.Deployment.Core.Logging
+﻿// Copyright (c) 2019 DrBarnabus
+
+namespace DacTools.Deployment.Core.Logging
 {
     public interface ILog
     {
