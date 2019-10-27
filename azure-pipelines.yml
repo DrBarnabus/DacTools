@@ -18,7 +18,7 @@ stages:
     - template: build/stages/build.yml
 
 - stage: Publish
-  dependentOn: Build
+  dependsOn: Build
   condition: succeeded()
   jobs:
   - job: Publish
