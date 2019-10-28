@@ -7,4 +7,6 @@ steps:
     path: $(Build.SourcesDirectory)
     artifact: storage
 - script: dotnet cake build.cake --bootstrap && dotnet cake build.cake --target=Publish
-  displayName: 'publish'
+  displayName: 'Publish'
+  env:
+    CODECOV_TOKEN: $(CODECOV_TOKEN)
