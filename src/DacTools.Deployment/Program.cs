@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 DrBarnabus
+// Copyright (c) 2019 DrBarnabus
 
 using System;
 using System.Threading.Tasks;
@@ -7,6 +7,7 @@ using DacTools.Deployment.Core.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace DacTools.Deployment
 {
@@ -19,8 +20,9 @@ namespace DacTools.Deployment
                 await CreateHostBuilder(args).Build().RunAsync();
                 return 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.Error.WriteLine("A fatal error occurred: " + ex.Message);
                 return 1;
             }
         }
@@ -31,6 +33,9 @@ namespace DacTools.Deployment
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddServiceModule(new DeploymentCoreServiceModule());
+                    services.AddServiceModule(new DeploymentServiceModule());
+
+                    services.AddSingleton(sp => Options.Create(sp.GetService<IArgumentParser>().ParseArguments(args)));
 
                     services.AddHostedService<DeploymentApp>();
                 })
