@@ -19,6 +19,8 @@ namespace DacTools.Deployment.Core
             services.AddSingleton<IBuildServer, AzurePipelines>();
 
             services.AddSingleton<IDacPacDeployer, DacPacDeployer>();
+
+            RegisterDatabaseListGenerators(services);
         }
 
         private void RegisterDatabaseListGenerators(IServiceCollection services)
