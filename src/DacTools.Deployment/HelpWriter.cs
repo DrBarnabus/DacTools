@@ -26,11 +26,16 @@ Used to deploy dacpac files to SQL Server. This tool has the ability to deploy a
 
 DacTools.Deployment [options...]
 
-    /version            Displays the current version of DacTools.Deployment
-    /help, /h or /?     Shows this Help Text
+    /version                        Displays the current version of DacTools.Deployment
+    /help, /h or /?                 Shows this Help Text
+    /verbosity or /v                Set Verbosity Level (Debug, Info, Warn, Error, None). Default is Info
 
-    /dacpac             The path to the .dacpac file to run the operation on.
-    /verbosity          Set Verbosity Level (Debug, Info, Warn, Error, None). Default is Info
+    /dacpac or /d                   The path to the .dacpac file to run the operation on.
+    /masterconnectionstring or /S   The SQL Server Connection string for the master database on the server to deploy to.
+    /databases or /D                A list of databases to either whitelist (default) or blacklist.
+    /blacklist or /b                Configures the tool to use the value of the  '/databases' option as a blacklist.
+    /threads or /t                  Configures the maximum number of threads to use while deploying databases.
+                                    If set to -1 then the value of Environment.ProcessorCount will be used.
 ";
 
             writeAction(message);

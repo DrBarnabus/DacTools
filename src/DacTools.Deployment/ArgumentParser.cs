@@ -47,7 +47,13 @@ namespace DacTools.Deployment
                     continue;
                 }
 
-                if (name.IsSwitch("dacpac"))
+                if (name.IsSwitch("verbosity") || name.IsSwitch("v"))
+                {
+                    if (Enum.TryParse(value, true, out arguments.LogLevel))
+                        throw new WarningException($"Could not parse Verbosity value '{value}'.");
+                }
+
+                if (name.IsSwitch("dacpac") || name.IsSwitch("d"))
                 {
                     EnsureArgumentValueCount(values);
 
@@ -59,10 +65,48 @@ namespace DacTools.Deployment
                     continue;
                 }
 
-                if (name.IsSwitch("loglevel"))
+                if (name.IsSwitch("masterconnectionstring") || name.IsSwitch("S"))
                 {
-                    if (Enum.TryParse(value, true, out arguments.LogLevel))
-                        throw new WarningException($"Could not parse LogLevel value '{value}'.");
+                    EnsureArgumentValueCount(values);
+
+                    arguments.MasterConnectionString = value;
+                    continue;
+                }
+
+                if (name.IsSwitch("databases") || name.IsSwitch("D"))
+                {
+                    if (values != null && values.Any())
+                    {
+                        foreach (string v in values)
+                            arguments.AddDatabaseName(v);
+                    }
+
+                    continue;
+                }
+
+                if (name.IsSwitch("blacklist") || name.IsSwitch("b"))
+                {
+                    if (value is null || value.IsTrue())
+                        arguments.IsBlacklist = true;
+
+                    continue;
+                }
+
+                if (name.IsSwitch("threads") || name.IsSwitch("t"))
+                {
+                    EnsureArgumentValueCount(values);
+
+                    if (!int.TryParse(value, out int result))
+                        throw new WarningException($"Could not parse Threads value of '{value}'.");
+
+                    if (result == -1)
+                        arguments.Threads = Environment.ProcessorCount;
+                    else if (result > 0)
+                        arguments.Threads = result;
+                    else
+                        throw new WarningException($"Threads parameter must be either minus one or greater than zero. Parsed a value of '{value}'.");
+
+                    continue;
                 }
 
                 string couldNotParseMessage = $"Could not parse command line parameter '{name}'.";
