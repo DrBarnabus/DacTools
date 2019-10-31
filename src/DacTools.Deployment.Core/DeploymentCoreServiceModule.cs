@@ -2,6 +2,7 @@
 
 using DacTools.Deployment.Core.BuildServers;
 using DacTools.Deployment.Core.Common;
+using DacTools.Deployment.Core.DatabaseListGenerators;
 using DacTools.Deployment.Core.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,12 @@ namespace DacTools.Deployment.Core
             services.AddSingleton<IBuildServer, AzurePipelines>();
 
             services.AddSingleton<IDacPacDeployer, DacPacDeployer>();
+        }
+
+        private void RegisterDatabaseListGenerators(IServiceCollection services)
+        {
+            services.AddSingleton<IWhitelistDatabaseListGenerator, WhitelistDatabaseListGenerator>();
+            services.AddSingleton<IBlacklistDatabaseListGenerator, BlacklistDatabaseListGenerator>();
         }
     }
 }
