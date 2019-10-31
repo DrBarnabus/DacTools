@@ -16,14 +16,15 @@ GitVersion GetVersion(BuildParameters parameters)
         OutputType = GitVersionOutput.Json,
     };
 
+    Verbose("Running GitVersion - Json");
     var gitVersion = GitVersion(settings);
 
     if (!parameters.IsLocalBuild && !(parameters.IsRunningOnAzurePipelines && parameters.IsPullRequest))
     {
-        settings.UpdateAssemblyInfo = true;
         settings.LogFilePath = "console";
         settings.OutputType = GitVersionOutput.BuildServer;
 
+        Verbose("Running GitVersion -- BuildServer");
         GitVersion(settings);
     }
 

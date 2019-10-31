@@ -81,6 +81,7 @@ Teardown<BuildParameters>((context, parameters) =>
 // Tasks
 Task("Pack")
     .IsDependentOn("Zip-Files")
+    .IsDependentOn("GZip-Files")
     .ReportError(exception =>
     {
         Error(exception.Dump());

@@ -4,18 +4,15 @@ public class BuildPaths
 {
     public BuildDirectories Directories { get; private set; }
 
-    public static BuildPaths GetPaths(ICakeContext context, BuildParameters parameters, string configuration, BuildVersion version)
+    public static BuildPaths GetPaths(ICakeContext context, BuildParameters parameters)
     {
         if (context is null)
             throw new ArgumentNullException(nameof(context));
 
-        if (string.IsNullOrEmpty(configuration))
-            throw new ArgumentNullException(nameof(configuration));
+        if (parameters is null)
+            throw new ArgumentNullException(nameof(parameters));
 
-        if (version is null)
-            throw new ArgumentNullException(nameof(version));
-
-        var semVersion = version.SemVersion;
+        var semVersion = parameters.Version.SemVersion;
 
         var artifactsDir = (DirectoryPath)(context.Directory("./artifacts") + context.Directory("v" + semVersion));
         var artifactsBinDir = artifactsDir.Combine("bin");

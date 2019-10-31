@@ -41,6 +41,10 @@ public class BuildParameters
     public string[] Artifacts { get; private set; }
     public Dictionary<PlatformFamily, string> NativeRuntimes { get; private set; }
 
+    public bool IsStableRelease() => !IsLocalBuild && IsMasterBranch && IsTagged && !IsPullRequest;
+    public bool IsBetaRelease() => !IsLocalBuild && IsReleaseBranch && !IsPullRequest;
+    public bool IsAlphaRelease() => !IsLocalBuild && IsDevelopBranch && !IsTagged && !IsPullRequest;
+
     public static BuildParameters GetParameters(ICakeContext context)
     {
         if (context is null)
@@ -82,7 +86,9 @@ public class BuildParameters
 
         Version = BuildVersion.Calculate(context, gitVersion);
 
-        Paths = BuildPaths.GetPaths(context, this, Configuration, Version);
+        SetMSBuildSettingsVersion(MSBuildSettings, Version);
+
+        Paths = BuildPaths.GetPaths(context, this);
 
         var buildArtifacts = context.GetFiles(Paths.Directories.BuildArtifact + "/*.*");
         Artifacts = buildArtifacts.Select(ba => ba.FullPath).ToArray();
@@ -93,8 +99,6 @@ public class BuildParameters
             [PlatformFamily.Linux] = "linux-x64",
             [PlatformFamily.OSX] = "osx-x64"
         };
-
-        SetMSBuildSettingsVersion(MSBuildSettings, Version);
     }
 
     private static DotNetCoreMSBuildSettings GetMSBuildSettings(ICakeContext context)
