@@ -49,9 +49,10 @@ namespace DacTools.Deployment.Extensions
 
         public static bool ArgumentRequiresValue(this string argument, int argumentIndex)
         {
-            var booleanArguments = new string[]
+            var booleanArguments = new[]
             {
-                // TODO: Add Boolean Arguments
+                "blacklist",
+                "b"
             };
 
             bool argumentMightRequireValue = !booleanArguments.Contains(argument.Substring(1), StringComparer.OrdinalIgnoreCase);
