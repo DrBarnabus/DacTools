@@ -5,12 +5,11 @@
 // Copyright (c) 2019 DrBarnabus
 
 using System.Threading.Tasks;
-using DacTools.Deployment.Core;
 
 namespace DacTools.Deployment
 {
-    public interface IDeploymentExecutor
+    public interface IExecCommand
     {
-        Task<int> Execute(Arguments arguments);
+        Task Execute();
     }
 }

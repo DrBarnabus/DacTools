@@ -26,11 +26,11 @@ namespace DacTools.Deployment
             log.LogLevel = _arguments.LogLevel;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
             try
             {
-                _deploymentExecutor.Execute(_arguments);
+                await _deploymentExecutor.Execute(_arguments);
             }
             catch (Exception ex)
             {
@@ -39,7 +39,6 @@ namespace DacTools.Deployment
             }
 
             _applicationLifetime.StopApplication();
-            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

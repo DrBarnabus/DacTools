@@ -13,6 +13,7 @@ namespace DacTools.Deployment
             services.AddSingleton<IHelpWriter, HelpWriter>();
             services.AddSingleton<IVersionWriter, VersionWriter>();
             services.AddSingleton<IDeploymentExecutor, DeploymentExecutor>();
+            services.AddSingleton<IExecCommand, ExecCommand>();
         }
     }
 }

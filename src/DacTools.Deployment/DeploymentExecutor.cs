@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using DacTools.Deployment.Core;
 using DacTools.Deployment.Core.Logging;
 
@@ -13,15 +14,17 @@ namespace DacTools.Deployment
         private readonly ILog _log;
         private readonly IHelpWriter _helpWriter;
         private readonly IVersionWriter _versionWriter;
+        private readonly IExecCommand _execCommand;
 
-        public DeploymentExecutor(ILog log, IHelpWriter helpWriter, IVersionWriter versionWriter)
+        public DeploymentExecutor(ILog log, IHelpWriter helpWriter, IVersionWriter versionWriter, IExecCommand execCommand)
         {
             _log = log;
             _helpWriter = helpWriter;
             _versionWriter = versionWriter;
+            _execCommand = execCommand;
         }
 
-        public int Execute(Arguments arguments)
+        public async Task<int> Execute(Arguments arguments)
         {
             try
             {
@@ -51,7 +54,7 @@ namespace DacTools.Deployment
                 else
                     _log.Info("Using DacPac: {0}", arguments.DacPacFilePath);
 
-                // TODO: Execute Core
+                await _execCommand.Execute();
             }
             catch (Exception)
             {
