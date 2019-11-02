@@ -78,7 +78,15 @@ namespace DacTools.Deployment
                     if (values != null && values.Any())
                     {
                         foreach (string v in values)
-                            arguments.AddDatabaseName(v);
+                            if (!v.Contains(","))
+                            {
+                                arguments.AddDatabaseName(v);
+                            }
+                            else
+                            {
+                                foreach (string subValue in v.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                                    arguments.AddDatabaseName(subValue);
+                            }
                     }
 
                     continue;

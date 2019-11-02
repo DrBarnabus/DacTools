@@ -33,6 +33,7 @@ DacTools.Deployment [options...]
     /dacpac or /d                   The path to the .dacpac file to run the operation on.
     /masterconnectionstring or /S   The SQL Server Connection string for the master database on the server to deploy to.
     /databases or /D                A list of databases to either whitelist (default) or blacklist.
+                                    The list can be provided as a set of either comma or space separated values.
     /blacklist or /b                Configures the tool to use the value of the  '/databases' option as a blacklist.
     /threads or /t                  Configures the maximum number of threads to use while deploying databases.
                                     If set to -1 then the value of Environment.ProcessorCount will be used.
