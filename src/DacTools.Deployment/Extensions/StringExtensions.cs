@@ -55,14 +55,7 @@ namespace DacTools.Deployment.Extensions
                 "b"
             };
 
-            bool argumentMightRequireValue = !booleanArguments.Contains(argument.Substring(1), StringComparer.OrdinalIgnoreCase);
-
-            // If this is the first argument that might be the target DacPac filepath,
-            // the argument starts with slash and we're running on an OS that supports paths with slashes, the argument does not require a value
-            if (argumentMightRequireValue && argumentIndex == 0 && argument.StartsWith("/") && Path.DirectorySeparatorChar == '/' && argument.IsValidFilePath())
-                return false;
-
-            return argumentMightRequireValue;
+            return !booleanArguments.Contains(argument.Substring(1), StringComparer.OrdinalIgnoreCase);
         }
     }
 }
