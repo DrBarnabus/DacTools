@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment
 {
@@ -49,8 +50,11 @@ namespace DacTools.Deployment
 
                 if (name.IsSwitch("verbosity") || name.IsSwitch("v"))
                 {
-                    if (Enum.TryParse(value, true, out arguments.LogLevel))
+                    if (!Enum.TryParse<LogLevel>(value, true, out var result))
                         throw new WarningException($"Could not parse Verbosity value '{value}'.");
+
+                    arguments.LogLevel = result;
+                    continue;
                 }
 
                 if (name.IsSwitch("dacpac") || name.IsSwitch("d"))
