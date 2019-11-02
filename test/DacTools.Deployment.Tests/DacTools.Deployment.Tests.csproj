@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFrameworks>netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
@@ -17,7 +17,7 @@
     <Import Project="..\test.msbuild" />
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj" />
+      <ProjectReference Include="..\..\src\DacTools.Deployment\DacTools.Deployment.csproj" />
     </ItemGroup>
 
 </Project>
