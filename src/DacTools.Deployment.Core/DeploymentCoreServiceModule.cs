@@ -23,7 +23,7 @@ namespace DacTools.Deployment.Core
             RegisterDatabaseListGenerators(services);
         }
 
-        private void RegisterDatabaseListGenerators(IServiceCollection services)
+        private static void RegisterDatabaseListGenerators(IServiceCollection services)
         {
             services.AddSingleton<IWhitelistDatabaseListGenerator, WhitelistDatabaseListGenerator>();
             services.AddSingleton<IBlacklistDatabaseListGenerator, BlacklistDatabaseListGenerator>();

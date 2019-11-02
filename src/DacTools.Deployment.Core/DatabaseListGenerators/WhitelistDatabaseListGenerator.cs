@@ -39,6 +39,7 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
             {
                 command.Parameters.AddWithValue("@DB", databaseName);
 
+                await command.Connection.OpenAsync();
                 var reader = await command.ExecuteReaderAsync();
                 if (await reader.ReadAsync())
                     return new DatabaseInfo(reader.GetInt32(0), reader.GetString(1));

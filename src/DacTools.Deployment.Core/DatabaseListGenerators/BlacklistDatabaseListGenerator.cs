@@ -25,8 +25,8 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
 
             if (databaseNames is null || !databaseNames.Any())
                 return allDatabases;
-            
-            allDatabases.RemoveAll(d => !databaseNames.Contains(d.Name));
+
+            allDatabases.RemoveAll(d => databaseNames.Contains(d.Name));
             return allDatabases;
         }
 
@@ -35,9 +35,10 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
             using (var connection = new SqlConnection(_arguments.MasterConnectionString))
             using (var command = new SqlCommand(QueryText, connection))
             {
-                var databaseInfos = new List<DatabaseInfo>();
-
+                await command.Connection.OpenAsync();
                 var reader = await command.ExecuteReaderAsync();
+
+                var databaseInfos = new List<DatabaseInfo>();
                 while (await reader.ReadAsync())
                     databaseInfos.Add(new DatabaseInfo(reader.GetInt32(0), reader.GetString(1)));
 
