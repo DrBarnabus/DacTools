@@ -124,23 +124,20 @@ namespace DacTools.Deployment.Tests
             result.DatabaseNames.ShouldBeEmpty();
         }
 
-        public static IEnumerable<object[]> CorrectDatabaseNamesTestData(string switchStart, string separator) =>
+        public static IEnumerable<object[]> CorrectDatabaseNamesTestData(string switchStart) =>
             new List<object[]>
             {
                 new object[] { $"{switchStart} Value1", new[] { "Value1" } },
                 new object[] { $"{switchStart}", Array.Empty<string>() },
-                new object[] { $"{switchStart} Value1{separator}Value2", new[] { "Value1", "Value2" } }
+                new object[] { $"{switchStart} Value1 Value2", new[] { "Value1", "Value2" } },
+                new object[] { $"{switchStart} Value1,Value2", new[] { "Value1", "Value2" } }
             };
 
         [Theory]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "/databases", ",")]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "-databases", ",")]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "/D", ",")]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "-D", ",")]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "/databases", " ")]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "-databases", " ")]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "/D", " ")]
-        [MemberData(nameof(CorrectDatabaseNamesTestData), "-D", " ")]
+        [MemberData(nameof(CorrectDatabaseNamesTestData), "/databases")]
+        [MemberData(nameof(CorrectDatabaseNamesTestData), "-databases")]
+        [MemberData(nameof(CorrectDatabaseNamesTestData), "/D")]
+        [MemberData(nameof(CorrectDatabaseNamesTestData), "-D")]
         public void ShouldSetTheCorrectDatabasesNames(string arguments, string[] expectedValues)
         {
             var argumentParser = new ArgumentParser();
