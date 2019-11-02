@@ -15,14 +15,15 @@ namespace DacTools.Deployment
     {
         public static async Task<int> Main(string[] args)
         {
+            // So that we can return exit code 1 (0x1) when there is an error, anything being run in the host can throw an exception
+            // which should reach this try-catch and return the correct exit code.
             try
             {
                 await CreateHostBuilder(args).Build().RunAsync();
                 return 0;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.Error.WriteLine("A fatal error occurred: " + ex.Message);
                 return 1;
             }
         }

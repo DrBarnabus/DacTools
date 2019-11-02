@@ -30,7 +30,7 @@ namespace DacTools.Deployment
         {
             try
             {
-                await _deploymentExecutor.Execute(_arguments);
+                await _deploymentExecutor.Execute(_arguments, cancellationToken);
             }
             catch (Exception ex)
             {

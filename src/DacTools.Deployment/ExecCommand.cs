@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core;
 using DacTools.Deployment.Core.DatabaseListGenerators;
@@ -27,15 +28,15 @@ namespace DacTools.Deployment
             _arguments = arguments.Value;
         }
 
-        public async Task Execute()
+        public async Task Execute(CancellationToken cancellationToken)
         {
             _log.Info($"Running on {GetCurrentPlatform()}.");
 
             List<DatabaseInfo> databases;
             if (_arguments.IsBlacklist)
-                databases = await _blacklistDatabaseListGenerator.GetDatabaseInfoListAsync(_arguments.DatabaseNames.ToList());
+                databases = await _blacklistDatabaseListGenerator.GetDatabaseInfoListAsync(_arguments.DatabaseNames.ToList(), cancellationToken);
             else
-                databases = await _whitelistDatabaseListGenerator.GetDatabaseInfoListAsync(_arguments.DatabaseNames.ToList());
+                databases = await _whitelistDatabaseListGenerator.GetDatabaseInfoListAsync(_arguments.DatabaseNames.ToList(), cancellationToken);
 
             if (databases is null)
                 throw new NullReferenceException($"{nameof(databases)} was null.");

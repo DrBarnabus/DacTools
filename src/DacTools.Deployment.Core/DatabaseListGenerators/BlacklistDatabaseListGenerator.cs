@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
@@ -19,9 +20,9 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
             _arguments = arguments.Value;
         }
 
-        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string> databaseNames = null)
+        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string> databaseNames = null, CancellationToken cancellationToken = default)
         {
-            var allDatabases = await GetAllNonSystemDatabasesAsync();
+            var allDatabases = await GetAllNonSystemDatabasesAsync(cancellationToken);
 
             if (databaseNames is null || !databaseNames.Any())
                 return allDatabases;
@@ -30,16 +31,16 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
             return allDatabases;
         }
 
-        private async Task<List<DatabaseInfo>> GetAllNonSystemDatabasesAsync()
+        private async Task<List<DatabaseInfo>> GetAllNonSystemDatabasesAsync(CancellationToken cancellationToken)
         {
             using (var connection = new SqlConnection(_arguments.MasterConnectionString))
             using (var command = new SqlCommand(QueryText, connection))
             {
-                await command.Connection.OpenAsync();
-                var reader = await command.ExecuteReaderAsync();
+                await command.Connection.OpenAsync(cancellationToken);
+                var reader = await command.ExecuteReaderAsync(cancellationToken);
 
                 var databaseInfos = new List<DatabaseInfo>();
-                while (await reader.ReadAsync())
+                while (await reader.ReadAsync(cancellationToken))
                     databaseInfos.Add(new DatabaseInfo(reader.GetInt32(0), reader.GetString(1)));
 
                 return databaseInfos;

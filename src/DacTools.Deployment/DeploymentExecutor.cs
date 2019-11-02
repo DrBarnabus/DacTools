@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core;
 using DacTools.Deployment.Core.Logging;
@@ -24,7 +25,7 @@ namespace DacTools.Deployment
             _execCommand = execCommand;
         }
 
-        public async Task<int> Execute(Arguments arguments)
+        public async Task<int> Execute(Arguments arguments, CancellationToken cancellationToken)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace DacTools.Deployment
                 else
                     _log.Info("Using DacPac: {0}", arguments.DacPacFilePath);
 
-                await _execCommand.Execute();
+                await _execCommand.Execute(cancellationToken);
             }
             catch (Exception)
             {

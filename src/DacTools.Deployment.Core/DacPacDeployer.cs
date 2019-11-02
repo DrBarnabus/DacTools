@@ -1,5 +1,6 @@
 // Copyright (c) 2019 DrBarnabus
 
+using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
@@ -17,7 +18,7 @@ namespace DacTools.Deployment.Core
             _buildServerResolver = buildServerResolver;
         }
 
-        public Task DeployDacPac()
+        public Task DeployDacPac(CancellationToken cancellationToken)
         {
             var buildServer = _buildServerResolver.Resolve();
 
