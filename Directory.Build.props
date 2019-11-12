@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageVersion_MicrosoftTestSdk>16.3.0</PackageVersion_MicrosoftTestSdk>
+        <PackageVersion_MicrosoftTestSdk>16.4.0</PackageVersion_MicrosoftTestSdk>
         <PackageVersion_Shouldly>3.0.2</PackageVersion_Shouldly>
         <PackageVersion_Moq>4.13.1</PackageVersion_Moq>
         <PackageVersion_XUnit>2.4.1</PackageVersion_XUnit>
