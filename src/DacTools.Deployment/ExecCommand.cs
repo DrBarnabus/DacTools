@@ -1,15 +1,15 @@
 // Copyright (c) 2019 DrBarnabus
 
+using DacTools.Deployment.Core;
+using DacTools.Deployment.Core.DatabaseListGenerators;
+using DacTools.Deployment.Core.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using DacTools.Deployment.Core;
-using DacTools.Deployment.Core.DatabaseListGenerators;
-using DacTools.Deployment.Core.Logging;
-using Microsoft.Extensions.Options;
 
 namespace DacTools.Deployment
 {
@@ -18,13 +18,15 @@ namespace DacTools.Deployment
         private readonly ILog _log;
         private readonly IWhitelistDatabaseListGenerator _whitelistDatabaseListGenerator;
         private readonly IBlacklistDatabaseListGenerator _blacklistDatabaseListGenerator;
+        private readonly IDacPacDeployer _dacPacDeployer;
         private readonly Arguments _arguments;
 
-        public ExecCommand(ILog log, IWhitelistDatabaseListGenerator whitelistDatabaseListGenerator, IBlacklistDatabaseListGenerator blacklistDatabaseListGenerator, IOptions<Arguments> arguments)
+        public ExecCommand(ILog log, IWhitelistDatabaseListGenerator whitelistDatabaseListGenerator, IBlacklistDatabaseListGenerator blacklistDatabaseListGenerator, IDacPacDeployer dacPacDeployer, IOptions<Arguments> arguments)
         {
             _log = log;
             _whitelistDatabaseListGenerator = whitelistDatabaseListGenerator;
             _blacklistDatabaseListGenerator = blacklistDatabaseListGenerator;
+            _dacPacDeployer = dacPacDeployer;
             _arguments = arguments.Value;
         }
 
@@ -42,6 +44,9 @@ namespace DacTools.Deployment
                 throw new NullReferenceException($"{nameof(databases)} was null.");
 
             _log.Info("Generated Database List: {0}", string.Join(", ", databases.Select(d => d.Name)));
+
+            // TODO: Make the type of AsyncTask Soft as we might have multiple different "Operations"
+            await _dacPacDeployer.DeployDacPac(databases, cancellationToken);
         }
 
         private static string GetCurrentPlatform() =>

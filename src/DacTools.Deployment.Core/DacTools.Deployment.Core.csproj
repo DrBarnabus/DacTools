@@ -8,6 +8,7 @@
         <PackageReference Include="Microsoft.Data.SqlClient" Version="1.0.19269.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
+        <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.10.0" />
     </ItemGroup>
 
 </Project>

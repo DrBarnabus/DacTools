@@ -55,6 +55,12 @@ namespace DacTools.Deployment
                 else
                     _log.Info("Using DacPac: {0}", arguments.DacPacFilePath);
 
+                if (arguments.Threads == 0)
+                {
+                    _log.Debug("Threads value was 0, so using default value of 1.");
+                    arguments.Threads = 1;
+                }
+
                 await _execCommand.Execute(cancellationToken);
             }
             catch (Exception)

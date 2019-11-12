@@ -8,5 +8,7 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
         public string Name { get; }
 
         public DatabaseInfo(int id, string name) => (Id, Name) = (id, name);
+
+        public override string ToString() => $"{Name}:{Id}";
     }
 }
