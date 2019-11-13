@@ -37,7 +37,7 @@ namespace DacTools.Deployment.Core
             var asyncTaskRunner = new AsyncTaskRunner<DacDeployAsyncTask>(_arguments.Threads, cancellationToken);
             foreach (var database in databases)
             {
-                var dacDeployAsyncTask = new DacDeployAsyncTask(_log, database, result =>
+                var dacDeployAsyncTask = new DacDeployAsyncTask(_log, _arguments, database, result =>
                 {
                     lock (_lock)
                     {
