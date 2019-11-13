@@ -61,7 +61,7 @@ namespace DacTools.Deployment.Core.AsyncTasks
                     }
                 };
 
-                dacServices.ProgressChanged += (sender, args) => _log.Debug("'{0}' DacServices Progress Update ({2}:{3}) - {1}", args.Message, args.Status, args.OperationId);
+                dacServices.ProgressChanged += (sender, args) => _log.Debug("'{0}' DacServices Progress Update ({2}:{3}) - {1}", _databaseInfo.ToString(), args.Message, args.Status, args.OperationId);
 
                 // TODO: Make the DacDeployOptions Configurable
                 dacServices.Deploy(dacPackage, _databaseInfo.Name, true, new DacDeployOptions(), cancellationToken);
