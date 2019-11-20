@@ -1,10 +1,10 @@
 // Copyright (c) 2019 DrBarnabus
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Logging;
 using Shouldly;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace DacTools.Deployment.Tests
@@ -86,10 +86,10 @@ namespace DacTools.Deployment.Tests
         [InlineData("/v invalid")]
         [InlineData("-verbosity invalid")]
         [InlineData("-v invalid")]
-        public void ShouldThrowAWarningExceptionWhenTheVerbosityValueCannotBeProcessed(string arguments)
+        public void ShouldThrowAArgumentParsingExceptionWhenTheVerbosityValueCannotBeProcessed(string arguments)
         {
             var argumentParser = new ArgumentParser();
-            Should.Throw<WarningException>(() => argumentParser.ParseArguments(arguments))
+            Should.Throw<ArgumentParsingException>(() => argumentParser.ParseArguments(arguments))
                 .Message.ShouldBe("Could not parse Verbosity value 'invalid'.");
         }
 
@@ -98,10 +98,10 @@ namespace DacTools.Deployment.Tests
         [InlineData("/d invalid")]
         [InlineData("-dacpac invalid")]
         [InlineData("-d invalid")]
-        public void ShouldThrowAWarningExceptionWhenTheDacPacFilePathValueIsNotAValidFilePath(string arguments)
+        public void ShouldThrowAArgumentParsingExceptionWhenTheDacPacFilePathValueIsNotAValidFilePath(string arguments)
         {
             var argumentParser = new ArgumentParser();
-            Should.Throw<WarningException>(() => argumentParser.ParseArguments(arguments))
+            Should.Throw<ArgumentParsingException>(() => argumentParser.ParseArguments(arguments))
                 .Message.ShouldBe("Could not parse DacPac value 'invalid'.");
         }
 
@@ -218,18 +218,18 @@ namespace DacTools.Deployment.Tests
         [MemberData(nameof(InvalidThreadsTestData), "/t")]
         [MemberData(nameof(InvalidThreadsTestData), "-threads")]
         [MemberData(nameof(InvalidThreadsTestData), "-t")]
-        public void ShouldThrowAWarningExceptionWhenThreadsValueIsInvalid(string arguments, string exceptionMessage)
+        public void ShouldThrowAArgumentParsingExceptionWhenThreadsValueIsInvalid(string arguments, string exceptionMessage)
         {
             var argumentParser = new ArgumentParser();
-            Should.Throw<WarningException>(() => argumentParser.ParseArguments(arguments))
+            Should.Throw<ArgumentParsingException>(() => argumentParser.ParseArguments(arguments))
                 .Message.ShouldBe(exceptionMessage);
         }
 
         [Fact]
-        public void ShouldThrowAWarningExceptionWhenTheArgumentCouldNotBeParsed()
+        public void ShouldThrowAArgumentParsingExceptionWhenTheArgumentCouldNotBeParsed()
         {
             var argumentParser = new ArgumentParser();
-            Should.Throw<WarningException>(() => argumentParser.ParseArguments("/InvalidArgument"))
+            Should.Throw<ArgumentParsingException>(() => argumentParser.ParseArguments("/InvalidArgument"))
                 .Message.ShouldBe("Could not parse command line parameter '/InvalidArgument'.");
         }
     }
