@@ -64,7 +64,26 @@ namespace DacTools.Deployment.Core.AsyncTasks
                 dacServices.ProgressChanged += (sender, args) => _log.Debug("'{0}' DacServices Progress Update ({2}:{3}) - {1}", _databaseInfo.ToString(), args.Message, args.Status, args.OperationId);
 
                 // TODO: Make the DacDeployOptions Configurable
-                dacServices.Deploy(dacPackage, _databaseInfo.Name, true, new DacDeployOptions(), cancellationToken);
+                var dacDeployOptions = new DacDeployOptions
+                {
+                    BlockOnPossibleDataLoss = false,
+                    DropIndexesNotInSource = false,
+                    IgnorePermissions = true,
+                    IgnoreRoleMembership = true,
+                    GenerateSmartDefaults = true,
+                    DropObjectsNotInSource = true,
+                    DoNotDropObjectTypes = new[]
+                    {
+                        ObjectType.Logins,
+                        ObjectType.Users,
+                        ObjectType.Permissions,
+                        ObjectType.RoleMembership,
+                        ObjectType.Filegroups
+                    },
+                    CommandTimeout = 0 // Infinite Timeout
+                };
+
+                dacServices.Deploy(dacPackage, _databaseInfo.Name, true, dacDeployOptions, cancellationToken);
             }
             catch (Exception ex)
             {
