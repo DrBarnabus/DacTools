@@ -13,9 +13,9 @@ namespace DacTools.Deployment.Core
 {
     internal class DacPacDeployer : IDacPacDeployer
     {
+        private readonly Arguments _arguments;
         private readonly IBuildServerResolver _buildServerResolver;
         private readonly ILog _log;
-        private readonly Arguments _arguments;
 
         private readonly object _lock = new object();
 

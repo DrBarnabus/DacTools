@@ -15,9 +15,9 @@ namespace DacTools.Deployment
     internal class DeploymentApp : IHostedService
     {
         private readonly IHostApplicationLifetime _applicationLifetime;
+        private readonly Arguments _arguments;
         private readonly IDeploymentExecutor _deploymentExecutor;
         private readonly ILog _log;
-        private readonly Arguments _arguments;
 
         public DeploymentApp(IHostApplicationLifetime applicationLifetime, IDeploymentExecutor deploymentExecutor, ILog log, IOptions<Arguments> options)
         {

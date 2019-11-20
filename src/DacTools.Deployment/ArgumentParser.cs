@@ -1,13 +1,13 @@
 // Copyright (c) 2019 DrBarnabus
 
-using DacTools.Deployment.Core;
-using DacTools.Deployment.Core.Exceptions;
-using DacTools.Deployment.Core.Logging;
-using DacTools.Deployment.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using DacTools.Deployment.Core;
+using DacTools.Deployment.Core.Exceptions;
+using DacTools.Deployment.Core.Logging;
+using DacTools.Deployment.Extensions;
 
 namespace DacTools.Deployment
 {
@@ -80,18 +80,12 @@ namespace DacTools.Deployment
                 if (name.IsSwitch("databases") || name.IsSwitch("D"))
                 {
                     if (values != null && values.Any())
-                    {
                         foreach (string v in values)
                             if (!v.Contains(","))
-                            {
                                 arguments.AddDatabaseName(v);
-                            }
                             else
-                            {
                                 foreach (string subValue in v.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                                     arguments.AddDatabaseName(subValue);
-                            }
-                    }
 
                     continue;
                 }

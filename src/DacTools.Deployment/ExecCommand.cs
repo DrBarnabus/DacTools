@@ -1,26 +1,25 @@
 // Copyright (c) 2019 DrBarnabus
 
-using DacTools.Deployment.Core;
-using DacTools.Deployment.Core.DatabaseListGenerators;
-using DacTools.Deployment.Core.Logging;
-using Microsoft.Extensions.Options;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using DacTools.Deployment.Core;
+using DacTools.Deployment.Core.DatabaseListGenerators;
 using DacTools.Deployment.Core.Exceptions;
+using DacTools.Deployment.Core.Logging;
+using Microsoft.Extensions.Options;
 
 namespace DacTools.Deployment
 {
     public class ExecCommand : IExecCommand
     {
-        private readonly ILog _log;
-        private readonly IWhitelistDatabaseListGenerator _whitelistDatabaseListGenerator;
+        private readonly Arguments _arguments;
         private readonly IBlacklistDatabaseListGenerator _blacklistDatabaseListGenerator;
         private readonly IDacPacDeployer _dacPacDeployer;
-        private readonly Arguments _arguments;
+        private readonly ILog _log;
+        private readonly IWhitelistDatabaseListGenerator _whitelistDatabaseListGenerator;
 
         public ExecCommand(ILog log, IWhitelistDatabaseListGenerator whitelistDatabaseListGenerator, IBlacklistDatabaseListGenerator blacklistDatabaseListGenerator, IDacPacDeployer dacPacDeployer, IOptions<Arguments> arguments)
         {

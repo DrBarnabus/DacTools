@@ -1,21 +1,21 @@
 // Copyright (c) 2019 DrBarnabus
 
-using DacTools.Deployment.Core;
-using DacTools.Deployment.Core.Logging;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using DacTools.Deployment.Core;
 using DacTools.Deployment.Core.Exceptions;
+using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment
 {
     public class DeploymentExecutor : IDeploymentExecutor
     {
-        private readonly ILog _log;
-        private readonly IHelpWriter _helpWriter;
-        private readonly IVersionWriter _versionWriter;
         private readonly IExecCommand _execCommand;
+        private readonly IHelpWriter _helpWriter;
+        private readonly ILog _log;
+        private readonly IVersionWriter _versionWriter;
 
         public DeploymentExecutor(ILog log, IHelpWriter helpWriter, IVersionWriter versionWriter, IExecCommand execCommand)
         {

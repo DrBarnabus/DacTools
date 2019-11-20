@@ -1,12 +1,12 @@
 // Copyright (c) 2019 DrBarnabus
 
-using DacTools.Deployment.Core.Common;
-using DacTools.Deployment.Core.DatabaseListGenerators;
-using DacTools.Deployment.Core.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using DacTools.Deployment.Core.Common;
+using DacTools.Deployment.Core.DatabaseListGenerators;
+using DacTools.Deployment.Core.Logging;
 using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Dac;
 
@@ -14,12 +14,12 @@ namespace DacTools.Deployment.Core.AsyncTasks
 {
     public class DacDeployAsyncTask : IAsyncTask
     {
-        private readonly ILog _log;
+        public delegate void ProgressUpdateDelegate(bool successful);
+
         private readonly Arguments _arguments;
         private readonly DatabaseInfo _databaseInfo;
+        private readonly ILog _log;
         private readonly ProgressUpdateDelegate _progressUpdateDelegate;
-
-        public delegate void ProgressUpdateDelegate(bool successful);
 
         public DacDeployAsyncTask(ILog log, Arguments arguments, DatabaseInfo databaseInfo, ProgressUpdateDelegate progressUpdateDelegate)
         {

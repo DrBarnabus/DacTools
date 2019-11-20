@@ -1,10 +1,10 @@
 // Copyright (c) 2019 DrBarnabus
 
 using System;
-using DacTools.Deployment.Core.Logging;
-using Shouldly;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DacTools.Deployment.Core.Logging;
+using Shouldly;
 using Xunit;
 
 namespace DacTools.Deployment.Tests

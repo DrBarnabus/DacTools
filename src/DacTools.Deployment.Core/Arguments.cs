@@ -7,17 +7,16 @@ namespace DacTools.Deployment.Core
 {
     public class Arguments
     {
-        public bool IsVersion;
-        public bool IsHelp;
+        public readonly ISet<string> DatabaseNames = new HashSet<string>();
 
         public string DacPacFilePath;
-        public string MasterConnectionString;
         public bool IsBlacklist;
-        public int Threads;
-
-        public readonly ISet<string> DatabaseNames  = new HashSet<string>();
-        public void AddDatabaseName(string databaseName) => DatabaseNames.Add(databaseName);
+        public bool IsHelp;
+        public bool IsVersion;
 
         public LogLevel LogLevel = LogLevel.Info;
+        public string MasterConnectionString;
+        public int Threads;
+        public void AddDatabaseName(string databaseName) => DatabaseNames.Add(databaseName);
     }
 }
