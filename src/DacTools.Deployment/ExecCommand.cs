@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using DacTools.Deployment.Core.Exceptions;
 
 namespace DacTools.Deployment
 {
@@ -40,8 +41,8 @@ namespace DacTools.Deployment
             else
                 databases = await _whitelistDatabaseListGenerator.GetDatabaseInfoListAsync(_arguments.DatabaseNames.ToList(), cancellationToken);
 
-            if (databases is null)
-                throw new NullReferenceException($"{nameof(databases)} was null.");
+            if (databases is null || !databases.Any())
+                throw new FatalException($"{nameof(databases)} was null or empty.");
 
             _log.Info("Generated Database List: {0}", string.Join(", ", databases.Select(d => d.Name)));
 

@@ -1,13 +1,13 @@
 // Copyright (c) 2019 DrBarnabus
 
 using DacTools.Deployment.Core;
+using DacTools.Deployment.Core.Exceptions;
+using DacTools.Deployment.Core.Logging;
 using DacTools.Deployment.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment
 {
@@ -51,7 +51,7 @@ namespace DacTools.Deployment
                 if (name.IsSwitch("verbosity") || name.IsSwitch("v"))
                 {
                     if (!Enum.TryParse<LogLevel>(value, true, out var result))
-                        throw new WarningException($"Could not parse Verbosity value '{value}'.");
+                        throw new ArgumentParsingException($"Could not parse Verbosity value '{value}'.");
 
                     arguments.LogLevel = result;
                     continue;
@@ -64,7 +64,7 @@ namespace DacTools.Deployment
                     if (value.IsValidFilePath())
                         arguments.DacPacFilePath = value;
                     else
-                        throw new WarningException($"Could not parse DacPac value '{value}'.");
+                        throw new ArgumentParsingException($"Could not parse DacPac value '{value}'.");
 
                     continue;
                 }
@@ -109,21 +109,19 @@ namespace DacTools.Deployment
                     EnsureArgumentValueCount(values);
 
                     if (!int.TryParse(value, out int result))
-                        throw new WarningException($"Could not parse Threads value of '{value}'.");
+                        throw new ArgumentParsingException($"Could not parse Threads value of '{value}'.");
 
                     if (result == -1)
                         arguments.Threads = Environment.ProcessorCount;
                     else if (result > 0)
                         arguments.Threads = result;
                     else
-                        throw new WarningException($"Threads parameter must be either minus one or greater than zero. Parsed a value of '{value}'.");
+                        throw new ArgumentParsingException($"Threads parameter must be either minus one or greater than zero. Parsed a value of '{value}'.");
 
                     continue;
                 }
 
-                string couldNotParseMessage = $"Could not parse command line parameter '{name}'.";
-
-                throw new WarningException(couldNotParseMessage);
+                throw new ArgumentParsingException($"Could not parse command line parameter '{name}'.");
             }
 
             return arguments;
@@ -132,7 +130,7 @@ namespace DacTools.Deployment
         private static void EnsureArgumentValueCount(IReadOnlyList<string> values, int maxArguments = 1)
         {
             if (values != null && values.Count > maxArguments)
-                throw new WarningException($"Could not parse command line parameter '{values[maxArguments]}'.");
+                throw new ArgumentParsingException($"Could not parse command line parameter '{values[maxArguments]}'.");
         }
 
         private static NameValueCollection CollectSwitchesAndValuesFromArguments(IReadOnlyList<string> namedArguments)

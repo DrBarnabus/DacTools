@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core;
+using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,14 +16,19 @@ namespace DacTools.Deployment
     {
         public static async Task<int> Main(string[] args)
         {
-            // So that we can return exit code 1 (0x1) when there is an error, anything being run in the host can throw an exception
-            // which should reach this try-catch and return the correct exit code.
             try
             {
                 await CreateHostBuilder(args).Build().RunAsync();
                 return 0;
             }
-            catch (Exception)
+            catch (ArgumentParsingException ex)
+            {
+                Console.Error.WriteLine("Failed to Parse Arguments with Error: {0}", ex.Message);
+                Console.Error.WriteLine("For Usage Help, run the program with one of the following arguments; -?, -h or -help.");
+                Console.Error.WriteLine("Alternatively, please consult the documentation for more details.");
+                return 1;
+            }
+            catch (FatalException)
             {
                 return 1;
             }

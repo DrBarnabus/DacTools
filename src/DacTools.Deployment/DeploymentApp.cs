@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core;
+using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -15,12 +16,14 @@ namespace DacTools.Deployment
     {
         private readonly IHostApplicationLifetime _applicationLifetime;
         private readonly IDeploymentExecutor _deploymentExecutor;
+        private readonly ILog _log;
         private readonly Arguments _arguments;
 
-        public DeploymentApp(IHostApplicationLifetime applicationLifetime, IDeploymentExecutor deploymentExecutor, IOptions<Arguments> options, ILog log)
+        public DeploymentApp(IHostApplicationLifetime applicationLifetime, IDeploymentExecutor deploymentExecutor, ILog log, IOptions<Arguments> options)
         {
             _applicationLifetime = applicationLifetime ?? throw new ArgumentNullException(nameof(applicationLifetime));
             _deploymentExecutor = deploymentExecutor ?? throw new ArgumentNullException(nameof(deploymentExecutor));
+            _log = log;
             _arguments = options.Value;
 
             log.LogLevel = _arguments.LogLevel;
@@ -32,10 +35,17 @@ namespace DacTools.Deployment
             {
                 await _deploymentExecutor.Execute(_arguments, cancellationToken);
             }
+            catch (FatalException fatalException)
+            {
+                if (fatalException.ShouldLog)
+                    _log.Error(fatalException.Message);
+
+                throw;
+            }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex.Message);
-                throw;
+                _log.Error("An unexpected error ocurred: {0}", ex.Message);
+                throw new FatalException("An unexpected error occurred.", ex);
             }
 
             _applicationLifetime.StopApplication();

@@ -12,6 +12,6 @@ namespace DacTools.Deployment
 {
     public interface IDeploymentExecutor
     {
-        Task<int> Execute(Arguments arguments, CancellationToken cancellationToken);
+        Task Execute(Arguments arguments, CancellationToken cancellationToken);
     }
 }

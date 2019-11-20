@@ -1,12 +1,12 @@
 // Copyright (c) 2019 DrBarnabus
 
-using System;
+using DacTools.Deployment.Core;
+using DacTools.Deployment.Core.Logging;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using DacTools.Deployment.Core;
-using DacTools.Deployment.Core.Logging;
+using DacTools.Deployment.Core.Exceptions;
 
 namespace DacTools.Deployment
 {
@@ -25,50 +25,41 @@ namespace DacTools.Deployment
             _execCommand = execCommand;
         }
 
-        public async Task<int> Execute(Arguments arguments, CancellationToken cancellationToken)
+        public async Task Execute(Arguments arguments, CancellationToken cancellationToken)
         {
-            try
+            if (arguments is null)
             {
-                if (arguments is null)
-                {
-                    _helpWriter.Write();
-                    return 1;
-                }
-
-                if (arguments.IsVersion)
-                {
-                    _versionWriter.Write(Assembly.GetExecutingAssembly());
-                    return 0;
-                }
-
-                if (arguments.IsHelp)
-                {
-                    _helpWriter.Write();
-                    return 0;
-                }
-
-                // TODO: Add File Logging
-                _log.AddLogAppender(new ConsoleAppender());
-
-                if (!File.Exists(arguments.DacPacFilePath))
-                    _log.Warning("The DacPac file '{0}' does not exist.", arguments.DacPacFilePath);
-                else
-                    _log.Info("Using DacPac: {0}", arguments.DacPacFilePath);
-
-                if (arguments.Threads == 0)
-                {
-                    _log.Debug("Threads value was 0, so using default value of 1.");
-                    arguments.Threads = 1;
-                }
-
-                await _execCommand.Execute(cancellationToken);
-            }
-            catch (Exception)
-            {
-                return 1;
+                _helpWriter.Write();
+                throw new FatalException("Arguments is null.");
             }
 
-            return 0;
+            if (arguments.IsVersion)
+            {
+                _versionWriter.Write(Assembly.GetExecutingAssembly());
+                return;
+            }
+
+            if (arguments.IsHelp)
+            {
+                _helpWriter.Write();
+                return;
+            }
+
+            // TODO: Add File Logging
+            _log.AddLogAppender(new ConsoleAppender());
+
+            if (!File.Exists(arguments.DacPacFilePath))
+                throw new FatalException($"DacPac FilePath '{arguments.DacPacFilePath}' does not exist!", true);
+
+            _log.Info("Using DacPac: {0}", arguments.DacPacFilePath);
+
+            if (arguments.Threads == 0)
+            {
+                _log.Debug("Threads value was 0, so using default value of 1.");
+                arguments.Threads = 1;
+            }
+
+            await _execCommand.Execute(cancellationToken);
         }
     }
 }
