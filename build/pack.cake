@@ -192,7 +192,11 @@ Task("Pack-NuGet")
             MSBuildSettings = parameters.MSBuildSettings
         };
 
-        DotNetCorePack($"./src/DacTools.Deployment.Core/DacTools.Deployment.Core.csproj", settings);
+        DotNetCorePack("./src/DacTools.Deployment.Core/DacTools.Deployment.Core.csproj", settings);
+
+        // dotnet Global Tool
+        settings.ArgumentCustomization = arg => arg.Append("/p:PackAsTool=true");
+        DotNetCorePack("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
     });
 
 Task("GZip-Files")

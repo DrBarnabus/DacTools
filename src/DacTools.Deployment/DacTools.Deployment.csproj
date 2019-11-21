@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -6,16 +6,22 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(ExcludeFramework)' != 'true'">
+    <PropertyGroup Condition=" '$(ExcludeFramework)' != 'true' And '$(PackAsTool)' != 'true' ">
         <TargetFrameworks>net472;$(TargetFrameworks);</TargetFrameworks>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(PackAsTool)' == 'true' ">
+        <ToolCommandName>dactools-deployment</ToolCommandName>
+        <PackageId>DacTools.Deployment.Tool</PackageId>
+        <PackageDescription>A Helpful tool that can be used to deploy dacpac files to SQL Server. This tool has the ability to deploy a dacpac to multiple databases simultaniously.</PackageDescription>
+    </PropertyGroup>
+
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj" />
+        <ProjectReference Include="..\DacTools.Deployment.Core\DacTools.Deployment.Core.csproj" />
     </ItemGroup>
 
 </Project>
