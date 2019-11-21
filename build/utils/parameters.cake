@@ -42,8 +42,8 @@ public class BuildParameters
     public Dictionary<PlatformFamily, string> NativeRuntimes { get; private set; }
 
     public bool IsStableRelease() => !IsLocalBuild && IsMasterBranch && IsTagged && !IsPullRequest;
-    public bool IsBetaRelease() => !IsLocalBuild && IsReleaseBranch && !IsPullRequest;
-    public bool IsAlphaRelease() => !IsLocalBuild && IsDevelopBranch && !IsTagged && !IsPullRequest;
+    public bool IsPreviewRelease() => !IsLocalBuild && IsReleaseBranch && !IsPullRequest;
+    public bool IsBetaRelease() => !IsLocalBuild && IsDevelopBranch && !IsTagged && !IsPullRequest;
 
     public static BuildParameters GetParameters(ICakeContext context)
     {

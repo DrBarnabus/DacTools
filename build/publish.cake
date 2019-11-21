@@ -3,7 +3,7 @@
 Task("Publish-AzurePipelines")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnWindows, "Publish-AzurePipelines works only on Windows agents.")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnAzurePipelines, "Publish-AzurePipelines works only on AzurePipelines.")
-    .WithCriteria<BuildParameters>((context, parameters) => parameters.IsStableRelease() || parameters.IsBetaRelease() || parameters.IsAlphaRelease(), "Publish-AzurePipelines works only stable, beta or alpha builds.")
+    .WithCriteria<BuildParameters>((context, parameters) => parameters.IsStableRelease() || parameters.IsPreviewRelease() || parameters.IsBetaRelease(), "Publish-AzurePipelines works only stable, preview or beta builds.")
     .Does<BuildParameters>(parameters =>
     {
         foreach (var artifact in parameters.Artifacts)

@@ -1,0 +1,7 @@
+branches:
+  release:
+    tag: preview
+  develop:
+    tag: beta
+  pull-request:
+    tag: PR
