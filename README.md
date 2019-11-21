@@ -1,6 +1,4 @@
-<h1>
-    DacTools
-</h1>
+# DacTools
 
 A Helpful tool that can be used to deploy dacpac files to SQL Server. This tool has the ability to deploy a dacpac to multiple databases simultaniously.
 
@@ -8,6 +6,14 @@ A Helpful tool that can be used to deploy dacpac files to SQL Server. This tool 
 | :------------------------------------: | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
 |                              **Build** | [![Build Status master][az-pipeline-master-badge]][az-pipeline-master]         | [![Build Status develop][az-pipeline-develop-badge]][az-pipeline-develop]      |
 |                           **Coverage** | [![Codecov master][codecov-master-badge]][codecov-master]                      | [![Codecov develop][codecov-develop-badge]][codecov-develop]                   |
+|           **DacTools.Deployment.Tool** | [![NuGet][dtdt-badge]][dtdt]                                                   | [![NuGet][dtdt-pre-badge]][dtdt-pre]                                           |
+|           **DacTools.Deployment.Core** | [![NuGet][dtdc-badge]][dtdc]                                                   | [![NuGet][dtdc-pre-badge]][dtdc-pre]                                           |
+
+## Compatibility
+
+DacTools.Deployment works on Windows, Linux and Mac. It is supported on .NET Core 3.0 and 2.1 as well as .NET Framework 4.7.2+.
+
+DacTools.Deployment currently makes use of Microsoft.SqlServer.DACFx v150.x and as such it can target SQL Server 2008, 2008R2, 2012, 2014, 2016, 2017, 2019 and Microsoft Azure SQL Databases.
 
 ## Quick Links
 
@@ -29,3 +35,11 @@ Copyright (c) 2019 DrBarnabus
 [codecov-master]:               https://codecov.io/gh/DrBarnabus/DacTools/branch/master
 [codecov-develop-badge]:        https://codecov.io/gh/DrBarnabus/DacTools/branch/develop/graph/badge.svg
 [codecov-develop]:              https://codecov.io/gh/DrBarnabus/DacTools/branch/develop
+[dtdt]:                         https://www.nuget.org/packages/DacTools.Deployment.Tool
+[dtdt-badge]:                   https://img.shields.io/nuget/v/DacTools.Deployment.Tool
+[dtdt-pre]:                     https://www.nuget.org/packages/DacTools.Deployment.Tool/absoluteLatest
+[dtdt-pre-badge]:               https://img.shields.io/nuget/vpre/DacTools.Deployment.Tool
+[dtdc]:                         https://www.nuget.org/packages/DacTools.Deployment.Core
+[dtdc-badge]:                   https://img.shields.io/nuget/v/DacTools.Deployment.Core
+[dtdc-pre]:                     https://www.nuget.org/packages/DacTools.Deployment.Core/absoluteLatest
+[dtdc-pre-badge]:               https://img.shields.io/nuget/vpre/DacTools.Deployment.Core
