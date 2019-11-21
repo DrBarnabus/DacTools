@@ -17,7 +17,7 @@ namespace DacTools.Deployment.Core.Logging
             {
                 try
                 {
-                    var (backgroundColor, foregroundColor) = ColorPalette[logLevel];
+                    (var backgroundColor, var foregroundColor) = ColorPalette[logLevel];
 
                     Console.BackgroundColor = backgroundColor;
                     Console.ForegroundColor = foregroundColor;

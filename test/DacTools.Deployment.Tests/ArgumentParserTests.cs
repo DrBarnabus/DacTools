@@ -1,10 +1,10 @@
 // Copyright (c) 2019 DrBarnabus
 
+using System;
+using System.Collections.Generic;
 using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Logging;
 using Shouldly;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace DacTools.Deployment.Tests
