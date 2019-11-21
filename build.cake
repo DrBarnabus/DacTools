@@ -52,7 +52,7 @@ Setup<BuildParameters>(context =>
         parameters.IsDevelopBranch,
         parameters.IsTagged,
         parameters.IsPullRequest,
-        parameters.IsStableRelase(),
+        parameters.IsStableRelease(),
         parameters.IsPreviewRelease(),
         parameters.IsBetaRelease());
 
@@ -72,7 +72,7 @@ Teardown<BuildParameters>((context, parameters) =>
             parameters.IsDevelopBranch,
             parameters.IsTagged,
             parameters.IsPullRequest,
-            parameters.IsStableRelase(),
+            parameters.IsStableRelease(),
             parameters.IsPreviewRelease(),
             parameters.IsBetaRelease());
 
