@@ -1,0 +1,7 @@
+site_name: DacTools
+theme: readthedocs
+repo_url: https://github.com/DrBarnabus/DacTools
+
+pages:
+- Home: index.md
+- Configuration: configuration.md
