@@ -180,6 +180,21 @@ Task("Pack-Prepare")
         }
     });
 
+Task("Pack-NuGet")
+    .IsDependentOn("Pack-Prepare")
+    .Does<BuildParameters>(parameters =>
+    {
+        var settings = new DotNetCorePackSettings
+        {
+            Configuration = parameters.Configuration,
+            NoRestore = true,
+            OutputDirectory = parameters.Paths.Directories.BuildArtifact,
+            MSBuildSettings = parameters.MSBuildSettings
+        };
+
+        DotNetCorePack($"./src/DacTools.Deployment.Core/DacTools.Deployment.Core.csproj", settings);
+    });
+
 Task("GZip-Files")
     .IsDependentOn("Pack-Prepare")
     .Does<BuildParameters>(parameters =>

@@ -80,6 +80,7 @@ Teardown<BuildParameters>((context, parameters) =>
 
 // Tasks
 Task("Pack")
+    .IsDependentOn("Pack-NuGet")
     .IsDependentOn("Zip-Files")
     .IsDependentOn("GZip-Files")
     .ReportError(exception =>
@@ -90,6 +91,7 @@ Task("Pack")
 Task("Publish")
     .IsDependentOn("Publish-AzurePipelines")
     .IsDependentOn("Publish-Coverage")
+    .IsDependentOn("Publish-NuGet")
     .Finally(() =>
     {
         if (publishingError)

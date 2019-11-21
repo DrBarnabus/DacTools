@@ -16,6 +16,7 @@ public class BuildParameters
     public string FullFxVersion472 { get; private set; } = "net472";
 
     public bool EnabledUnitTests { get; private set; }
+    public bool EnabledPublishNuGet { get; private set; }
 
     public bool IsRunningOnUnix { get; private set; }
     public bool IsRunningOnWindows { get; private set; }
@@ -59,6 +60,7 @@ public class BuildParameters
             Configuration = context.Argument("configuration", "Release"),
 
             EnabledUnitTests = IsEnabled(context, "ENABLED_UNIT_TESTS"),
+            EnabledPublishNuGet = IsEnabled(context, "ENABLED_PUBLISH_NUGET"),
 
             IsRunningOnUnix = context.IsRunningOnUnix(),
             IsRunningOnWindows = context.IsRunningOnWindows(),
