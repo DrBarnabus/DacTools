@@ -4,7 +4,7 @@
 
 A Helpful tool that can be used to deploy dacpac files to SQL Server. This tool has the ability to deploy a dacpac to multiple databases simultaniously.
 
-|                                        | Stable (master)                                                                | Pre-Release (develop)                                                          |
+|                                        | Stable (master)                                                                | Preview & Beta (develop)                                                       |
 | :------------------------------------: | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
 |                              **Build** | [![Build Status master][az-pipeline-master-badge]][az-pipeline-master]         | [![Build Status develop][az-pipeline-develop-badge]][az-pipeline-develop]      |
 |                           **Coverage** | [![Codecov master][codecov-master-badge]][codecov-master]                      | [![Codecov develop][codecov-develop-badge]][codecov-develop]                   |
