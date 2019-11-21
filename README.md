@@ -1,6 +1,8 @@
 # DacTools
 
-A Helpful tool that can be used to deploy dacpac files to SQL Server. This tool has the ability to deploy a dacpac to multiple databases simultaniously.
+DacTools is a tool that can be used to deploy DacPac files to Microsoft SQL Server. This tool expands upon DacFx by providing the ability to run multiple deployments to multiple databases simultaniously in parallel.
+
+It was originally designed for use in Multi-Tenant scenarios where you may have a database per Customer (or Tenant) but you want to use a sqlproj to keep the schema of those databases in line.
 
 |                                        | Stable (master)                                                                | Preview & Beta (develop)                                                       |
 | :------------------------------------: | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
@@ -21,6 +23,7 @@ DacTools.Deployment currently makes use of Microsoft.SqlServer.DACFx v150.x and 
 
 - [Documentation⇗][docs]
 - [Configuration⇗][configuration]
+- [Changelog⇗](./CHANGELOG.md)
 
 # License
 
