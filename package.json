@@ -1,0 +1,5 @@
+{
+    "name": "dactools",
+    "description": "This package.json only exists for conventional-changelog-cli to have the correct version.",
+    "version": "0.1.0"
+}
