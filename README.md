@@ -30,13 +30,10 @@ Copyright (c) 2019 DrBarnabus
 
 **Notice**: This isn't an official Microsoft repository or tool, this is an open source project designed to assist in deploying dacpac Data-teir Applications.
 
-[![Documentation Status]()](https://drbarnabus-dactools.readthedocs-hosted.com/en/latest/?badge=latest)
-
-
 [docs]:                         https://drbarnabus-dactools.readthedocs-hosted.com/en/stable/
 [docs-badge]:                   https://readthedocs.com/projects/drbarnabus-dactools/badge/?version=stable&token=7071953b0821b7c66c10e181c6ba48f5d84924781173f7d9b570de1cbd03a687
-[docs-pre]:                     https://drbarnabus-dactools.readthedocs-hosted.com/en/latest/
-[docs-pre-badge]:               https://readthedocs.com/projects/drbarnabus-dactools/badge/?version=latest&token=7071953b0821b7c66c10e181c6ba48f5d84924781173f7d9b570de1cbd03a687
+[docs-pre]:                     https://drbarnabus-dactools.readthedocs-hosted.com/en/develop/
+[docs-pre-badge]:               https://readthedocs.com/projects/drbarnabus-dactools/badge/?version=develop&token=7071953b0821b7c66c10e181c6ba48f5d84924781173f7d9b570de1cbd03a687
 [gh-rel]:                       https://github.com/DrBarnabus/DacTools/releases/latest
 [gh-rel-badge]:                 https://img.shields.io/github/release/DrBarnabus/DacTools.svg
 [az-pipeline-master-badge]:     https://dev.azure.com/DrBarnabus/DacTools/_apis/build/status/DrBarnabus.DacTools?branchName=master
