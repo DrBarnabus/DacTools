@@ -45,13 +45,16 @@ Setup<BuildParameters>(context =>
         parameters.Configuration,
         parameters.Target);
 
-    Information("Repository Info: IsMainRepo {0}, IsMasterBranch {1}, IsReleaseBranch {2}, IsDevelopBranch {3}, IsTagged {4}, IsPullRequest: {5}",
+    Information("Repository Info: IsMainRepo {0}, IsMasterBranch {1}, IsReleaseBranch {2}, IsDevelopBranch {3}, IsTagged {4}, IsPullRequest: {5}, IsStableRelase {6}, IsPreviewRelease {7}, IsBetaRelease {8}",
         parameters.IsMainRepo,
         parameters.IsMasterBranch,
         parameters.IsReleaseBranch,
         parameters.IsDevelopBranch,
         parameters.IsTagged,
-        parameters.IsPullRequest);
+        parameters.IsPullRequest,
+        parameters.IsStableRelase(),
+        parameters.IsPreviewRelease(),
+        parameters.IsBetaRelease());
 
     return parameters;
 });
@@ -62,13 +65,16 @@ Teardown<BuildParameters>((context, parameters) =>
     {
         Information("Starting Teardown...");
 
-        Information("Repository Info: IsMainRepo {0}, IsMasterBranch {1}, IsReleaseBranch {2}, IsDevelopBranch {3}, IsTagged {4}, IsPullRequest: {5}",
+        Information("Repository Info: IsMainRepo {0}, IsMasterBranch {1}, IsReleaseBranch {2}, IsDevelopBranch {3}, IsTagged {4}, IsPullRequest: {5}, IsStableRelase {6}, IsPreviewRelease {7}, IsBetaRelease {8}",
             parameters.IsMainRepo,
             parameters.IsMasterBranch,
             parameters.IsReleaseBranch,
             parameters.IsDevelopBranch,
             parameters.IsTagged,
-            parameters.IsPullRequest);
+            parameters.IsPullRequest,
+            parameters.IsStableRelase(),
+            parameters.IsPreviewRelease(),
+            parameters.IsBetaRelease());
 
         Information("Finished running tasks.");
     }
