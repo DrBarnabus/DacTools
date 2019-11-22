@@ -3,12 +3,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using DacTools.Deployment.Core.Common;
+using DacTools.Deployment.Core.AsyncTasks;
 using DacTools.Deployment.Core.Tests.TestInfrastructure;
 using Shouldly;
 using Xunit;
 
-namespace DacTools.Deployment.Core.Tests.Common
+namespace DacTools.Deployment.Core.Tests.AsyncTasks
 {
     public class AsyncTaskRunnerTests
     {

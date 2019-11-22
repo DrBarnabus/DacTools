@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace DacTools.Deployment.Core.Common
+namespace DacTools.Deployment.Core.AsyncTasks
 {
     public class AsyncTaskRunner<TAsyncTask> where TAsyncTask : IAsyncTask
     {

@@ -1,7 +1,7 @@
 // Copyright (c) 2019 DrBarnabus
 
 using System.Threading;
-using DacTools.Deployment.Core.Common;
+using DacTools.Deployment.Core.AsyncTasks;
 
 namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 {

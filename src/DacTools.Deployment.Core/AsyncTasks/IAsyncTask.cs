@@ -2,7 +2,7 @@
 
 using System.Threading;
 
-namespace DacTools.Deployment.Core.Common
+namespace DacTools.Deployment.Core.AsyncTasks
 {
     public interface IAsyncTask
     {
