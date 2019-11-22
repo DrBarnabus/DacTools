@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.DatabaseListGenerators;
 using DacTools.Deployment.Core.Logging;
 using Microsoft.Data.SqlClient;
