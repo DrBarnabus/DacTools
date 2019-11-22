@@ -12,6 +12,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
 {
     public class AsyncTaskRunnerTests
     {
+        private readonly object _lock = new object();
+
         [Theory]
         [InlineData(1, 1)]
         [InlineData(1, 10)]
@@ -25,7 +27,13 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             for (int i = 0; i < taskCount; i++)
             {
                 testAsyncTaskStatuses.Add(i, false);
-                asyncTaskRunner.AddTask(new TestAsyncTask(i, task => { testAsyncTaskStatuses[task.TaskId] = true; }));
+                asyncTaskRunner.AddTask(new TestAsyncTask(i, task =>
+                {
+                    lock (_lock)
+                    {
+                        testAsyncTaskStatuses[task.TaskId] = true;
+                    }
+                }));
             }
 
             // Act

@@ -10,7 +10,7 @@ namespace DacTools.Deployment.Core.AsyncTasks
     {
         public AsyncTaskRunner(int maxDegreeOfParallelism, CancellationToken cancellationToken)
         {
-            ActionBlock = new ActionBlock<TAsyncTask>(at => at.RunAsync(cancellationToken), new ExecutionDataflowBlockOptions
+            ActionBlock = new ActionBlock<TAsyncTask>(async at => await at.Run(cancellationToken), new ExecutionDataflowBlockOptions
             {
                 MaxDegreeOfParallelism = maxDegreeOfParallelism,
                 CancellationToken = cancellationToken

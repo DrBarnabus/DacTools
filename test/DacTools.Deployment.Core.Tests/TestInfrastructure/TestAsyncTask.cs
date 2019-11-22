@@ -1,7 +1,9 @@
 // Copyright (c) 2019 DrBarnabus
 
 using System.Threading;
+using System.Threading.Tasks;
 using DacTools.Deployment.Core.AsyncTasks;
+using DacTools.Deployment.Core.DatabaseListGenerators;
 
 namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 {
@@ -19,8 +21,13 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 
         public int TaskId { get; }
 
-        public void RunAsync(CancellationToken cancellationToken)
+        public void Setup(DatabaseInfo databaseInfo, AsyncTaskBase.ProgressUpdateDelegate progressUpdate)
         {
+        }
+
+        public async Task Run(CancellationToken cancellationToken)
+        {
+            await Task.Delay(10, cancellationToken);
             _asyncTaskCompleted(this);
         }
     }

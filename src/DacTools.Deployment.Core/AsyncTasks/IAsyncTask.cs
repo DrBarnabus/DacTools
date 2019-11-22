@@ -1,11 +1,14 @@
 // Copyright (c) 2019 DrBarnabus
 
 using System.Threading;
+using System.Threading.Tasks;
+using DacTools.Deployment.Core.DatabaseListGenerators;
 
 namespace DacTools.Deployment.Core.AsyncTasks
 {
     public interface IAsyncTask
     {
-        void RunAsync(CancellationToken cancellationToken);
+        void Setup(DatabaseInfo databaseInfo, AsyncTaskBase.ProgressUpdateDelegate progressUpdate);
+        Task Run(CancellationToken cancellationToken);
     }
 }
