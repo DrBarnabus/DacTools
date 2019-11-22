@@ -1,5 +1,6 @@
 // Copyright (c) 2019 DrBarnabus
 
+using DacTools.Deployment.Core.AsyncTasks;
 using DacTools.Deployment.Core.BuildServers;
 using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.DatabaseListGenerators;
@@ -21,12 +22,18 @@ namespace DacTools.Deployment.Core
             services.AddSingleton<IDacPacDeployer, DacPacDeployer>();
 
             RegisterDatabaseListGenerators(services);
+            RegisterAsyncTaskFactories(services);
         }
 
         private static void RegisterDatabaseListGenerators(IServiceCollection services)
         {
             services.AddSingleton<IWhitelistDatabaseListGenerator, WhitelistDatabaseListGenerator>();
             services.AddSingleton<IBlacklistDatabaseListGenerator, BlacklistDatabaseListGenerator>();
+        }
+
+        private static void RegisterAsyncTaskFactories(IServiceCollection services)
+        {
+            services.AddSingleton<IAsyncTaskFactory<DacPacDeployAsyncTask>, AsyncTaskFactory<DacPacDeployAsyncTask>>();
         }
     }
 }

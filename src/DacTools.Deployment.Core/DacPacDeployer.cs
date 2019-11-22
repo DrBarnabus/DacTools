@@ -15,14 +15,16 @@ namespace DacTools.Deployment.Core
     {
         private readonly Arguments _arguments;
         private readonly IBuildServerResolver _buildServerResolver;
+        private readonly IAsyncTaskFactory<DacPacDeployAsyncTask> _dacPacDeployAsyncTaskFactory;
         private readonly ILog _log;
 
         private readonly object _lock = new object();
 
-        public DacPacDeployer(ILog log, IBuildServerResolver buildServerResolver, IOptions<Arguments> arguments)
+        public DacPacDeployer(ILog log, IBuildServerResolver buildServerResolver, IOptions<Arguments> arguments, IAsyncTaskFactory<DacPacDeployAsyncTask> dacPacDeployAsyncTaskFactory)
         {
             _log = log;
             _buildServerResolver = buildServerResolver;
+            _dacPacDeployAsyncTaskFactory = dacPacDeployAsyncTaskFactory;
             _arguments = arguments.Value;
         }
 
@@ -30,23 +32,26 @@ namespace DacTools.Deployment.Core
         {
             var buildServer = _buildServerResolver.Resolve();
 
+            // ReSharper disable once InconsistentlySynchronizedField
             _log.Debug("Starting DacPac Deployment Tasks with {0} {1}.", _arguments.Threads, _arguments.Threads == 1 ? "thread" : "threads");
 
             int completedTasks = 0;
             int totalTasks = databases.Count;
-            var asyncTaskRunner = new AsyncTaskRunner<DacDeployAsyncTask>(_arguments.Threads, cancellationToken);
+            var asyncTaskRunner = new AsyncTaskRunner<DacPacDeployAsyncTask>(_arguments.Threads, cancellationToken);
             foreach (var database in databases)
             {
-                var dacDeployAsyncTask = new DacDeployAsyncTask(_log, _arguments, database, result =>
+                var dacPacDeployAsyncTask = _dacPacDeployAsyncTaskFactory.CreateAsyncTask();
+                dacPacDeployAsyncTask.Setup(database, (task, successful, elapsedMilliseconds) =>
                 {
                     lock (_lock)
                     {
                         completedTasks++;
-                        buildServer?.GenerateSetProgressMessage(completedTasks, totalTasks, "DacPac Deployment Progress");
+                        _log.Debug("Completed {0} out of {1} tasks.", completedTasks, totalTasks);
+                        buildServer?.GenerateSetProgressMessage(completedTasks, totalTasks, "Progress Update");
                     }
                 });
 
-                asyncTaskRunner.AddTask(dacDeployAsyncTask);
+                asyncTaskRunner.AddTask(dacPacDeployAsyncTask);
             }
 
             await asyncTaskRunner.WaitForCompletion();
