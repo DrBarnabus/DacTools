@@ -22,9 +22,12 @@ namespace DacTools.Deployment
             _versionWriter.WriteTo(Assembly.GetExecutingAssembly(), v => version = v);
 
             string message = "DacTools.Deployment v" + version + @"
-Used to deploy dacpac files to SQL Server. This tool has the ability to deploy a dacpac to multiple databases simultaniously.
+DacTools.Deployment is a tool that can be used to deploy DacPac files to Microsoft SQL Server. This tool expands upon DacFx by providing the ability to run multiple deployments to multiple databases simultaniously in parallel.
 
-DacTools.Deployment [options...]
+<Application> [options...]
+
+    <Application>                   The name of this Application, such as DacTools.Deployment.exe.
+    [options...]                    Any of the below options you want to add as command line arguments.
 
     /version                        Displays the current version of DacTools.Deployment
     /help, /h or /?                 Shows this Help Text
