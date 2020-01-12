@@ -8,6 +8,7 @@ using DacTools.Deployment.Core;
 using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Logging;
 using DacTools.Deployment.Extensions;
+using Microsoft.SqlServer.Dac;
 
 namespace DacTools.Deployment
 {
@@ -115,10 +116,93 @@ namespace DacTools.Deployment
                     continue;
                 }
 
+                if (name.IsParameter("BlockOnPossibleDataLoss"))
+                {
+                    arguments.DacDeployOptions.BlockOnPossibleDataLoss = ParseBooleanParameter(values, false);
+                    continue;
+                }
+
+                if (name.IsParameter("DropIndexesNotInSource"))
+                {
+                    arguments.DacDeployOptions.DropIndexesNotInSource = ParseBooleanParameter(values, false);
+                    continue;
+                }
+
+                if (name.IsParameter("IgnorePermissions"))
+                {
+                    arguments.DacDeployOptions.IgnorePermissions = ParseBooleanParameter(values, true);
+                    continue;
+                }
+
+                if (name.IsParameter("IgnoreRoleMembership"))
+                {
+                    arguments.DacDeployOptions.IgnoreRoleMembership = ParseBooleanParameter(values, true);
+                    continue;
+                }
+
+                if (name.IsParameter("GenerateSmartDefaults"))
+                {
+                    arguments.DacDeployOptions.GenerateSmartDefaults = ParseBooleanParameter(values, true);
+                    continue;
+                }
+
+                if (name.IsParameter("DropObjectsNotInSource"))
+                {
+                    arguments.DacDeployOptions.DropObjectsNotInSource = ParseBooleanParameter(values, true);
+                    continue;
+                }
+
+                if (name.IsParameter("DoNotDropObjectTypes"))
+                {
+                    if (values != null && values.Any())
+                    {
+                        var temporaryObjectTypes = new List<ObjectType>();
+                        foreach (string v in values)
+                        {
+                            if (!v.Contains(","))
+                            {
+                                if (Enum.TryParse<ObjectType>(v, true, out var result))
+                                    temporaryObjectTypes.Add(result);
+                                else
+                                    throw new ArgumentParsingException($"Could not parse ObjectType value of '{v}'.");
+                            }
+                            else
+                                foreach (string subValue in v.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                                {
+                                    if (Enum.TryParse<ObjectType>(subValue, true, out var result))
+                                        temporaryObjectTypes.Add(result);
+                                    else
+                                        throw new ArgumentParsingException($"Could not parse ObjectType value of '{subValue}'.");
+                                }
+                        }
+
+                        arguments.DacDeployOptions.DoNotDropObjectTypes = temporaryObjectTypes.ToArray();
+                    }
+
+                    continue;
+                }
+
                 throw new ArgumentParsingException($"Could not parse command line parameter '{name}'.");
             }
 
             return arguments;
+        }
+
+        private static bool ParseBooleanParameter(IReadOnlyList<string> values, bool defaultValue)
+        {
+            EnsureArgumentValueCount(values);
+            string value = values?.FirstOrDefault();
+
+            if (value is null)
+                return defaultValue;
+
+            if (value.IsFalse())
+                return false;
+
+            if (value.IsTrue())
+                return true;
+
+            throw new InvalidOperationException($"Could not parse Boolean Parameter Value of '{value}'.");
         }
 
         private static void EnsureArgumentValueCount(IReadOnlyList<string> values, int maxArguments = 1)

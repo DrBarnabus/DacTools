@@ -28,7 +28,7 @@ namespace DacTools.Deployment.Extensions
         public static bool IsSwitchArgument(this string value) =>
             value != null
             && (value.StartsWith("-") || value.StartsWith("/"))
-            && !Regex.Match(value, @"/\w+:").Success;
+            && !Regex.Match(value, @"(-/)\w+:").Success;
 
         public static bool IsSwitch(this string value, string switchName)
         {
@@ -42,6 +42,20 @@ namespace DacTools.Deployment.Extensions
                 value = value.Substring(1);
 
             return string.Equals(switchName, value, switchName.Length == 1 ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool IsParameter(this string value, string parameterName)
+        {
+            if (value == null)
+                return false;
+
+            if (value.StartsWith("-p:"))
+                value = value.Substring(3);
+
+            if (value.StartsWith("/"))
+                value = value.Substring(3);
+
+            return string.Equals(parameterName, value, StringComparison.OrdinalIgnoreCase);
         }
 
         public static bool IsHelp(this string singleArgument) =>

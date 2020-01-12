@@ -38,6 +38,7 @@ namespace DacTools.Deployment.Tests
             // Assert
             typeof(Arguments).GetFields()
                 .Select(f => f.Name)
+                .Where(f =>  f != "DacDeployOptions")
                 .Where(f =>
                 {
                     lookup.ContainsKey(f).ShouldBeTrue();

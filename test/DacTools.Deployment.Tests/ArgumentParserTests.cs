@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Logging;
+using Microsoft.SqlServer.Dac;
 using Shouldly;
 using Xunit;
 
@@ -223,6 +224,172 @@ namespace DacTools.Deployment.Tests
             var argumentParser = new ArgumentParser();
             Should.Throw<ArgumentParsingException>(() => argumentParser.ParseArguments(arguments))
                 .Message.ShouldBe(exceptionMessage);
+        }
+
+        [Theory]
+        [InlineData("/p:BlockOnPossibleDataLoss", false)]
+        [InlineData("/p:BlockOnPossibleDataLoss false", false)]
+        [InlineData("/p:BlockOnPossibleDataLoss true", true)]
+        [InlineData("-p:BlockOnPossibleDataLoss", false)]
+        [InlineData("-p:BlockOnPossibleDataLoss false", false)]
+        [InlineData("-p:BlockOnPossibleDataLoss true", true)]
+        public void ShouldSetDacDeployOptionsBlockOnPossibleDataLoss(string arguments, bool expectedValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.BlockOnPossibleDataLoss.ShouldBe(expectedValue);
+        }
+
+        [Theory]
+        [InlineData("/p:DropIndexesNotInSource", false)]
+        [InlineData("/p:DropIndexesNotInSource false", false)]
+        [InlineData("/p:DropIndexesNotInSource true", true)]
+        [InlineData("-p:DropIndexesNotInSource", false)]
+        [InlineData("-p:DropIndexesNotInSource false", false)]
+        [InlineData("-p:DropIndexesNotInSource true", true)]
+        public void ShouldSetDacDeployOptionsDropIndexesNotInSource(string arguments, bool expectedValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.DropIndexesNotInSource.ShouldBe(expectedValue);
+        }
+
+        [Theory]
+        [InlineData("/p:IgnorePermissions", true)]
+        [InlineData("/p:IgnorePermissions false", false)]
+        [InlineData("/p:IgnorePermissions true", true)]
+        [InlineData("-p:IgnorePermissions", true)]
+        [InlineData("-p:IgnorePermissions false", false)]
+        [InlineData("-p:IgnorePermissions true", true)]
+        public void ShouldSetDacDeployOptionsIgnorePermissions(string arguments, bool expectedValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.IgnorePermissions.ShouldBe(expectedValue);
+        }
+
+        [Theory]
+        [InlineData("/p:IgnoreRoleMembership", true)]
+        [InlineData("/p:IgnoreRoleMembership false", false)]
+        [InlineData("/p:IgnoreRoleMembership true", true)]
+        [InlineData("-p:IgnoreRoleMembership", true)]
+        [InlineData("-p:IgnoreRoleMembership false", false)]
+        [InlineData("-p:IgnoreRoleMembership true", true)]
+        public void ShouldSetDacDeployOptionsIgnoreRoleMembership(string arguments, bool expectedValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.IgnoreRoleMembership.ShouldBe(expectedValue);
+        }
+
+        [Theory]
+        [InlineData("/p:GenerateSmartDefaults", true)]
+        [InlineData("/p:GenerateSmartDefaults false", false)]
+        [InlineData("/p:GenerateSmartDefaults true", true)]
+        [InlineData("-p:GenerateSmartDefaults", true)]
+        [InlineData("-p:GenerateSmartDefaults false", false)]
+        [InlineData("-p:GenerateSmartDefaults true", true)]
+        public void ShouldSetDacDeployOptionsGenerateSmartDefaults(string arguments, bool expectedValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.GenerateSmartDefaults.ShouldBe(expectedValue);
+        }
+
+        [Theory]
+        [InlineData("/p:DropObjectsNotInSource", true)]
+        [InlineData("/p:DropObjectsNotInSource false", false)]
+        [InlineData("/p:DropObjectsNotInSource true", true)]
+        [InlineData("-p:DropObjectsNotInSource", true)]
+        [InlineData("-p:DropObjectsNotInSource false", false)]
+        [InlineData("-p:DropObjectsNotInSource true", true)]
+        public void ShouldSetDacDeployOptionsDropObjectsNotInSource(string arguments, bool expectedValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.DropObjectsNotInSource.ShouldBe(expectedValue);
+        }
+        public static IEnumerable<object[]> CorrectDacDeployOptionsDoNotDropObjectTypesValues(string switchStart) =>
+            new List<object[]>
+            {
+                new object[] { $"{switchStart}", new[] { ObjectType.Logins, ObjectType.Users, ObjectType.Permissions, ObjectType.RoleMembership, ObjectType.Filegroups } },
+                new object[] { $"{switchStart} Logins", new[] { ObjectType.Logins } },
+                new object[] { $"{switchStart} Logins Users", new[] { ObjectType.Logins, ObjectType.Users } },
+                new object[] { $"{switchStart} Logins,Users", new[] { ObjectType.Logins, ObjectType.Users } }
+            };
+
+        [Theory]
+        [MemberData(nameof(CorrectDacDeployOptionsDoNotDropObjectTypesValues), "/p:DoNotDropObjectTypes")]
+        [MemberData(nameof(CorrectDacDeployOptionsDoNotDropObjectTypesValues), "-p:DoNotDropObjectTypes")]
+        public void ShouldSetTheCorrectDacDeployOptionsDoNotDropObjectTypesValues(string arguments, ObjectType[] expectedValues)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.DoNotDropObjectTypes.Length.ShouldBe(expectedValues.Length);
+            result.DacDeployOptions.DoNotDropObjectTypes.ShouldBe(expectedValues);
+        }
+
+        [Theory]
+        [InlineData("/p:DoNotDropObjectTypes invalid")]
+        [InlineData("/p:DoNotDropObjectTypes Users invalid")]
+        [InlineData("/p:DoNotDropObjectTypes Users,invalid")]
+        [InlineData("-p:DoNotDropObjectTypes invalid")]
+        [InlineData("-p:DoNotDropObjectTypes Users invalid")]
+        [InlineData("-p:DoNotDropObjectTypes Users,invalid")]
+        public void ShouldThrowAArgumentParsingExceptionWhenTheObjectTypeValueCannotBeProcessed(string arguments)
+        {
+            var argumentParser = new ArgumentParser();
+            Should.Throw<ArgumentParsingException>(() => argumentParser.ParseArguments(arguments))
+                .Message.ShouldBe("Could not parse ObjectType value of 'invalid'.");
         }
 
         [Fact]
