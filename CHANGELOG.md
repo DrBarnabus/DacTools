@@ -1,3 +1,17 @@
+# [0.2.0](https://github.com/DrBarnabus/DacTools/compare/v0.1.0...v0.2.0) (2020-01-12)
+
+
+### Bug Fixes
+
+* **deployment:** updated HelpWriter with updated Help Text ([d8ee2c3](https://github.com/DrBarnabus/DacTools/commit/d8ee2c3d14490f301f3b8f4a7778424516e3bc49)), closes [#3](https://github.com/DrBarnabus/DacTools/issues/3)
+
+
+### Features
+
+* **deployment:** added command line parameters to configure DacDelpoyOptions sent to Microsoft DacServices ([3b56e1b](https://github.com/DrBarnabus/DacTools/commit/3b56e1b37175266e065378f628e6639a12747402)), closes [#1](https://github.com/DrBarnabus/DacTools/issues/1)
+
+
+
 # 0.1.0 (2019-11-21)
 
 
