@@ -1,14 +1,14 @@
 // Copyright (c) 2020 DrBarnabus
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using DacTools.Deployment.Core.AsyncTasks;
 using DacTools.Deployment.Core.DatabaseListGenerators;
 using DacTools.Deployment.Core.Logging;
 using DacTools.Deployment.Core.Tests.TestInfrastructure;
 using Moq;
 using Shouldly;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DacTools.Deployment.Core.Tests.AsyncTasks

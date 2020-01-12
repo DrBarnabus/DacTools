@@ -351,6 +351,7 @@ namespace DacTools.Deployment.Tests
             result.DatabaseNames.ShouldBeEmpty();
             result.DacDeployOptions.DropObjectsNotInSource.ShouldBe(expectedValue);
         }
+
         public static IEnumerable<object[]> CorrectDacDeployOptionsDoNotDropObjectTypesValues(string switchStart) =>
             new List<object[]>
             {

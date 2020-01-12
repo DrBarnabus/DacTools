@@ -158,7 +158,6 @@ namespace DacTools.Deployment
                     {
                         var temporaryObjectTypes = new List<ObjectType>();
                         foreach (string v in values)
-                        {
                             if (!v.Contains(","))
                             {
                                 if (Enum.TryParse<ObjectType>(v, true, out var result))
@@ -167,14 +166,13 @@ namespace DacTools.Deployment
                                     throw new ArgumentParsingException($"Could not parse ObjectType value of '{v}'.");
                             }
                             else
-                                foreach (string subValue in v.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                                {
+                            {
+                                foreach (string subValue in v.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                                     if (Enum.TryParse<ObjectType>(subValue, true, out var result))
                                         temporaryObjectTypes.Add(result);
                                     else
                                         throw new ArgumentParsingException($"Could not parse ObjectType value of '{subValue}'.");
-                                }
-                        }
+                            }
 
                         arguments.DacDeployOptions.DoNotDropObjectTypes = temporaryObjectTypes.ToArray();
                     }

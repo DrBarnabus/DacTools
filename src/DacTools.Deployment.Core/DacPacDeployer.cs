@@ -16,9 +16,9 @@ namespace DacTools.Deployment.Core
         private readonly Arguments _arguments;
         private readonly IBuildServerResolver _buildServerResolver;
         private readonly IAsyncTaskFactory<DacPacDeployAsyncTask> _dacPacDeployAsyncTaskFactory;
-        private readonly ILog _log;
 
         private readonly object _lock = new object();
+        private readonly ILog _log;
 
         public DacPacDeployer(ILog log, IBuildServerResolver buildServerResolver, IOptions<Arguments> arguments, IAsyncTaskFactory<DacPacDeployAsyncTask> dacPacDeployAsyncTaskFactory)
         {

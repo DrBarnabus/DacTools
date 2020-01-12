@@ -8,12 +8,8 @@ namespace DacTools.Deployment.Core
 {
     public class Arguments
     {
-        public Arguments()
-        {
-            SetDefaultDacDeployOptions();
-        }
-
         public readonly ISet<string> DatabaseNames = new HashSet<string>();
+        public DacDeployOptions DacDeployOptions;
 
         public string DacPacFilePath;
         public bool IsBlacklist;
@@ -22,7 +18,11 @@ namespace DacTools.Deployment.Core
         public LogLevel LogLevel = LogLevel.Info;
         public string MasterConnectionString;
         public int Threads;
-        public DacDeployOptions DacDeployOptions;
+
+        public Arguments()
+        {
+            SetDefaultDacDeployOptions();
+        }
 
         public void AddDatabaseName(string databaseName) => DatabaseNames.Add(databaseName);
 
