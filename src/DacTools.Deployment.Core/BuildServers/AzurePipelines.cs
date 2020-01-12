@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 DrBarnabus
+﻿// Copyright (c) 2020 DrBarnabus
 
 using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;

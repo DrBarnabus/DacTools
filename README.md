@@ -29,7 +29,7 @@ DacTools.Deployment currently makes use of Microsoft.SqlServer.DACFx v150.x and 
 
 Licensed under [MIT](./LICENSE)
 
-Copyright (c) 2019 DrBarnabus
+Copyright (c) 2020 DrBarnabus
 
 **Notice**: This isn't an official Microsoft repository or tool, this is an open source project designed to assist in deploying dacpac Data-teir Applications.
 

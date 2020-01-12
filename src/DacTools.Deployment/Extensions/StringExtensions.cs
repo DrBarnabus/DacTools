@@ -1,4 +1,4 @@
-// Copyright (c) 2019 DrBarnabus
+// Copyright (c) 2020 DrBarnabus
 
 using System;
 using System.IO;
