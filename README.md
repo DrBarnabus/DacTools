@@ -15,7 +15,7 @@ It was originally designed for use in Multi-Tenant scenarios where you may have 
 
 ## Compatibility
 
-DacTools.Deployment works on Windows, Linux and Mac. It is supported on .NET Core 3.0 and 2.1 as well as .NET Framework 4.7.2+.
+DacTools.Deployment works on Windows, Linux and Mac. It is supported on .NET Core 3.1 and 2.1 as well as .NET Framework 4.7.2+.
 
 DacTools.Deployment currently makes use of Microsoft.SqlServer.DACFx v150.x and as such it can target SQL Server 2008, 2008R2, 2012, 2014, 2016, 2017, 2019 and Microsoft Azure SQL Databases.
 

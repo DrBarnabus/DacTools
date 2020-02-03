@@ -52,7 +52,7 @@ namespace DacTools.Deployment.Extensions
             if (value.StartsWith("-p:"))
                 value = value.Substring(3);
 
-            if (value.StartsWith("/"))
+            if (value.StartsWith("/p:"))
                 value = value.Substring(3);
 
             return string.Equals(parameterName, value, StringComparison.OrdinalIgnoreCase);

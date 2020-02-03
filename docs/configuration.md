@@ -37,3 +37,43 @@ Configures the application to use the value of the '/databases' or '/D' option a
 ### /threads or /t
 
 Configures the maximum number of threads to use while deploying the dacpac to the databases. Deployments will be run in parallel up till the specified number of threads concurrently. If set to -1 then the value of `Environment.ProcessorCount` will be used instead. The default value if not set is 1.
+
+## DacDeploymentOptions Arguments
+
+A number of parameters are supported to customize the DacDeploymentOptions that are passed into DacServices by the DacTools.Deployment tool.
+
+All of these parameters can be set by passing the name of the argument as well as the desired value/values via the command line. These parameters should be prefixed with either -p: or /p:, for example to set the BlockOnPossibleDataLoss option to true you would add the following argument to the command line: `-p:BlockOnPossibleDataLoss true`.
+
+The members of [DacDeployOptions](https://docs.microsoft.com/en-us/dotnet/api/microsoft.sqlserver.dac.dacdeployoptions) which are currently serviced are listed below along with their default values. If an option parameter is not currently serviced and isn't listed below, create a feature request or feel free to submit a pull request adding the option.
+
+### BlockOnPossibleDataLoss
+
+Defaults to false.
+
+### DropIndexesNotInSource
+
+Defaults to false.
+
+### IgnorePermissions
+
+Defaults to true.
+
+### IgnoreRoleMembership
+
+Defaults to true.
+
+### GenerateSmartDefaults
+
+Defaults to true.
+
+### DropObjectsNotInSource
+
+Defaults to true.
+
+### DoNotDropObjectTypes
+
+Accepts a list of values in the [ObjectType](https://docs.microsoft.com/en-us/dotnet/api/microsoft.sqlserver.dac.objecttype) enum. Defaults to; `ObjectType.Logins`, `ObjectType.Users`, `ObjectType.Permissions`, `ObjectType.RoleMembership`, `ObjectType.Filegroups`.
+
+### CommandTimeout
+
+This option **cannot** be set via the command line arguments. However, this is set to 0 for an infinate timeout by default.
