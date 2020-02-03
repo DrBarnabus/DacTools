@@ -17,7 +17,7 @@ public class BuildPaths
         var artifactsDir = (DirectoryPath)(context.Directory("./artifacts") + context.Directory("v" + semVersion));
         var artifactsBinDir = artifactsDir.Combine("bin");
         var artifactsBinCoreFx21Dir = artifactsBinDir.Combine(parameters.CoreFxVersion21);
-        var artifactsBinCoreFx30Dir = artifactsBinDir.Combine(parameters.CoreFxVersion30);
+        var artifactsBinCoreFx31Dir = artifactsBinDir.Combine(parameters.CoreFxVersion31);
         var artifactsBinFullFx472Dir = artifactsBinDir.Combine(parameters.FullFxVersion472);
 
         var nativeDir = artifactsDir.Combine("native");
@@ -29,7 +29,7 @@ public class BuildPaths
             artifactsDir,
             artifactsBinDir,
             artifactsBinCoreFx21Dir,
-            artifactsBinCoreFx30Dir,
+            artifactsBinCoreFx31Dir,
             artifactsBinFullFx472Dir,
             nativeDir,
             buildArtifactDir,
@@ -48,7 +48,7 @@ public class BuildDirectories
     public DirectoryPath Artifacts { get; private set; }
     public DirectoryPath ArtifactsBin { get; private set; }
     public DirectoryPath ArtifactsBinCoreFx21 { get; private set; }
-    public DirectoryPath ArtifactsBinCoreFx30 { get; private set; }
+    public DirectoryPath ArtifactsBinCoreFx31 { get; private set; }
     public DirectoryPath ArtifactsBinFullFx472 { get; private set; }
     public DirectoryPath Native { get; private set; }
     public DirectoryPath BuildArtifact { get; private set; }
@@ -60,7 +60,7 @@ public class BuildDirectories
         DirectoryPath artifactsDir,
         DirectoryPath artifactsBinDir,
         DirectoryPath artifactsBinCoreFx21Dir,
-        DirectoryPath artifactsBinCoreFx30Dir,
+        DirectoryPath artifactsBinCoreFx31Dir,
         DirectoryPath artifactsBinFullFx472Dir,
         DirectoryPath nativeDir,
         DirectoryPath buildArtifactDir,
@@ -69,7 +69,7 @@ public class BuildDirectories
         Artifacts = artifactsDir;
         ArtifactsBin = artifactsBinDir;
         ArtifactsBinCoreFx21 = artifactsBinCoreFx21Dir;
-        ArtifactsBinCoreFx30 = artifactsBinCoreFx30Dir;
+        ArtifactsBinCoreFx31 = artifactsBinCoreFx31Dir;
         ArtifactsBinFullFx472 = artifactsBinFullFx472Dir;
         Native = nativeDir;
         BuildArtifact = buildArtifactDir;
@@ -78,7 +78,7 @@ public class BuildDirectories
             Artifacts,
             ArtifactsBin,
             ArtifactsBinCoreFx21,
-            ArtifactsBinCoreFx30,
+            ArtifactsBinCoreFx31,
             ArtifactsBinFullFx472,
             Native,
             BuildArtifact,

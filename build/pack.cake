@@ -50,7 +50,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does<BuildParameters>(parameters =>
     {
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion30 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -144,7 +144,7 @@ Task("Pack-Prepare")
 
             var settings = new DotNetCorePublishSettings
             {
-                Framework = parameters.CoreFxVersion30,
+                Framework = parameters.CoreFxVersion31,
                 Runtime = runtimeName,
                 NoRestore = false,
                 Configuration = parameters.Configuration,
@@ -160,7 +160,7 @@ Task("Pack-Prepare")
             DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion30 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -211,7 +211,7 @@ Task("GZip-Files")
             GZipCompress(sourceDir, tarFile);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion30 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -236,7 +236,7 @@ Task("Zip-Files")
             ZipCompress(sourceDir, tarFile);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion30 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
