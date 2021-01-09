@@ -50,7 +50,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does<BuildParameters>(parameters =>
     {
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -107,26 +107,6 @@ Task("Test")
     {
         var error = (exception as AggregateException).InnerExceptions[0];
         Error(error.Dump());
-    })
-    .Finally(() =>
-    {
-        var parameters = Context.Data.Get<BuildParameters>();
-
-        if (parameters.IsRunningOnAzurePipelines)
-        {
-            var testResultsFiles = GetFiles(parameters.Paths.Directories.TestResultsOutput + "/*.results.xml");
-            if (testResultsFiles.Any())
-            {
-                var data = new TFBuildPublishTestResultsData
-                {
-                    TestRunTitle = $"Tests_{parameters.Configuration}_{parameters.PlatformFamily.ToString()}",
-                    TestResultsFiles = testResultsFiles.ToArray(),
-                    TestRunner = TFTestRunnerType.VSTest
-                };
-
-                TFBuild.Commands.PublishTestResults(data);
-            }
-        }
     });
 
 #endregion
@@ -137,18 +117,17 @@ Task("Pack-Prepare")
     .IsDependentOn("Test")
     .Does<BuildParameters>(parameters =>
     {
-        // Publish Single File for all Native Runtimes (self-contained)
-        foreach (var runtime in parameters.NativeRuntimes)
+        var platform = Context.Environment.Platform.Family;
+        var runtimes = parameters.NativeRuntimes[platform];
+        foreach (var runtime in runtimes)
         {
-            var runtimeName = runtime.Value;
-
             var settings = new DotNetCorePublishSettings
             {
-                Framework = parameters.CoreFxVersion31,
-                Runtime = runtimeName,
+                Framework = parameters.NetVersion50,
+                Runtime = runtime,
                 NoRestore = false,
                 Configuration = parameters.Configuration,
-                OutputDirectory = parameters.Paths.Directories.Native.Combine(runtimeName),
+                OutputDirectory = parameters.Paths.Directories.Native.Combine(runtime),
                 MSBuildSettings = parameters.MSBuildSettings
             };
 
@@ -160,7 +139,7 @@ Task("Pack-Prepare")
             DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -199,53 +178,38 @@ Task("Pack-NuGet")
         DotNetCorePack("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
     });
 
-Task("GZip-Files")
-    .IsDependentOn("Pack-Prepare")
-    .Does<BuildParameters>(parameters =>
-    {
-        foreach (var runtime in parameters.NativeRuntimes)
-        {
-            var sourceDir = parameters.Paths.Directories.Native.Combine(runtime.Value);
-            var fileName = $"dactools-deployment-{runtime.Key}-{parameters.Version.SemVersion}.tar.gz".ToLower();
-            var tarFile = parameters.Paths.Directories.BuildArtifact.CombineWithFilePath(fileName);
-            GZipCompress(sourceDir, tarFile);
-        }
-
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
-        if (parameters.IsRunningOnWindows)
-            frameworks.Add(parameters.FullFxVersion472);
-
-        foreach (var framework in frameworks)
-        {
-            var sourceDir = parameters.Paths.Directories.ArtifactsBin.Combine(framework);
-            var fileName = $"dactools-deployment-{framework}-{parameters.Version.SemVersion}.tar.gz".ToLower();
-            var tarFile = parameters.Paths.Directories.BuildArtifact.CombineWithFilePath(fileName);
-            GZipCompress(sourceDir, tarFile);
-        }
-    });
-
 Task("Zip-Files")
     .IsDependentOn("Pack-Prepare")
     .Does<BuildParameters>(parameters =>
     {
-        foreach (var runtime in parameters.NativeRuntimes)
+        var platform = Context.Environment.Platform.Family;
+        var runtimes = parameters.NativeRuntimes[platform];
+        foreach (var runtime in runtimes)
         {
-            var sourceDir = parameters.Paths.Directories.Native.Combine(runtime.Value);
-            var fileName = $"dactools-deployment-{runtime.Key}-{parameters.Version.SemVersion}.zip".ToLower();
-            var tarFile = parameters.Paths.Directories.BuildArtifact.CombineWithFilePath(fileName);
-            ZipCompress(sourceDir, tarFile);
+            var sourceDir = parameters.Paths.Directories.Native.Combine(platform.ToString().ToLower()).Combine(runtime);
+            var targetDir = parameters.Paths.Directories.ArtifactsNative;
+            EnsureDirectoryExists(targetDir);
+
+            var fileName = $"dactools-deployment-{runtime}-{parameters.Version.SemVersion}.tar.gz".ToLower();
+            var tarFile = targetDir.CombineWithFilePath(fileName);
+            var filePaths = GetFiles($"{sourceDir}/**/*");
+            GZipCompress(sourceDir, tarFile, filePaths);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
         foreach (var framework in frameworks)
         {
             var sourceDir = parameters.Paths.Directories.ArtifactsBin.Combine(framework);
-            var fileName = $"dactools-deployment-{framework}-{parameters.Version.SemVersion}.zip".ToLower();
-            var tarFile = parameters.Paths.Directories.BuildArtifact.CombineWithFilePath(fileName);
-            ZipCompress(sourceDir, tarFile);
+            var targetDir = parameters.Paths.Directories.BuildArtifact;
+            EnsureDirectoryExists(targetDir);
+
+            var fileName = $"dactools-deployment-{framework}-{parameters.Version.SemVersion}.tar.gz".ToLower();
+            var tarFile = targetDir.CombineWithFilePath(fileName);
+            var filePaths = GetFiles($"{sourceDir}/**/*");
+            GZipCompress(sourceDir, tarFile, filePaths);
         }
     });
 

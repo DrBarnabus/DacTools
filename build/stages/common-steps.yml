@@ -3,16 +3,17 @@ steps:
   displayName: 'Use .NET Core SDK 2.1'
   inputs:
     packageType: sdk
-    version: 2.1.803
+    version: 2.1.811
 - task: UseDotNet@2
   displayName: 'Use .NET Core SDK 3.1'
   inputs:
     packageType: sdk
-    version: 3.1.101
-- task: NuGetToolInstaller@0
-  displayName: 'Install NuGet 5.4.0'
+    version: 3.1.404
+- task: UseDotNet@2
+  displayName: 'Use .NET SDK 5.0'
   inputs:
-    versionSpec: 5.4.0
+    packageType: sdk
+    version: 5.0.101
 - task: Bash@3
   displayName: 'Env Vars'
   inputs:

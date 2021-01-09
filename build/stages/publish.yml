@@ -1,3 +1,6 @@
+parameters:
+  oses: ['windows', 'ubuntu', 'macos']
+
 steps:
 - template: common-steps.yml
 - task: DownloadPipelineArtifact@2
@@ -6,6 +9,13 @@ steps:
     source: current
     path: $(Build.SourcesDirectory)
     artifact: storage
+- ${{ each os in parameters.oses }}:
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download ${{os}} native folder'
+    inputs:
+      source: current
+      path: $(Build.SourcesDirectory)/artifacts/native
+      artifact: storage-${{os}}-latest
 - script: dotnet cake build.cake --bootstrap && dotnet cake build.cake --target=Publish
   displayName: 'Publish'
   env:

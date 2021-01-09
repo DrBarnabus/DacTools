@@ -1,17 +1,17 @@
 // Install Modules
-#module nuget:?package=Cake.DotNetTool.Module&version=0.3.1
+#module nuget:?package=Cake.DotNetTool.Module&version=0.4.0
 
 // Install addins.
-#addin "nuget:?package=Cake.Codecov&version=0.7.0"
+#addin "nuget:?package=Cake.Codecov&version=0.9.1"
 #addin "nuget:?package=Cake.Compression&version=0.2.4"
-#addin "nuget:?package=Cake.Coverlet&version=2.3.4"
+#addin "nuget:?package=Cake.Coverlet&version=2.5.1"
 #addin "nuget:?package=Cake.Incubator&version=5.1.0"
 
-#addin "nuget:?package=SharpZipLib&version=1.2.0"
+#addin "nuget:?package=SharpZipLib&version=1.3.1"
 
 // Install .NET Core Global Tools
-#tool "dotnet:?package=Codecov.Tool&version=1.7.2"
-#tool "dotnet:?package=GitVersion.Tool&version=5.0.1"
+#tool "dotnet:?package=Codecov.Tool&version=1.12.3"
+#tool "dotnet:?package=GitVersion.Tool&version=5.6.3"
 
 // Load Other Scripts
 #load "./build/utils/parameters.cake"
@@ -88,7 +88,6 @@ Teardown<BuildParameters>((context, parameters) =>
 Task("Pack")
     .IsDependentOn("Pack-NuGet")
     .IsDependentOn("Zip-Files")
-    .IsDependentOn("GZip-Files")
     .ReportError(exception =>
     {
         Error(exception.Dump());

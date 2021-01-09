@@ -8,3 +8,6 @@ steps:
   displayName: 'Upload pipeline artifacts'
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   artifact: storage
+- publish: $(System.DefaultWorkingDirectory)/artifacts/native
+  displayName: 'Upload native folder'
+  artifact: storage-$(VM_IMAGE)

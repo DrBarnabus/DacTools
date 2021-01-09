@@ -13,6 +13,7 @@ public class BuildParameters
 
     public string CoreFxVersion21 { get; private set; } = "netcoreapp2.1";
     public string CoreFxVersion31 { get; private set; } = "netcoreapp3.1";
+    public string NetVersion50 { get; private set; } = "net5.0";
     public string FullFxVersion472 { get; private set; } = "net472";
 
     public bool EnabledUnitTests { get; private set; }
@@ -40,7 +41,7 @@ public class BuildParameters
     public BuildVersion Version { get; private set; }
     public BuildPaths Paths { get; private set; }
     public string[] Artifacts { get; private set; }
-    public Dictionary<PlatformFamily, string> NativeRuntimes { get; private set; }
+    public Dictionary<PlatformFamily, string[]> NativeRuntimes { get; private set; }
 
     public bool IsStableRelease() => !IsLocalBuild && IsMasterBranch && IsTagged && !IsPullRequest;
     public bool IsPreviewRelease() => !IsLocalBuild && IsReleaseBranch && IsTagged && !IsPullRequest;
@@ -92,14 +93,15 @@ public class BuildParameters
 
         Paths = BuildPaths.GetPaths(context, this);
 
-        var buildArtifacts = context.GetFiles(Paths.Directories.BuildArtifact + "/*.*");
+        var buildArtifacts = context.GetFiles(Paths.Directories.BuildArtifact + "/*.*")
+            + context.GetFiles(Paths.Directories.ArtifactsNative + "/*.*");
         Artifacts = buildArtifacts.Select(ba => ba.FullPath).ToArray();
 
-        NativeRuntimes = new Dictionary<PlatformFamily, string>
+        NativeRuntimes = new Dictionary<PlatformFamily, string[]>
         {
-            [PlatformFamily.Windows] = "win-x64",
-            [PlatformFamily.Linux] = "linux-x64",
-            [PlatformFamily.OSX] = "osx-x64"
+            [PlatformFamily.Windows] = new[] { "win-x64", "win-x86" },
+            [PlatformFamily.Linux] = new[] { "linux-x64", "linux-musl-x64" },
+            [PlatformFamily.OSX] = new[] { "osx-x64" }
         };
     }
 
@@ -117,6 +119,7 @@ public class BuildParameters
     {
         msBuildSettings.WithProperty("Version", version.SemVersion);
         msBuildSettings.WithProperty("AssemblyVersion", version.Version);
+        msBuildSettings.WithProperty("PackageVersion", version.SemVersion.ToLowerInvariant());
         msBuildSettings.WithProperty("FileVersion", version.Version);
         msBuildSettings.WithProperty("NoPackageAnalysis", "true");
     }
@@ -127,7 +130,7 @@ public class BuildParameters
         string repositoryName = null;
 
         if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-            repositoryName = buildSystem.TFBuild.Environment.Repository.RepoName;
+            repositoryName = buildSystem.AzurePipelines.Environment.Repository.RepoName;
 
         context.Information("Repository Name: {0}" , repositoryName);
 
@@ -140,7 +143,7 @@ public class BuildParameters
         string repositoryBranch = ExecGitCmd(context, "rev-parse --abbrev-ref HEAD").Single();
 
         if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-            repositoryBranch = buildSystem.TFBuild.Environment.Repository.Branch;
+            repositoryBranch = buildSystem.AzurePipelines.Environment.Repository.SourceBranchName;
 
         if (logBranch)
             context.Information("Repository Branch: {0}", repositoryBranch);
@@ -154,7 +157,10 @@ public class BuildParameters
         string repositoryBranch = ExecGitCmd(context, "rev-parse --abbrev-ref HEAD").Single();
 
         if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-            repositoryBranch = buildSystem.TFBuild.Environment.Repository.Branch;
+        {
+            branchPrefix = branchPrefix.Insert(0, "refs/heads/");
+            repositoryBranch = buildSystem.AzurePipelines.Environment.Repository.SourceBranch;
+        }
 
         return !string.IsNullOrWhiteSpace(repositoryBranch) && repositoryBranch.StartsWith(branchPrefix, StringComparison.OrdinalIgnoreCase);
     }

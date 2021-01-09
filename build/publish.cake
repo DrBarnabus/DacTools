@@ -8,7 +8,7 @@ Task("Publish-AzurePipelines")
     {
         foreach (var artifact in parameters.Artifacts)
             if (FileExists(artifact))
-                TFBuild.Commands.UploadArtifact("", artifact, "artifacts");
+                AzurePipelines.Commands.UploadArtifact("", artifact, "artifacts");
     })
     .OnError(exception =>
     {
