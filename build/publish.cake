@@ -22,7 +22,7 @@ Task("Publish-Coverage")
     .WithCriteria<BuildParameters>((context, parameters) => parameters.IsRunningOnAzurePipelines, "Publish-Coverage works only on AzurePipelines.")
     .Does<BuildParameters>(parameters =>
     {
-        var coverageFiles = GetFiles(parameters.Paths.Directories.TestResultsOutput + "/*.coverage.xml");
+        var coverageFiles = GetFiles(parameters.Paths.Directories.TestResultsOutput + "/*.coverage.*.xml");
 
         var token = parameters.Credentials.CodeCov.Token;
         if (string.IsNullOrEmpty(token))
