@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.AsyncTasks;
+using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.DatabaseListGenerators;
 using DacTools.Deployment.Core.Logging;
 using DacTools.Deployment.Core.Tests.TestInfrastructure;
@@ -19,9 +20,10 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
         public async Task ShouldCallTheCorrectLoggingMethods()
         {
             // Setup
-            var mockLog = new Mock<ILog>();
             var arguments = new Arguments();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object);
+            var mockLog = new Mock<ILog>();
+            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
             sut.Setup(new DatabaseInfo(1, "Test"), (_, __, ___) => { });
 
             // Act
@@ -43,7 +45,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
 
             var mockLog = new Mock<ILog>();
             var arguments = new Arguments();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object);
+            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
 
             void ProgressUpdate(AsyncTaskBase asyncTask, bool succeeded, long elapsedMiliseconds)
             {
@@ -69,7 +72,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             // Setup
             var mockLog = new Mock<ILog>();
             var arguments = new Arguments();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object);
+            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
 
             // Assert
             Assert.Throws<ArgumentNullException>(() => sut.Setup(null, (_, __, ___) => { }));
@@ -81,7 +85,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             // Setup
             var mockLog = new Mock<ILog>();
             var arguments = new Arguments();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object);
+            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
 
             // Assert
             Assert.Throws<ArgumentNullException>(() => sut.Setup(new DatabaseInfo(1, "Test"), null));

@@ -6,6 +6,8 @@ namespace DacTools.Deployment.Core.Logging
     {
         LogLevel LogLevel { get; set; }
         void Write(LogLevel logLevel, string format, params object[] args);
+
+        void WriteRaw(LogLevel logLevel, string message);
         void AddLogAppender(ILogAppender logAppender);
     }
 }

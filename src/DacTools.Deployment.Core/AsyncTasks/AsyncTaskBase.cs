@@ -1,5 +1,6 @@
 // Copyright (c) 2020 DrBarnabus
 
+using DacTools.Deployment.Core.Common;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,11 +14,13 @@ namespace DacTools.Deployment.Core.AsyncTasks
         public delegate void ProgressUpdateDelegate(AsyncTaskBase asyncTask, bool successful, long elapsedMilliseconds);
 
         private readonly ILog _log;
+        private readonly IBuildServer _buildServer;
 
-        protected AsyncTaskBase(Arguments arguments, ILog log)
+        protected AsyncTaskBase(Arguments arguments, ILog log, IBuildServerResolver buildServerResolver)
         {
             Arguments = arguments;
             _log = log;
+            _buildServer = buildServerResolver.Resolve();
         }
 
         protected Arguments Arguments { get; }
@@ -36,11 +39,17 @@ namespace DacTools.Deployment.Core.AsyncTasks
         protected void LogError(string source, string formatString, params object[] args)
         {
             _log.Error($"'{DatabaseInfo}' {source} - {formatString}", args);
+
+            if (_buildServer != null)
+                _log.WriteRaw(LogLevel.Error, _buildServer.GenerateLogIssueErrorMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
         }
 
         protected void LogWarning(string source, string formatString, params object[] args)
         {
             _log.Warning($"'{DatabaseInfo}' {source} - {formatString}", args);
+
+            if (_buildServer != null)
+                _log.WriteRaw(LogLevel.Warn, _buildServer.GenerateLogIssueWarningMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
         }
 
         protected void LogInfo(string source, string formatString, params object[] args)

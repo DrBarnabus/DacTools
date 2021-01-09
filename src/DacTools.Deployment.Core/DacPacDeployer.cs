@@ -46,8 +46,8 @@ namespace DacTools.Deployment.Core
                     lock (_lock)
                     {
                         completedTasks++;
-                        _log.Debug("Completed {0} out of {1} tasks.", completedTasks, totalTasks);
-                        buildServer?.GenerateSetProgressMessage(completedTasks, totalTasks, "Progress Update");
+                        _log.Info("Completed {0} out of {1} tasks.", completedTasks, totalTasks);
+                        _log.WriteRaw(LogLevel.Info, buildServer?.GenerateSetProgressMessage(completedTasks, totalTasks, "Progress Update"));
                     }
                 });
 

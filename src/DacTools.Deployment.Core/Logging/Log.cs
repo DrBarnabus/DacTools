@@ -1,5 +1,6 @@
 ﻿// Copyright (c) 2020 DrBarnabus
 
+using Microsoft.Data.SqlClient.Server;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -38,6 +39,12 @@ namespace DacTools.Deployment.Core.Logging
                 logAppender.WriteTo(logLevel, formattedMessage);
 
             _stringBuilder.Append(formattedMessage);
+        }
+
+        public void WriteRaw(LogLevel logLevel, string message)
+        {
+            foreach (var logAppender in LogAppenders)
+                logAppender.WriteTo(logLevel, message);
         }
 
         public void AddLogAppender(ILogAppender logAppender)

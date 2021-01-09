@@ -1,5 +1,6 @@
 // Copyright (c) 2020 DrBarnabus
 
+using DacTools.Deployment.Core.Common;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -13,8 +14,8 @@ namespace DacTools.Deployment.Core.AsyncTasks
     // ReSharper disable once ClassNeverInstantiated.Global
     public class DacPacDeployAsyncTask : AsyncTaskBase
     {
-        public DacPacDeployAsyncTask(Arguments arguments, ILog log)
-            : base(arguments, log)
+        public DacPacDeployAsyncTask(Arguments arguments, ILog log, IBuildServerResolver buildServerResolver)
+            : base(arguments, log, buildServerResolver)
         {
         }
 
