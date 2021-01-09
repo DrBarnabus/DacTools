@@ -45,12 +45,16 @@ namespace DacTools.Deployment
                 return;
             }
 
-            // TODO: Add File Logging
+            // Configure Logging
             _log.AddLogAppender(new ConsoleAppender());
+
+            if (arguments.LogFilePath != null)
+                _log.AddLogAppender(new FileAppender(arguments.LogFilePath));
 
             if (!File.Exists(arguments.DacPacFilePath))
                 throw new FatalException($"DacPac FilePath '{arguments.DacPacFilePath}' does not exist!", true);
 
+            // Continue with Deployment
             _log.Info("Using DacPac: {0}", arguments.DacPacFilePath);
 
             if (arguments.Threads == 0)

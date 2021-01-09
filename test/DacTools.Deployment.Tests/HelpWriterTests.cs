@@ -27,7 +27,8 @@ namespace DacTools.Deployment.Tests
                 { "IsBlacklist", new[] { "/blacklist", "/b" } },
                 { "Threads", new[] { "/threads", "/t" } },
                 { "DatabaseNames", new[] { "/databases", "/D" } },
-                { "LogLevel", new[] { "/verbosity", "/v" } }
+                { "LogLevel", new[] { "/verbosity", "/v" } },
+                { "LogFilePath", new []{ "/log", "/l" } }
             };
 
             // Act

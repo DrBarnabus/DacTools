@@ -70,6 +70,14 @@ namespace DacTools.Deployment
                     continue;
                 }
 
+                if (name.IsSwitch("log") || name.IsSwitch("l"))
+                {
+                    EnsureArgumentValueCount(values);
+
+                    arguments.LogFilePath = value;
+                    continue;
+                }
+
                 if (name.IsSwitch("masterconnectionstring") || name.IsSwitch("S"))
                 {
                     EnsureArgumentValueCount(values);

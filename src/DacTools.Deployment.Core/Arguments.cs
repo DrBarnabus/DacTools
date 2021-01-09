@@ -16,6 +16,7 @@ namespace DacTools.Deployment.Core
         public bool IsHelp;
         public bool IsVersion;
         public LogLevel LogLevel = LogLevel.Info;
+        public string LogFilePath = null;
         public string MasterConnectionString;
         public int Threads;
 

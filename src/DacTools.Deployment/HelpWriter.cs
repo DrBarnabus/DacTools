@@ -32,6 +32,8 @@ DacTools.Deployment is a tool that can be used to deploy DacPac files to Microso
     /version                        Displays the current version of DacTools.Deployment
     /help, /h or /?                 Shows this Help Text
     /verbosity or /v                Set Verbosity Level (Debug, Info, Warn, Error, None). Default is Info
+    /log or /l                      Set a path for a Log File.
+                                    If not supplied then no log file is created and logging only goes to console.
 
     /dacpac or /d                   The path to the .dacpac file to run the operation on.
     /masterconnectionstring or /S   The SQL Server Connection string for the master database on the server to deploy to.

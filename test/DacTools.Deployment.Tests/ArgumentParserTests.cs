@@ -79,7 +79,28 @@ namespace DacTools.Deployment.Tests
             result.IsBlacklist.ShouldBeFalse();
             result.Threads.ShouldBe(0);
             result.DatabaseNames.ShouldBeEmpty();
+            result.LogFilePath.ShouldBeNull();
             result.LogLevel.ShouldBe(expectedLogLevel);
+        }
+
+        [Theory]
+        [InlineData("/log C:\\Test\\Logging.log", "C:\\Test\\Logging.log")]
+        [InlineData("/l C:\\Test\\Logging.log", "C:\\Test\\Logging.log")]
+        [InlineData("-log C:\\Test\\Logging.log", "C:\\Test\\Logging.log")]
+        [InlineData("-l C:\\Test\\Logging.log", "C:\\Test\\Logging.log")]
+        public void ShouldSetTheCorrectLogFilePath(string arguments, string expectedLogFilePath)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.LogLevel.ShouldBe(LogLevel.Info);
+            result.LogFilePath.ShouldBe(expectedLogFilePath);
         }
 
         [Theory]
