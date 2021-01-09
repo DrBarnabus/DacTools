@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="1.1.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.1" />
-        <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4573.2" />
-        <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.10.0" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+        <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4897.1" />
+        <PackageReference Include="System.Threading.Tasks.Dataflow" Version="5.0.0" />
     </ItemGroup>
 
 </Project>
