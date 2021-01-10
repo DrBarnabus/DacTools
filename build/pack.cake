@@ -107,6 +107,25 @@ Task("Test")
     {
         var error = (exception as AggregateException).InnerExceptions[0];
         Error(error.Dump());
+    })
+    .Finally(() =>
+    {
+        var parameters = Context.Data.Get<BuildParameters>();
+        if (parameters.IsRunningOnAzurePipelines)
+        {
+            var testResultsFiles = GetFiles(parameters.Paths.Directories.TestResultsOutput + "/*.results.xml");
+            if (testResultsFiles.Any())
+            {
+                var data = new AzurePipelinesPublishTestResultsData
+                {
+                    TestRunTitle = $"Tests_{parameters.Configuration}_{parameters.PlatformFamily.ToString()}",
+                    TestResultsFiles = testResultsFiles.ToArray(),
+                    TestRunner = AzurePipelinesTestRunnerType.VSTest
+                };
+
+                AzurePipelines.Commands.PublishTestResults(data);
+            }
+        }
     });
 
 #endregion
