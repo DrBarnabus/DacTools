@@ -1,4 +1,30 @@
-# [0.2.0](https://github.com/DrBarnabus/DacTools/compare/v0.1.0...v0.2.0) (2020-01-12)
+# Changelog
+
+All notable changes to this project will be automatically documented in this file.
+
+
+## [0.3.0](https://github.com/DrBarnabus/DacTools/compare/v0.2.0...v0.3.0) (2021-01-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deployment:** Removed netcoreapp3.0 as a TFM and replaced it with netcoreapp3.1, all native builds now target .NET Core 3.1.
+
+Ensure you are using .NET Core 2.1 or preferably .NET Core 3.1 if you are currently using the .NET Core 3.0 build of the project.
+
+### Features
+
+* **deployment:** add command line argument parsing for sqlcmd variables ([6f805e8](https://github.com/DrBarnabus/DacTools/commit/6f805e8bcdbc5269fe5f8ad3f71f8883d7e84d2f))
+* **deployment:** add file logging option ([755285c](https://github.com/DrBarnabus/DacTools/commit/755285c90a68d761c7464d1fefcc918070e1cff9)), closes [#2](https://github.com/DrBarnabus/DacTools/issues/2)
+* **deployment:** add progress, warning and error build server messages ([4f20600](https://github.com/DrBarnabus/DacTools/commit/4f206001fde5eb9cf4e64cc58c94cdfb11ba08ee)), closes [#6](https://github.com/DrBarnabus/DacTools/issues/6)
+* **deployment:** output build server messages on task completion ([9042f7a](https://github.com/DrBarnabus/DacTools/commit/9042f7addcda6fb501049e7e0e31b9104129af1a)), closes [#6](https://github.com/DrBarnabus/DacTools/issues/6)
+
+
+### build
+
+* **deployment:** Updated from .NET Core 3.0 to 3.1 ([531da17](https://github.com/DrBarnabus/DacTools/commit/531da17fd40ef814ad605365382ed83f198b0669)), closes [#10](https://github.com/DrBarnabus/DacTools/issues/10)
+
+## [0.2.0](https://github.com/DrBarnabus/DacTools/compare/v0.1.0...v0.2.0) (2020-01-12)
 
 
 ### Bug Fixes
@@ -12,7 +38,7 @@
 
 
 
-# 0.1.0 (2019-11-21)
+## 0.1.0 (2019-11-21)
 
 
 ### Bug Fixes

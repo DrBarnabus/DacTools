@@ -1,0 +1,7 @@
+{
+    "header": "# Changelog\n\nAll notable changes to this project will be automatically documented in this file.\n\n",
+    "skip": {
+        "commit": true,
+        "tag": true
+    }
+}
