@@ -124,6 +124,15 @@ namespace DacTools.Deployment
                     continue;
                 }
 
+                if (name.IsVariable(out string variableName))
+                {
+                    if (values != null && values.Length > 1)
+                        throw new ArgumentParsingException($"A value for Variable named '{variableName}' has been defined more than once.");
+
+                    arguments.DacDeployOptions.SqlCommandVariableValues.Add(variableName, value);
+                    continue;
+                }
+
                 if (name.IsParameter("BlockOnPossibleDataLoss"))
                 {
                     arguments.DacDeployOptions.BlockOnPossibleDataLoss = ParseBooleanParameter(values, false);

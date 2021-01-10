@@ -44,6 +44,24 @@ namespace DacTools.Deployment.Extensions
             return string.Equals(switchName, value, switchName.Length == 1 ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase);
         }
 
+        public static bool IsVariable(this string value, out string variableName)
+        {
+            variableName = null;
+
+            if (value == null)
+                return false;
+
+            if (value.StartsWith("-") || value.StartsWith("/"))
+                value = value.Substring(1);
+
+            var match = Regex.Match(value, "^variable:([^ ].*)$");
+            if (!match.Success)
+                return false;
+
+            variableName = match.Groups[1].Value;
+            return true;
+        }
+
         public static bool IsParameter(this string value, string parameterName)
         {
             if (value == null)

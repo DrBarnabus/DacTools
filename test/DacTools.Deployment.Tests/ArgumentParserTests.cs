@@ -414,6 +414,58 @@ namespace DacTools.Deployment.Tests
                 .Message.ShouldBe("Could not parse ObjectType value of 'invalid'.");
         }
 
+        [Theory]
+        [InlineData("/variable:CustomSqlCmdVariable VariableValue", "CustomSqlCmdVariable", "VariableValue")]
+        [InlineData("-variable:CustomSqlCmdVariable VariableValue", "CustomSqlCmdVariable", "VariableValue")]
+        public void ShouldSetTheCorrectSqlCommandVariableValue(string arguments, string expectedVariableName, string expectedVariableValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.DacDeployOptions.SqlCommandVariableValues.ShouldContainKeyAndValue(expectedVariableName, expectedVariableValue);
+        }
+
+        public static IEnumerable<object[]> CorrectSqlCommandVariableValuesWhenMultipleSupplied(string switchStart) =>
+            new List<object[]>
+            {
+                new object[] { $"{switchStart}variable:Variable1 Value1 {switchStart}variable:Variable2 Value2", new[] { "Variable1", "Variable2" }, new[] { "Value1", "Value2" } }
+            };
+
+        [Theory]
+        [MemberData(nameof(CorrectSqlCommandVariableValuesWhenMultipleSupplied), "/")]
+        [MemberData(nameof(CorrectSqlCommandVariableValuesWhenMultipleSupplied), "-")]
+        public void ShouldSetTheCorrectSqlCommandVariableValuesWhenMultipleSupplied(string arguments, string[] expectedVariableNames, string[] expectedVariableValues)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+
+            for (int i = 0; i < expectedVariableNames.Length; i++)
+                result.DacDeployOptions.SqlCommandVariableValues.ShouldContainKeyAndValue(expectedVariableNames[i], expectedVariableValues[i]);
+        }
+
+        [Theory]
+        [InlineData("/variable:DuplicateName DuplicateValue /variable:DuplicateName DuplicateValue")]
+        [InlineData("-variable:DuplicateName DuplicateValue -variable:DuplicateName DuplicateValue")]
+        public void ShouldThrowAArgumentParsingExceptionWhenADuplicateSqlCommandVariableNameIsProvided(string arguments)
+        {
+            var argumentParser = new ArgumentParser();
+            Should.Throw<ArgumentParsingException>(() => argumentParser.ParseArguments(arguments))
+                .Message.ShouldBe("A value for Variable named 'DuplicateName' has been defined more than once.");
+        }
+
         [Fact]
         public void ShouldThrowAArgumentParsingExceptionWhenTheArgumentCouldNotBeParsed()
         {

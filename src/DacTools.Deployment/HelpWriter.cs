@@ -42,6 +42,10 @@ DacTools.Deployment is a tool that can be used to deploy DacPac files to Microso
     /blacklist or /b                Configures the tool to use the value of the  '/databases' option as a blacklist.
     /threads or /t                  Configures the maximum number of threads to use while deploying databases.
                                     If set to -1 then the value of Environment.ProcessorCount will be used.
+
+    /variable:<VariableName>        If provided then the DacDeployOptions SqlCommandVariableValues of '<VariableName>' will be set to the provided value.
+    /p:<ParameterName>              If provided then the DacDeployOptions Parameter of '<ParameterName>' will be set to the provided value.
+                                    Only certain parameters are supported, for a full list of supported parameters please refer to the documentation.
 ";
 
             writeAction(message);
