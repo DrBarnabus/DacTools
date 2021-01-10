@@ -22,6 +22,9 @@ namespace DacTools.Deployment.Core.BuildServers
         public override string GenerateLogIssueErrorMessage(string issueMessage) =>
             $"##vso[task.logissue type=error;] {issueMessage}";
 
+        public override string GenerateSetStatusSucceededMessage(string statusMessage) =>
+            $"##vso[task.complete type=Succeeded;] {statusMessage}";
+
         public override string GenerateSetStatusSucceededWithIssuesMessage(string statusMessage) =>
             $"##vso[task.complete type=SucceededWithIssues;] {statusMessage}";
 

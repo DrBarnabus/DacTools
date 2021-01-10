@@ -24,6 +24,7 @@ namespace DacTools.Deployment.Core.Common
         public abstract string GenerateSetProgressMessage(int current, int total, string message);
         public abstract string GenerateLogIssueWarningMessage(string issueMessage);
         public abstract string GenerateLogIssueErrorMessage(string issueMessage);
+        public abstract string GenerateSetStatusSucceededMessage(string statusMessage);
         public abstract string GenerateSetStatusSucceededWithIssuesMessage(string statusMessage);
         public abstract string GenerateSetStatusFailMessage(string statusMessage);
     }

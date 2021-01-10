@@ -105,5 +105,18 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             azurePipelines.GenerateSetStatusSucceededWithIssuesMessage("status message")
                 .ShouldBe("##vso[task.complete type=SucceededWithIssues;] status message");
         }
+
+        [Fact]
+        public void GenerateSetStatusSucceededMessageShouldReturnCorrectValue()
+        {
+            // Setup
+            var environment = new TestEnvironment();
+            var log = new Mock<ILog>().Object;
+            var azurePipelines = new AzurePipelines(environment, log);
+
+            // Act & Assert
+            azurePipelines.GenerateSetStatusSucceededMessage("status message")
+                .ShouldBe("##vso[task.complete type=Succeeded;] status message");
+        }
     }
 }
