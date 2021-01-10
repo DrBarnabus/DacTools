@@ -5,9 +5,9 @@ It was originally designed for use in Multi-Tenant scenarios where you may have 
 
 ## Compatibility
 
-DacTools works with Windows, Linux and Mac. It is supported on .NET Core 3.1 and 2.1 as well as .NET Framework 4.7.2+
+DacTools works on Windows, Linux and Mac. It is supported on .NET 5, .NET Core 3.1, .NET Core 2.1 and .NET Framework 4.7.2+.
 
-DacTools currently makes use of Microsoft.SqlServer.DacFx v150 and as such supports the same Microsoft SQL Server versions supported by that package. Currently that includes; Microsoft SQL Server 2008, 2008R2, 2012, 2014, 2016, 2017, 2019 and Microsoft Azure SQL Databases.
+DacTools currently makes use of Microsoft.SqlServer.DacFx v150.x and as such supports the same Microsoft SQL Server versions supported by that package. Currently that includes; Microsoft SQL Server 2008, 2008R2, 2012, 2014, 2016, 2017, 2019 and Microsoft Azure SQL Databases.
 
 ## Configuration
 
@@ -17,4 +17,4 @@ Read more about the configuration options [here⇗](configuration.md)
 
 ## Changelog
 
-The project uses conventional commits as well as conventional-changelog-cli to automatically generate a changelog. The changelog is available in the repository.
+The project uses conventional commits as well as standard-version to automatically generate a changelog. The changelog is available in the repository.

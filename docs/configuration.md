@@ -38,11 +38,17 @@ Configures the application to use the value of the '/databases' or '/D' option a
 
 Configures the maximum number of threads to use while deploying the dacpac to the databases. Deployments will be run in parallel up till the specified number of threads concurrently. If set to -1 then the value of `Environment.ProcessorCount` will be used instead. The default value if not set is 1.
 
+## DacDeploymentOptions SqlCommandVariableValues
+
+If you require a SqlCommandVariable to be set while deploying you can specify this by passing a command line parameter to the DacTools.Deployment tool.
+
+Any SqlCommandVariable can be set by passing the name of the variable as well as the desired value via the command line. These values should be prefixed with `-variable:` or `/variable:`, for example to set the _CommandExample_ variable to a value of _ExampleValue_ you would add the following argument to the command line: `/variable:CommandExample ExampleValue`.
+
 ## DacDeploymentOptions Arguments
 
 A number of parameters are supported to customize the DacDeploymentOptions that are passed into DacServices by the DacTools.Deployment tool.
 
-All of these parameters can be set by passing the name of the argument as well as the desired value/values via the command line. These parameters should be prefixed with either -p: or /p:, for example to set the BlockOnPossibleDataLoss option to true you would add the following argument to the command line: `-p:BlockOnPossibleDataLoss true`.
+All of these parameters can be set by passing the name of the argument as well as the desired value/values via the command line. These parameters should be prefixed with either `-p:` or `/p:`, for example to set the BlockOnPossibleDataLoss option to true you would add the following argument to the command line: `-p:BlockOnPossibleDataLoss true`.
 
 The members of [DacDeployOptions](https://docs.microsoft.com/en-us/dotnet/api/microsoft.sqlserver.dac.dacdeployoptions) which are currently serviced are listed below along with their default values. If an option parameter is not currently serviced and isn't listed below, create a feature request or feel free to submit a pull request adding the option.
 
