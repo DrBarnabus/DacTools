@@ -186,7 +186,7 @@ Task("Zip-Files")
         var runtimes = parameters.NativeRuntimes[platform];
         foreach (var runtime in runtimes)
         {
-            var sourceDir = parameters.Paths.Directories.Native.Combine(platform.ToString().ToLower()).Combine(runtime);
+            var sourceDir = parameters.Paths.Directories.Native.Combine(runtime);
             var targetDir = parameters.Paths.Directories.ArtifactsNative;
             EnsureDirectoryExists(targetDir);
 
