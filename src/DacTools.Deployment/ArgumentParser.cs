@@ -157,6 +157,12 @@ namespace DacTools.Deployment
                     continue;
                 }
 
+                if (name.IsParameter("IgnoreFileAndLogFilePath"))
+                {
+                    arguments.DacDeployOptions.IgnoreFileAndLogFilePath = ParseBooleanParameter(values, true);
+                    continue;
+                }
+
                 if (name.IsParameter("GenerateSmartDefaults"))
                 {
                     arguments.DacDeployOptions.GenerateSmartDefaults = ParseBooleanParameter(values, true);
