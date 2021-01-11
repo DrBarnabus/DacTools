@@ -35,6 +35,7 @@ namespace DacTools.Deployment.Core
                 DropIndexesNotInSource = false,
                 IgnorePermissions = true,
                 IgnoreRoleMembership = true,
+                IgnoreFileAndLogFilePath = true,
                 GenerateSmartDefaults = true,
                 DropObjectsNotInSource = true,
                 DoNotDropObjectTypes = new[]
