@@ -40,11 +40,12 @@ namespace DacTools.Deployment.Core
                 DropObjectsNotInSource = true,
                 DoNotDropObjectTypes = new[]
                 {
+                    ObjectType.Filegroups,
+                    ObjectType.Files,
                     ObjectType.Logins,
-                    ObjectType.Users,
                     ObjectType.Permissions,
                     ObjectType.RoleMembership,
-                    ObjectType.Filegroups
+                    ObjectType.Users
                 },
                 CommandTimeout = 0 // Infinite Timeout
             };

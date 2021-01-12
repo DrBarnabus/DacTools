@@ -376,7 +376,7 @@ namespace DacTools.Deployment.Tests
         public static IEnumerable<object[]> CorrectDacDeployOptionsDoNotDropObjectTypesValues(string switchStart) =>
             new List<object[]>
             {
-                new object[] { $"{switchStart}", new[] { ObjectType.Logins, ObjectType.Users, ObjectType.Permissions, ObjectType.RoleMembership, ObjectType.Filegroups } },
+                new object[] { $"{switchStart}", new[] { ObjectType.Filegroups, ObjectType.Files, ObjectType.Logins, ObjectType.Permissions, ObjectType.RoleMembership, ObjectType.Users } },
                 new object[] { $"{switchStart} Logins", new[] { ObjectType.Logins } },
                 new object[] { $"{switchStart} Logins Users", new[] { ObjectType.Logins, ObjectType.Users } },
                 new object[] { $"{switchStart} Logins,Users", new[] { ObjectType.Logins, ObjectType.Users } }
