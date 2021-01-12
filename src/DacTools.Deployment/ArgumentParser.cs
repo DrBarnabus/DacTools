@@ -234,7 +234,7 @@ namespace DacTools.Deployment
 
         private static NameValueCollection CollectSwitchesAndValuesFromArguments(IReadOnlyList<string> namedArguments)
         {
-            var switchesAndValues = new NameValueCollection();
+            var switchesAndValues = new NameValueCollection(StringComparer.Ordinal);
             string currentKey = null;
             bool argumentRequiresValue = false;
 
