@@ -16,7 +16,7 @@ namespace DacTools.Deployment
     {
         public Arguments ParseArguments(string commandLineArguments)
         {
-            var arguments = commandLineArguments
+            string[] arguments = commandLineArguments
                 .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToArray();
 
@@ -25,12 +25,7 @@ namespace DacTools.Deployment
 
         public Arguments ParseArguments(string[] commandLineArguments)
         {
-            if (commandLineArguments.Length == 0)
-                return new Arguments { IsHelp = true };
-
-            string firstArgument = commandLineArguments.First();
-
-            if (firstArgument.IsHelp())
+            if (commandLineArguments.Length == 0 || commandLineArguments.First().IsHelp())
                 return new Arguments { IsHelp = true };
 
             var arguments = new Arguments();
@@ -39,7 +34,7 @@ namespace DacTools.Deployment
 
             foreach (string name in switchesAndValues.AllKeys)
             {
-                var values = switchesAndValues.GetValues(name);
+                string[] values = switchesAndValues.GetValues(name);
                 string value = values?.FirstOrDefault();
 
                 if (name.IsSwitch("version"))
