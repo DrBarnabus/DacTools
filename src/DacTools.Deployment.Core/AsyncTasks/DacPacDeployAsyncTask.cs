@@ -51,13 +51,13 @@ namespace DacTools.Deployment.Core.AsyncTasks
                     }
                 };
 
-                dacServices.ProgressChanged += (_, args) => LogInfo("DacServices Progress", "OperationId {0}, Status {1}, Message {2}", args.OperationId, args.Status, args.Message);
+                dacServices.ProgressChanged += (_, args) => LogDebug("DacServices Progress", "OperationId {0}, Status {1}, Message {2}", args.OperationId, args.Status, args.Message);
 
                 dacServices.Deploy(dacPackage, DatabaseInfo.Name, true, Arguments.DacDeployOptions, cancellationToken);
             }
             catch (Exception ex)
             {
-                LogError("Internal", "DacPac Deployment AsyncTask failed after {0}ms with the following error: {1}", stopwatch.ElapsedMilliseconds, ex.Message);
+                LogError("Internal", "DacPac Deployment AsyncTask failed after {0}ms with the following error: {1}\n{2}", stopwatch.ElapsedMilliseconds, ex.Message, ex.StackTrace);
 
                 ProgressUpdate(this, false, stopwatch.ElapsedMilliseconds);
                 return Task.CompletedTask;
