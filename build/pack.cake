@@ -150,11 +150,6 @@ Task("Pack-Prepare")
                 MSBuildSettings = parameters.MSBuildSettings
             };
 
-            settings.ArgumentCustomization =
-                arg => arg
-                .Append("/p:PublishSingleFile=true")
-                .Append("/p:IncldueSymbolsInSingleFile=true");
-
             DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
         }
 
