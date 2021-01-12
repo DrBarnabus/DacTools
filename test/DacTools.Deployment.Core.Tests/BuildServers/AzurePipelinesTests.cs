@@ -67,8 +67,10 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
                 .ShouldBe("##vso[task.logissue type=warning;] warning");
         }
 
-        [Fact]
-        public void GenerateSetProgressMessageShouldReturnCorrectValue()
+        [Theory]
+        [InlineData(5, 10, 50)]
+        [InlineData(4, 30, 13)]
+        public void GenerateSetProgressMessageShouldReturnCorrectValue(int current, int total, int expected)
         {
             // Setup
             var environment = new TestEnvironment();
@@ -76,8 +78,8 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             var azurePipelines = new AzurePipelines(environment, log);
 
             // Act & Assert
-            azurePipelines.GenerateSetProgressMessage(5, 10, "progress")
-                .ShouldBe($"##vso[task.setprogress value={50};] progress");
+            azurePipelines.GenerateSetProgressMessage(current, total, "progress")
+                .ShouldBe($"##vso[task.setprogress value={expected};] progress");
         }
 
         [Fact]
@@ -90,7 +92,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
 
             // Act & Assert
             azurePipelines.GenerateSetStatusFailMessage("status message")
-                .ShouldBe("##vso[task.complete type=Failed;] status message");
+                .ShouldBe("##vso[task.complete result=Failed;] status message");
         }
 
         [Fact]
@@ -103,7 +105,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
 
             // Act & Assert
             azurePipelines.GenerateSetStatusSucceededWithIssuesMessage("status message")
-                .ShouldBe("##vso[task.complete type=SucceededWithIssues;] status message");
+                .ShouldBe("##vso[task.complete result=SucceededWithIssues;] status message");
         }
 
         [Fact]
@@ -116,7 +118,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
 
             // Act & Assert
             azurePipelines.GenerateSetStatusSucceededMessage("status message")
-                .ShouldBe("##vso[task.complete type=Succeeded;] status message");
+                .ShouldBe("##vso[task.complete result=Succeeded;] status message");
         }
     }
 }

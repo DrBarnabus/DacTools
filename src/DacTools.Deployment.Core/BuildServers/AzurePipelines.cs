@@ -23,12 +23,12 @@ namespace DacTools.Deployment.Core.BuildServers
             $"##vso[task.logissue type=error;] {issueMessage}";
 
         public override string GenerateSetStatusSucceededMessage(string statusMessage) =>
-            $"##vso[task.complete type=Succeeded;] {statusMessage}";
+            $"##vso[task.complete result=Succeeded;] {statusMessage}";
 
         public override string GenerateSetStatusSucceededWithIssuesMessage(string statusMessage) =>
-            $"##vso[task.complete type=SucceededWithIssues;] {statusMessage}";
+            $"##vso[task.complete result=SucceededWithIssues;] {statusMessage}";
 
         public override string GenerateSetStatusFailMessage(string statusMessage) =>
-            $"##vso[task.complete type=Failed;] {statusMessage}";
+            $"##vso[task.complete result=Failed;] {statusMessage}";
     }
 }
