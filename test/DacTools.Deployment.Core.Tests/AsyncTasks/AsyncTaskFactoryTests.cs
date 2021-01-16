@@ -20,8 +20,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             var arguments = new Arguments();
             var argumentsOptions = Options.Create(arguments);
             var log = new Mock<ILog>().Object;
-            var buildServerResolver = new Mock<IBuildServerResolver>().Object;
-            var sut = new AsyncTaskFactory<TestAsyncTask2>(argumentsOptions, log, buildServerResolver);
+            var buildServer = new Mock<IActiveBuildServer>().Object;
+            var sut = new AsyncTaskFactory<TestAsyncTask2>(argumentsOptions, log, buildServer);
 
             // Act
             var result = sut.CreateAsyncTask();

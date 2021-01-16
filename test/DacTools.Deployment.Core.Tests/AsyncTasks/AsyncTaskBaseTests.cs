@@ -22,8 +22,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             // Setup
             var arguments = new Arguments();
             var mockLog = new Mock<ILog>();
-            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
+            var mockBuildServer = new Mock<IActiveBuildServer>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
             sut.Setup(new DatabaseInfo(1, "Test"), (_, __, ___) => { });
 
             // Act
@@ -45,8 +45,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
 
             var mockLog = new Mock<ILog>();
             var arguments = new Arguments();
-            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
+            var mockBuildServer = new Mock<IActiveBuildServer>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
 
             void ProgressUpdate(AsyncTaskBase asyncTask, bool succeeded, long elapsedMiliseconds)
             {
@@ -72,8 +72,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             // Setup
             var mockLog = new Mock<ILog>();
             var arguments = new Arguments();
-            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
+            var mockBuildServer = new Mock<IActiveBuildServer>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
 
             // Assert
             Assert.Throws<ArgumentNullException>(() => sut.Setup(null, (_, __, ___) => { }));
@@ -85,8 +85,8 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             // Setup
             var mockLog = new Mock<ILog>();
             var arguments = new Arguments();
-            var mockBuildServerResolver = new Mock<IBuildServerResolver>();
-            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServerResolver.Object);
+            var mockBuildServer = new Mock<IActiveBuildServer>();
+            var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
 
             // Assert
             Assert.Throws<ArgumentNullException>(() => sut.Setup(new DatabaseInfo(1, "Test"), null));

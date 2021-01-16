@@ -10,7 +10,7 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 {
     public class TestAsyncTask2 : AsyncTaskBase
     {
-        public TestAsyncTask2(Arguments arguments, ILog log, IBuildServerResolver buildServerResolver) : base(arguments, log, buildServerResolver)
+        public TestAsyncTask2(Arguments arguments, ILog log, IActiveBuildServer buildServer) : base(arguments, log, buildServer)
         {
         }
 

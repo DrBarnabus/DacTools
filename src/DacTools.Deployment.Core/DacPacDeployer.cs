@@ -14,22 +14,20 @@ namespace DacTools.Deployment.Core
     internal class DacPacDeployer : IDacPacDeployer
     {
         private readonly Arguments _arguments;
-        private readonly IBuildServerResolver _buildServerResolver;
+        private readonly IActiveBuildServer _buildServer;
         private readonly IAsyncTaskFactory<DacPacDeployAsyncTask> _dacPacDeployAsyncTaskFactory;
         private readonly ILog _log;
 
-        public DacPacDeployer(ILog log, IBuildServerResolver buildServerResolver, IOptions<Arguments> arguments, IAsyncTaskFactory<DacPacDeployAsyncTask> dacPacDeployAsyncTaskFactory)
+        public DacPacDeployer(ILog log, IActiveBuildServer buildServer, IOptions<Arguments> arguments, IAsyncTaskFactory<DacPacDeployAsyncTask> dacPacDeployAsyncTaskFactory)
         {
             _log = log;
-            _buildServerResolver = buildServerResolver;
+            _buildServer = buildServer;
             _dacPacDeployAsyncTaskFactory = dacPacDeployAsyncTaskFactory;
             _arguments = arguments.Value;
         }
 
         public async Task DeployDacPac(IReadOnlyCollection<DatabaseInfo> databases, CancellationToken cancellationToken)
         {
-            var buildServer = _buildServerResolver.Resolve();
-
             _log.Debug("Starting DacPac Deployment Tasks with {0} {1}.", _arguments.Threads, _arguments.Threads == 1 ? "thread" : "threads");
 
             int completedTasks = 0;
@@ -51,8 +49,8 @@ namespace DacTools.Deployment.Core
                         _log.Warning("{0} out of {1} tasks have failed.", failedTasks, totalTasks);
                     }
 
-                    if (buildServer != null)
-                        _log.WriteRaw(LogLevel.Info, buildServer.GenerateSetProgressMessage(completedTasks, totalTasks, "Progress Update"));
+                    if (_buildServer != null)
+                        _log.WriteRaw(LogLevel.Info, _buildServer.GenerateSetProgressMessage(completedTasks, totalTasks, "Progress Update"));
                 });
 
                 asyncTaskRunner.AddTask(dacPacDeployAsyncTask);
@@ -63,20 +61,20 @@ namespace DacTools.Deployment.Core
             if (failedTasks == totalTasks) // If all Tasks Failed
             {
                 _log.Error("All Deployment Tasks Failed");
-                if (buildServer != null)
-                    _log.WriteRaw(LogLevel.Error, buildServer.GenerateSetStatusFailMessage("All Deployment Tasks Failed"));
+                if (_buildServer != null)
+                    _log.WriteRaw(LogLevel.Error, _buildServer.GenerateSetStatusFailMessage("All Deployment Tasks Failed"));
             }
             else if (failedTasks > 0) // If any Tasks Failed
             {
                 _log.Warning("Some Deployment Tasks Failed");
-                if (buildServer != null)
-                    _log.WriteRaw(LogLevel.Warn, buildServer.GenerateSetStatusSucceededWithIssuesMessage("Some Deployment Tasks Failed"));
+                if (_buildServer != null)
+                    _log.WriteRaw(LogLevel.Warn, _buildServer.GenerateSetStatusSucceededWithIssuesMessage("Some Deployment Tasks Failed"));
             }
             else // If all Tasks Succeeded
             {
                 _log.Info("All Deployment Tasks Succeeded");
-                if (buildServer != null)
-                    _log.WriteRaw(LogLevel.Info, buildServer.GenerateSetStatusSucceededMessage("All Deployment Tasks Succeeded"));
+                if (_buildServer != null)
+                    _log.WriteRaw(LogLevel.Info, _buildServer.GenerateSetStatusSucceededMessage("All Deployment Tasks Succeeded"));
             }
         }
     }

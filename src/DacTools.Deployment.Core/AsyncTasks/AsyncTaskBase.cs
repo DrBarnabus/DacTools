@@ -14,13 +14,13 @@ namespace DacTools.Deployment.Core.AsyncTasks
         public delegate void ProgressUpdateDelegate(AsyncTaskBase asyncTask, bool successful, long elapsedMilliseconds);
 
         private readonly ILog _log;
-        private readonly IBuildServer _buildServer;
+        private readonly IActiveBuildServer _buildServer;
 
-        protected AsyncTaskBase(Arguments arguments, ILog log, IBuildServerResolver buildServerResolver)
+        protected AsyncTaskBase(Arguments arguments, ILog log, IActiveBuildServer buildServer)
         {
             Arguments = arguments;
             _log = log;
-            _buildServer = buildServerResolver.Resolve();
+            _buildServer = buildServer;
         }
 
         protected Arguments Arguments { get; }

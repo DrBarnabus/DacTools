@@ -12,15 +12,15 @@ namespace DacTools.Deployment.Core.AsyncTasks
     {
         private readonly Arguments _arguments;
         private readonly ILog _log;
-        private readonly IBuildServerResolver _buildServerResolver;
+        private readonly IActiveBuildServer _buildServer;
 
-        public AsyncTaskFactory(IOptions<Arguments> arguments, ILog log, IBuildServerResolver buildServerResolver)
+        public AsyncTaskFactory(IOptions<Arguments> arguments, ILog log, IActiveBuildServer buildServer)
         {
             _arguments = arguments.Value;
             _log = log;
-            _buildServerResolver = buildServerResolver;
+            _buildServer = buildServer;
         }
 
-        public TAsyncTask CreateAsyncTask() => (TAsyncTask)Activator.CreateInstance(typeof(TAsyncTask), _arguments, _log, _buildServerResolver);
+        public TAsyncTask CreateAsyncTask() => (TAsyncTask)Activator.CreateInstance(typeof(TAsyncTask), _arguments, _log, _buildServer);
     }
 }
