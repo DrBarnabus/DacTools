@@ -28,7 +28,8 @@ namespace DacTools.Deployment.Tests
                 { "Threads", new[] { "/threads", "/t" } },
                 { "DatabaseNames", new[] { "/databases", "/D" } },
                 { "LogLevel", new[] { "/verbosity", "/v" } },
-                { "LogFilePath", new []{ "/log", "/l" } }
+                { "LogFilePath", new []{ "/log", "/l" } },
+                { "AzPipelines", new[] { "/azpipelines" } }
             };
 
             // Act

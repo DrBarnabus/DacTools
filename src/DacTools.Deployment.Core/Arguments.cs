@@ -20,6 +20,8 @@ namespace DacTools.Deployment.Core
         public string MasterConnectionString;
         public int Threads;
 
+        public bool AzPipelines;
+
         public Arguments()
         {
             SetDefaultDacDeployOptions();

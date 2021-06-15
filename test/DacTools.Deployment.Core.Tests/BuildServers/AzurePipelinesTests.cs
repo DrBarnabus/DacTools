@@ -3,6 +3,7 @@
 using DacTools.Deployment.Core.BuildServers;
 using DacTools.Deployment.Core.Logging;
 using DacTools.Deployment.Core.Tests.TestInfrastructure;
+using Microsoft.Extensions.Options;
 using Moq;
 using Shouldly;
 using Xunit;
@@ -19,7 +20,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments(false));
 
             environment.SetEnvironmentVariable("TF_BUILD", variableValue);
 
@@ -33,9 +34,25 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments(false));
 
             environment.SetEnvironmentVariable("TF_BUILD", "True");
+
+            // Act & Assert
+            azurePipelines.CanApplyToCurrentContext().ShouldBe(true);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void CanApplyToCurrentContextShouldReturnTrueWhenArgumentIsTrue(string variableValue)
+        {
+            // Setup
+            var environment = new TestEnvironment();
+            var log = new Mock<ILog>().Object;
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments(true));
+
+            environment.SetEnvironmentVariable("TF_BUILD", variableValue);
 
             // Act & Assert
             azurePipelines.CanApplyToCurrentContext().ShouldBe(true);
@@ -47,7 +64,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
             // Act & Assert
             azurePipelines.GenerateLogIssueErrorMessage("error")
@@ -60,7 +77,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
             // Act & Assert
             azurePipelines.GenerateLogIssueWarningMessage("warning")
@@ -75,7 +92,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
             // Act & Assert
             azurePipelines.GenerateSetProgressMessage(current, total, "progress")
@@ -88,7 +105,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
             // Act & Assert
             azurePipelines.GenerateSetStatusFailMessage("status message")
@@ -101,7 +118,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
             // Act & Assert
             azurePipelines.GenerateSetStatusSucceededWithIssuesMessage("status message")
@@ -114,11 +131,19 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log);
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
             // Act & Assert
             azurePipelines.GenerateSetStatusSucceededMessage("status message")
                 .ShouldBe("##vso[task.complete result=Succeeded;] status message");
+        }
+
+        private static IOptions<Arguments> GetMockArguments(bool azPipelines = true)
+        {
+            var arguments = new Arguments { AzPipelines = azPipelines };
+            var mock = new Mock<IOptions<Arguments>>();
+            mock.Setup(o => o.Value).Returns(arguments);
+            return mock.Object;
         }
     }
 }

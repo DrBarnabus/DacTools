@@ -46,6 +46,9 @@ DacTools.Deployment is a tool that can be used to deploy DacPac files to Microso
     /variable:<VariableName>        If provided then the DacDeployOptions SqlCommandVariableValues of '<VariableName>' will be set to the provided value.
     /p:<ParameterName>              If provided then the DacDeployOptions Parameter of '<ParameterName>' will be set to the provided value.
                                     Only certain parameters are supported, for a full list of supported parameters please refer to the documentation.
+
+    /azpipelines                    Configures the tool to enable the Azure Pipelines integration for Progress Reporting and Logging.
+                                    This should only be used if the tool is being run by an Azure Pipelines build or release pipeline.
 ";
 
             writeAction(message);

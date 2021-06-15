@@ -41,7 +41,7 @@ namespace DacTools.Deployment.Core
                 dacPacDeployAsyncTask.Setup(database, (task, successful, elapsedMilliseconds) =>
                 {
                     Interlocked.Increment(ref completedTasks);
-                    _log.Debug("Completed {0} out of {1} tasks.", completedTasks, totalTasks);
+                    _log.Info("Completed {0} out of {1} tasks.", completedTasks, totalTasks);
 
                     if (!successful)
                     {

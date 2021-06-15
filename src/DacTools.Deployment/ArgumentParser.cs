@@ -119,6 +119,14 @@ namespace DacTools.Deployment
                     continue;
                 }
 
+                if (name.IsSwitch("azpipelines"))
+                {
+                    if (value is null || value.IsTrue())
+                        arguments.AzPipelines = true;
+
+                    continue;
+                }
+
                 if (name.IsVariable(out string variableName))
                 {
                     if (values != null && values.Length > 1)

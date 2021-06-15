@@ -248,6 +248,27 @@ namespace DacTools.Deployment.Tests
         }
 
         [Theory]
+        [InlineData("/azpipelines", true)]
+        [InlineData("/azpipelines true", true)]
+        [InlineData("/azpipelines false", false)]
+        [InlineData("-azpipelines", true)]
+        [InlineData("-azpipelines true", true)]
+        [InlineData("-azpipelines false", false)]
+        public void ShouldSetAzPipelines(string arguments, bool expectedValue)
+        {
+            var argumentParser = new ArgumentParser();
+            var result = argumentParser.ParseArguments(arguments);
+            result.IsHelp.ShouldBeFalse();
+            result.IsVersion.ShouldBeFalse();
+            result.DacPacFilePath.ShouldBeNull();
+            result.MasterConnectionString.ShouldBeNull();
+            result.IsBlacklist.ShouldBeFalse();
+            result.Threads.ShouldBe(0);
+            result.DatabaseNames.ShouldBeEmpty();
+            result.AzPipelines.ShouldBe(expectedValue);
+        }
+
+        [Theory]
         [InlineData("/p:BlockOnPossibleDataLoss", false)]
         [InlineData("/p:BlockOnPossibleDataLoss false", false)]
         [InlineData("/p:BlockOnPossibleDataLoss true", true)]
