@@ -12,11 +12,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageVersion_MicrosoftTestSdk>16.8.3</PackageVersion_MicrosoftTestSdk>
+        <PackageVersion_MicrosoftTestSdk>16.10.0</PackageVersion_MicrosoftTestSdk>
         <PackageVersion_Shouldly>4.0.3</PackageVersion_Shouldly>
-        <PackageVersion_Moq>4.15.2</PackageVersion_Moq>
+        <PackageVersion_Moq>4.16.1</PackageVersion_Moq>
         <PackageVersion_XUnit>2.4.1</PackageVersion_XUnit>
         <PackageVersion_XUnitRunnerVisualStudio>2.4.3</PackageVersion_XUnitRunnerVisualStudio>
-        <PackageVersion_CoverletMsBuild>2.9.0</PackageVersion_CoverletMsBuild>
+        <PackageVersion_CoverletMsBuild>3.0.3</PackageVersion_CoverletMsBuild>
     </PropertyGroup>
 </Project>
