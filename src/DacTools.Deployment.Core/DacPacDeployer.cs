@@ -8,6 +8,7 @@ using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.DatabaseListGenerators;
 using DacTools.Deployment.Core.Logging;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace DacTools.Deployment.Core
 {
@@ -49,8 +50,8 @@ namespace DacTools.Deployment.Core
                         _log.Warning("{0} out of {1} tasks have failed.", failedTasks, totalTasks);
                     }
 
-                    if (_buildServer != null)
-                        _log.WriteRaw(LogLevel.Info, _buildServer.GenerateSetProgressMessage(completedTasks, totalTasks, "Progress Update"));
+                    if (_buildServer.IsActive)
+                        _log.WriteRaw(LogLevel.Info, _buildServer.Instance.GenerateSetProgressMessage(completedTasks, totalTasks, "Progress Update"));
                 });
 
                 asyncTaskRunner.AddTask(dacPacDeployAsyncTask);
@@ -61,20 +62,20 @@ namespace DacTools.Deployment.Core
             if (failedTasks == totalTasks) // If all Tasks Failed
             {
                 _log.Error("All Deployment Tasks Failed");
-                if (_buildServer != null)
-                    _log.WriteRaw(LogLevel.Error, _buildServer.GenerateSetStatusFailMessage("All Deployment Tasks Failed"));
+                if (_buildServer.IsActive)
+                    _log.WriteRaw(LogLevel.Error, _buildServer.Instance.GenerateSetStatusFailMessage("All Deployment Tasks Failed"));
             }
             else if (failedTasks > 0) // If any Tasks Failed
             {
                 _log.Warning("Some Deployment Tasks Failed");
-                if (_buildServer != null)
-                    _log.WriteRaw(LogLevel.Warn, _buildServer.GenerateSetStatusSucceededWithIssuesMessage("Some Deployment Tasks Failed"));
+                if (_buildServer.IsActive)
+                    _log.WriteRaw(LogLevel.Warn, _buildServer.Instance.GenerateSetStatusSucceededWithIssuesMessage("Some Deployment Tasks Failed"));
             }
             else // If all Tasks Succeeded
             {
                 _log.Info("All Deployment Tasks Succeeded");
-                if (_buildServer != null)
-                    _log.WriteRaw(LogLevel.Info, _buildServer.GenerateSetStatusSucceededMessage("All Deployment Tasks Succeeded"));
+                if (_buildServer.IsActive)
+                    _log.WriteRaw(LogLevel.Info, _buildServer.Instance.GenerateSetStatusSucceededMessage("All Deployment Tasks Succeeded"));
             }
         }
     }

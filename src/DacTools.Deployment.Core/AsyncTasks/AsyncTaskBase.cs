@@ -40,16 +40,16 @@ namespace DacTools.Deployment.Core.AsyncTasks
         {
             _log.Error($"'{DatabaseInfo}' {source} - {formatString}", args);
 
-            if (_buildServer != null)
-                _log.WriteRaw(LogLevel.Error, _buildServer.GenerateLogIssueErrorMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
+            if (_buildServer.IsActive)
+                _log.WriteRaw(LogLevel.Error, _buildServer.Instance.GenerateLogIssueErrorMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
         }
 
         protected void LogWarning(string source, string formatString, params object[] args)
         {
             _log.Warning($"'{DatabaseInfo}' {source} - {formatString}", args);
 
-            if (_buildServer != null)
-                _log.WriteRaw(LogLevel.Warn, _buildServer.GenerateLogIssueWarningMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
+            if (_buildServer.IsActive)
+                _log.WriteRaw(LogLevel.Warn, _buildServer.Instance.GenerateLogIssueWarningMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
         }
 
         protected void LogInfo(string source, string formatString, params object[] args)

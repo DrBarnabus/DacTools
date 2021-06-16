@@ -22,6 +22,7 @@ namespace DacTools.Deployment.Core.Common
             foreach (var buildServer in _buildServers)
                 try
                 {
+                    _log.Debug($"Checking if build server '{buildServer.GetType().Name}' is applicable.");
                     if (buildServer.CanApplyToCurrentContext())
                     {
                         _log.Info($"Applicable build server found: '{buildServer.GetType().Name}'.");

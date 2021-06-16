@@ -18,10 +18,10 @@ namespace DacTools.Deployment.Core
 
             services.AddSingleton<IBuildServer, AzurePipelines>();
             services.AddSingleton<IBuildServerResolver, BuildServerResolver>();
-            services.AddSingleton(serviceProvider =>
+            services.AddSingleton<IActiveBuildServer, ActiveBuildServer>(serviceProvider =>
             {
                 var buildServerResolver = serviceProvider.GetRequiredService<IBuildServerResolver>();
-                return buildServerResolver.Resolve() as IActiveBuildServer;
+                return new ActiveBuildServer(buildServerResolver.Resolve());
             });
 
             services.AddSingleton<IDacPacDeployer, DacPacDeployer>();

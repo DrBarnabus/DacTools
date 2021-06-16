@@ -2,7 +2,10 @@
 
 namespace DacTools.Deployment.Core.Common
 {
-    public interface IActiveBuildServer : IBuildServer
+    public interface IActiveBuildServer
     {
+        bool IsActive { get; }
+
+        IBuildServer Instance { get; }
     }
 }
