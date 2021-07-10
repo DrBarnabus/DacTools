@@ -4,16 +4,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.AsyncTasks;
 using DacTools.Deployment.Core.DatabaseListGenerators;
+using System;
 
 namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 {
     public class TestAsyncTask : IAsyncTask
     {
-        public delegate void AsyncTaskCompletedDelegate(TestAsyncTask task);
+        private readonly Action<TestAsyncTask> _asyncTaskCompleted;
 
-        private readonly AsyncTaskCompletedDelegate _asyncTaskCompleted;
-
-        public TestAsyncTask(int taskId, AsyncTaskCompletedDelegate asyncTaskCompleted)
+        public TestAsyncTask(int taskId, Action<TestAsyncTask> asyncTaskCompleted)
         {
             TaskId = taskId;
             _asyncTaskCompleted = asyncTaskCompleted;
@@ -21,7 +20,9 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 
         public int TaskId { get; }
 
-        public void Setup(DatabaseInfo databaseInfo, AsyncTaskBase.ProgressUpdateDelegate progressUpdate)
+        public DatabaseInfo DatabaseInfo { get; } = null;
+
+        public void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long> progressUpdate)
         {
         }
 

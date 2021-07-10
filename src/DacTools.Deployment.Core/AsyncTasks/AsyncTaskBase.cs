@@ -11,8 +11,6 @@ namespace DacTools.Deployment.Core.AsyncTasks
 {
     public abstract class AsyncTaskBase : IAsyncTask
     {
-        public delegate void ProgressUpdateDelegate(AsyncTaskBase asyncTask, bool successful, long elapsedMilliseconds);
-
         private readonly ILog _log;
         private readonly IActiveBuildServer _buildServer;
 
@@ -24,11 +22,11 @@ namespace DacTools.Deployment.Core.AsyncTasks
         }
 
         protected Arguments Arguments { get; }
-        protected ProgressUpdateDelegate ProgressUpdate { get; private set; }
+        protected Action<IAsyncTask, bool, long> ProgressUpdate { get; private set; }
 
         public DatabaseInfo DatabaseInfo { get; private set; }
 
-        public void Setup(DatabaseInfo databaseInfo, ProgressUpdateDelegate progressUpdate)
+        public void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long> progressUpdate)
         {
             DatabaseInfo = databaseInfo ?? throw new ArgumentNullException(nameof(databaseInfo));
             ProgressUpdate = progressUpdate ?? throw new ArgumentNullException(nameof(progressUpdate));

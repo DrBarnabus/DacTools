@@ -39,10 +39,10 @@ namespace DacTools.Deployment
                 .ConfigureAppConfiguration((hostContext, configApp) => { configApp.AddCommandLine(args); })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddServiceModule(new DeploymentCoreServiceModule());
-                    services.AddServiceModule(new DeploymentServiceModule());
+                    services.AddServiceModule<DeploymentCoreServiceModule>();
+                    services.AddServiceModule<DeploymentServiceModule>();
 
-                    services.AddSingleton(sp => Options.Create(sp.GetService<IArgumentParser>().ParseArguments(args)));
+                    services.AddSingleton(sp => Options.Create(sp.GetRequiredService<IArgumentParser>().ParseArguments(args)));
 
                     services.AddHostedService<DeploymentApp>();
                 })

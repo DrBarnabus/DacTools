@@ -48,7 +48,7 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             var mockBuildServer = new Mock<IActiveBuildServer>();
             var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
 
-            void ProgressUpdate(AsyncTaskBase asyncTask, bool succeeded, long elapsedMiliseconds)
+            void ProgressUpdate(IAsyncTask asyncTask, bool succeeded, long elapsedMiliseconds)
             {
                 delegateCalled = true;
                 asyncTask.DatabaseInfo.ShouldBe(databaseInfo);

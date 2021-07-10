@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DacTools.Deployment.Core.AsyncTasks;
 using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.Logging;
+using System;
 
 namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 {
@@ -16,7 +17,7 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 
         public Arguments PublicArguments => Arguments;
 
-        public ProgressUpdateDelegate PublicProgressUpdate => ProgressUpdate;
+        public Action<IAsyncTask, bool, long> PublicProgressUpdate => ProgressUpdate;
 
         public override Task Run(CancellationToken cancellationToken)
         {
