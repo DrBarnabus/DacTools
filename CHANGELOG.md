@@ -3,6 +3,22 @@
 All notable changes to this project will be automatically documented in this file.
 
 
+## [0.4.0](https://github.com/DrBarnabus/DacTools/compare/v0.3.0...v0.4.0) (2021-07-12)
+
+
+### Features
+
+* **deployment:** add command line argument to enable azpipelines integration ([bfbd76a](https://github.com/DrBarnabus/DacTools/commit/bfbd76ad5a445401aed3656147385060871f4a6f))
+* **deployment:** add files object type to default do not drop list ([5940742](https://github.com/DrBarnabus/DacTools/commit/59407422d55b54e9d2d9e4a83402b22ecac83e69))
+* **deployment:** add ignorefileandlogfilepath as a serviced dacdeployoptions value ([c111815](https://github.com/DrBarnabus/DacTools/commit/c11181544802d7e39a36d412d3d5f0b8bd3c3fc4))
+
+
+### Bug Fixes
+
+* **deployment:** azure pipelines task.complete messages now use correct format ([d1226be](https://github.com/DrBarnabus/DacTools/commit/d1226be9974639e2a0f147c3fdaffc3e8cee23b0))
+* **deployment:** change to fix case sensitive command line arguments ([602dae2](https://github.com/DrBarnabus/DacTools/commit/602dae20965a9b20194e09fd844261ce58659ac9))
+* **deployment:** fixes issue with active build server ([bad6570](https://github.com/DrBarnabus/DacTools/commit/bad65707dbe9f59059e2ebec8dd998b597616e6d))
+
 ## [0.3.0](https://github.com/DrBarnabus/DacTools/compare/v0.2.0...v0.3.0) (2021-01-10)
 
 
