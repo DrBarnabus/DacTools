@@ -11,7 +11,7 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
 {
     public class BlacklistDatabaseListGenerator : IBlacklistDatabaseListGenerator
     {
-        private const string QueryText = "SELECT database_id, name FROM sys.databases WHERE owner_sid <> 0x01 AND name <> 'master'";
+        private const string QueryText = "SELECT database_id, name FROM sys.databases WHERE database_id > 4";
 
         private readonly Arguments _arguments;
 
