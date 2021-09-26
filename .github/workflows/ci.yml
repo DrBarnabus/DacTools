@@ -244,7 +244,7 @@ jobs:
         key: tools-${{ runner.os }}-${{ hashFiles('./build/**') }}
     -
       name: Download Framework Dependent Packages
-      uses: actions/download-artifacts@v2
+      uses: actions/download-artifact@v2
       with:
         name: framework-dependent
         path: ${{ github.workspace }}/artifacts/packages/framework-dependent
