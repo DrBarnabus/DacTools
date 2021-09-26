@@ -4,12 +4,12 @@ DacTools is a tool that can be used to deploy DacPac files to Microsoft SQL Serv
 
 It was originally designed for use in Multi-Tenant scenarios where you may have a database per Customer (or Tenant) but you want to use a sqlproj to keep the schema of those databases in line.
 
-|                                        | Stable (master)                                                                | Preview & Beta (develop)                                                       |
+|                                        | Stable (main)                                                                  | Preview & Beta (develop)                                                       |
 | :------------------------------------: | :----------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
 |                               **Docs** | [![Docs][docs-badge]][docs]                                                    | [![Docs][docs-pre-badge]][docs-pre]                                            |
 |                     **GitHub Release** | [![GitHub Release][gh-rel-badge]][gh-rel]                                      |                                                                                |
-|                              **Build** | [![Build Status master][az-pipeline-master-badge]][az-pipeline-master]         | [![Build Status develop][az-pipeline-develop-badge]][az-pipeline-develop]      |
-|                           **Coverage** | [![Codecov master][codecov-master-badge]][codecov-master]                      | [![Codecov develop][codecov-develop-badge]][codecov-develop]                   |
+|                              **Build** | [![Build Status main][gh-actions-main-badge]][gh-actions-main]                 | [![Build Status develop][gh-actions-develop-badge]][gh-actions-develop]        |
+|                           **Coverage** | [![Codecov main][codecov-main-badge]][codecov-main]                            | [![Codecov develop][codecov-develop-badge]][codecov-develop]                   |
 |           **DacTools.Deployment.Tool** | [![NuGet][dtdt-badge]][dtdt]                                                   | [![NuGet][dtdt-pre-badge]][dtdt-pre]                                           |
 |           **DacTools.Deployment.Core** | [![NuGet][dtdc-badge]][dtdc]                                                   | [![NuGet][dtdc-pre-badge]][dtdc-pre]                                           |
 
@@ -39,12 +39,12 @@ Copyright (c) 2021 DrBarnabus
 [docs-pre-badge]:               https://readthedocs.org/projects/dactools/badge/?version=develop
 [gh-rel]:                       https://github.com/DrBarnabus/DacTools/releases/latest
 [gh-rel-badge]:                 https://img.shields.io/github/release/DrBarnabus/DacTools.svg
-[az-pipeline-master-badge]:     https://dev.azure.com/DrBarnabus/DacTools/_apis/build/status/DrBarnabus.DacTools?branchName=master
-[az-pipeline-master]:           https://dev.azure.com/DrBarnabus/DacTools/_build/latest?definitionId=5&branchName=master
-[az-pipeline-develop-badge]:    https://dev.azure.com/DrBarnabus/DacTools/_apis/build/status/DrBarnabus.DacTools?branchName=develop
-[az-pipeline-develop]:          https://dev.azure.com/DrBarnabus/DacTools/_build/latest?definitionId=5&branchName=develop
-[codecov-master-badge]:         https://codecov.io/gh/DrBarnabus/DacTools/branch/master/graph/badge.svg
-[codecov-master]:               https://codecov.io/gh/DrBarnabus/DacTools/branch/master
+[gh-actions-main-badge]:        https://github.com/DrBarnabus/DacTools/actions/workflows/ci.yml/badge.svg?branch=main
+[gh-actions-main]:              https://github.com/DrBarnabus/DacTools/actions/workflows/ci.yml
+[gh-actions-develop-badge]:     https://github.com/DrBarnabus/DacTools/actions/workflows/ci.yml/badge.svg?branch=develop
+[gh-actions-develop]:           https://github.com/DrBarnabus/DacTools/actions/workflows/ci.yml
+[codecov-main-badge]:           https://codecov.io/gh/DrBarnabus/DacTools/branch/main/graph/badge.svg
+[codecov-main]:                 https://codecov.io/gh/DrBarnabus/DacTools/branch/main
 [codecov-develop-badge]:        https://codecov.io/gh/DrBarnabus/DacTools/branch/develop/graph/badge.svg
 [codecov-develop]:              https://codecov.io/gh/DrBarnabus/DacTools/branch/develop
 [dtdt]:                         https://www.nuget.org/packages/DacTools.Deployment.Tool
