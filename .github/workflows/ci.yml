@@ -269,4 +269,4 @@ jobs:
     -
       name: '[Release]'
       shell: pwsh
-      run: dotnet run/publish.dll --target=PublishRelease
+      run: dotnet run/release.dll --target=PublishRelease
