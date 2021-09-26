@@ -36,6 +36,12 @@ jobs:
       name: Checkout
       uses: actions/checkout@v2
     -
+      name: 'Setup .NET 6.0.x SDK'
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
+    -
       name: Cache Cake Frosting
       id: cache-cake
       uses: actions/cache@v2
@@ -63,6 +69,12 @@ jobs:
     -
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
+    -
+      name: 'Setup .NET 6.0.x SDK'
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
     -
       name: Use Cached Cake Frosting
       id: cache-cake
@@ -122,6 +134,12 @@ jobs:
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
     -
+      name: 'Setup .NET 6.0.x SDK'
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
+    -
       name: Use Cached Cake Frosting
       id: cache-cake
       uses: actions/cache@v2
@@ -159,6 +177,12 @@ jobs:
     -
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
+    -
+      name: 'Setup .NET 6.0.x SDK'
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
     -
       name: Use Cached Cake Frosting
       id: cache-cake
@@ -198,6 +222,12 @@ jobs:
     -
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
+    -
+      name: 'Setup .NET 6.0.x SDK'
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+        include-prerelease: true
     -
       name: Use Cached Cake Frosting
       id: cache-cake
