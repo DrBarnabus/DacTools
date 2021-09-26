@@ -11,7 +11,6 @@ public class BuildParameters
     public const string MainRepoOwner = "DrBarnabus";
     public const string MainRepoName = "DacTools";
 
-    public string CoreFxVersion21 { get; private set; } = "netcoreapp2.1";
     public string CoreFxVersion31 { get; private set; } = "netcoreapp3.1";
     public string NetVersion50 { get; private set; } = "net5.0";
     public string NetVersion60 { get; private set; } = "net6.0";
