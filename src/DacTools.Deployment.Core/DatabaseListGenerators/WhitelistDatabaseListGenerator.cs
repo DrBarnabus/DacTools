@@ -36,18 +36,17 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
 
         private async Task<DatabaseInfo> GetDatabaseInfoFromNameAsync(string databaseName, CancellationToken cancellationToken)
         {
-            using (var connection = new SqlConnection(_arguments.MasterConnectionString))
-            using (var command = new SqlCommand(QueryText, connection))
-            {
-                command.Parameters.AddWithValue("@DB", databaseName);
+            await using var connection = new SqlConnection(_arguments.MasterConnectionString);
+            await connection.OpenAsync(cancellationToken);
 
-                await command.Connection.OpenAsync(cancellationToken);
-                var reader = await command.ExecuteReaderAsync(cancellationToken);
-                if (await reader.ReadAsync(cancellationToken))
-                    return new DatabaseInfo(reader.GetInt32(0), reader.GetString(1));
+            await using var command = new SqlCommand(QueryText, connection);
+            command.Parameters.AddWithValue("@DB", databaseName);
 
-                throw new InvalidOperationException($"Failed to get database info for '{databaseName}'.");
-            }
+            var reader = await command.ExecuteReaderAsync(cancellationToken);
+            if (await reader.ReadAsync(cancellationToken))
+                return new DatabaseInfo(reader.GetInt32(0), reader.GetString(1));
+
+            throw new InvalidOperationException($"Failed to get database info for '{databaseName}'.");
         }
     }
 }

@@ -76,7 +76,7 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => sut.Setup(null!, (_, __, ___) => { }));
+            Assert.Throws<ArgumentNullException>(() => sut.Setup(null!, (_, _, _) => { }));
         }
 
         [Fact]

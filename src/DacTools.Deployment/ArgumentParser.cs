@@ -85,7 +85,7 @@ namespace DacTools.Deployment
                 {
                     if (values != null && values.Any())
                         foreach (string v in values)
-                            if (!v.Contains(","))
+                            if (!v.Contains(','))
                                 arguments.AddDatabaseName(v);
                             else
                                 foreach (string subValue in v.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -109,12 +109,12 @@ namespace DacTools.Deployment
                     if (!int.TryParse(value, out int result))
                         throw new ArgumentParsingException($"Could not parse Threads value of '{value}'.");
 
-                    if (result == -1)
-                        arguments.Threads = Environment.ProcessorCount;
-                    else if (result > 0)
-                        arguments.Threads = result;
-                    else
-                        throw new ArgumentParsingException($"Threads parameter must be either minus one or greater than zero. Parsed a value of '{value}'.");
+                    arguments.Threads = result switch
+                    {
+                        -1  => Environment.ProcessorCount,
+                        > 0 => result,
+                        _   => throw new ArgumentParsingException($"Threads parameter must be either minus one or greater than zero. Parsed a value of '{value}'.")
+                    };
 
                     continue;
                 }
@@ -129,7 +129,7 @@ namespace DacTools.Deployment
 
                 if (name.IsVariable(out string? variableName))
                 {
-                    if (values != null && values.Length > 1)
+                    if (values is { Length: > 1 })
                         throw new ArgumentParsingException($"A value for Variable named '{variableName}' has been defined more than once.");
 
                     arguments.DacDeployOptions.SqlCommandVariableValues.Add(variableName, value);
@@ -184,7 +184,7 @@ namespace DacTools.Deployment
                     {
                         var temporaryObjectTypes = new List<ObjectType>();
                         foreach (string v in values)
-                            if (!v.Contains(","))
+                            if (!v.Contains(','))
                             {
                                 if (Enum.TryParse<ObjectType>(v, true, out var result))
                                     temporaryObjectTypes.Add(result);
@@ -241,14 +241,12 @@ namespace DacTools.Deployment
             string? currentKey = null;
             bool argumentRequiresValue = false;
 
-            for (int i = 0; i < namedArguments.Count; i++)
+            foreach (string arg in namedArguments)
             {
-                string arg = namedArguments[i];
-
                 if (!argumentRequiresValue && arg.IsSwitchArgument())
                 {
                     currentKey = arg;
-                    argumentRequiresValue = arg.ArgumentRequiresValue(i);
+                    argumentRequiresValue = arg.ArgumentRequiresValue();
                     switchesAndValues.Add(currentKey, null);
                 }
                 else if (currentKey != null)

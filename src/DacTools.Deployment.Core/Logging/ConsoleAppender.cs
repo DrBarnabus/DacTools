@@ -9,7 +9,7 @@ namespace DacTools.Deployment.Core.Logging
     {
         private static readonly IDictionary<LogLevel, (ConsoleColor, ConsoleColor)> ColorPalette = CreateColorPalette();
 
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
 
         public void WriteTo(LogLevel logLevel, string message)
         {

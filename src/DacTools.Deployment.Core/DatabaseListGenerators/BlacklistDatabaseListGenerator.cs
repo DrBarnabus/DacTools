@@ -33,18 +33,17 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
 
         private async Task<List<DatabaseInfo>> GetAllNonSystemDatabasesAsync(CancellationToken cancellationToken)
         {
-            using (var connection = new SqlConnection(_arguments.MasterConnectionString))
-            using (var command = new SqlCommand(QueryText, connection))
-            {
-                await command.Connection.OpenAsync(cancellationToken);
-                var reader = await command.ExecuteReaderAsync(cancellationToken);
+            await using var connection = new SqlConnection(_arguments.MasterConnectionString);
+            await connection.OpenAsync(cancellationToken);
 
-                var databaseInfos = new List<DatabaseInfo>();
-                while (await reader.ReadAsync(cancellationToken))
-                    databaseInfos.Add(new DatabaseInfo(reader.GetInt32(0), reader.GetString(1)));
+            await using var command = new SqlCommand(QueryText, connection);
+            var reader = await command.ExecuteReaderAsync(cancellationToken);
 
-                return databaseInfos;
-            }
+            var databaseInfos = new List<DatabaseInfo>();
+            while (await reader.ReadAsync(cancellationToken))
+                databaseInfos.Add(new DatabaseInfo(reader.GetInt32(0), reader.GetString(1)));
+
+            return databaseInfos;
         }
     }
 }

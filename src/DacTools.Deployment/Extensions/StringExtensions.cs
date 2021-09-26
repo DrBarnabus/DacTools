@@ -37,10 +37,10 @@ namespace DacTools.Deployment.Extensions
                 return false;
 
             if (value.StartsWith("-"))
-                value = value.Substring(1);
+                value = value[1..];
 
             if (value.StartsWith("/"))
-                value = value.Substring(1);
+                value = value[1..];
 
             return string.Equals(switchName, value, switchName.Length == 1 ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase);
         }
@@ -53,7 +53,7 @@ namespace DacTools.Deployment.Extensions
                 return false;
 
             if (value.StartsWith("-") || value.StartsWith("/"))
-                value = value.Substring(1);
+                value = value[1..];
 
             var match = Regex.Match(value, "^variable:([^ ].*)$");
             if (!match.Success)
@@ -69,10 +69,10 @@ namespace DacTools.Deployment.Extensions
                 return false;
 
             if (value.StartsWith("-p:"))
-                value = value.Substring(3);
+                value = value[3..];
 
             if (value.StartsWith("/p:"))
-                value = value.Substring(3);
+                value = value[3..];
 
             return string.Equals(parameterName, value, StringComparison.OrdinalIgnoreCase);
         }
@@ -80,15 +80,14 @@ namespace DacTools.Deployment.Extensions
         public static bool IsHelp(this string singleArgument) =>
             singleArgument == "?" || singleArgument.IsSwitch("h") || singleArgument.IsSwitch("help") || singleArgument.IsSwitch("?");
 
-        public static bool ArgumentRequiresValue(this string argument, int argumentIndex)
+        public static bool ArgumentRequiresValue(this string argument)
         {
-            var booleanArguments = new[]
-            {
+            string[] booleanArguments = {
                 "blacklist",
                 "b"
             };
 
-            return !booleanArguments.Contains(argument.Substring(1), StringComparer.OrdinalIgnoreCase);
+            return !booleanArguments.Contains(argument, StringComparer.OrdinalIgnoreCase);
         }
     }
 }

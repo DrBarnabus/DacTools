@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.DatabaseListGenerators;
-using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core.AsyncTasks

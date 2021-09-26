@@ -50,7 +50,7 @@ namespace DacTools.Deployment.Core.Tests.BuildServers
             // Setup
             var environment = new TestEnvironment();
             var log = new Mock<ILog>().Object;
-            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments(true));
+            var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
             environment.SetEnvironmentVariable("TF_BUILD", variableValue);
 

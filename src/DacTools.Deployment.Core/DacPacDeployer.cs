@@ -8,7 +8,6 @@ using DacTools.Deployment.Core.Common;
 using DacTools.Deployment.Core.DatabaseListGenerators;
 using DacTools.Deployment.Core.Logging;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace DacTools.Deployment.Core
 {
@@ -39,7 +38,7 @@ namespace DacTools.Deployment.Core
             foreach (var database in databases)
             {
                 var dacPacDeployAsyncTask = _dacPacDeployAsyncTaskFactory.CreateAsyncTask();
-                dacPacDeployAsyncTask.Setup(database, (task, successful, elapsedMilliseconds) =>
+                dacPacDeployAsyncTask.Setup(database, (_, successful, _) =>
                 {
                     Interlocked.Increment(ref completedTasks);
                     _log.Info("Completed {0} out of {1} tasks.", completedTasks, totalTasks);

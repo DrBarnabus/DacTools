@@ -23,7 +23,7 @@ namespace DacTools.Deployment
             }
             catch (ArgumentParsingException ex)
             {
-                Console.Error.WriteLine("Failed to Parse Arguments with Error: {0}", ex.Message);
+                Console.Error.WriteLine($"Failed to Parse Arguments with Error: {ex.Message}");
                 Console.Error.WriteLine("For Usage Help, run the program with one of the following arguments; -?, -h or -help.");
                 Console.Error.WriteLine("Alternatively, please consult the documentation for more details.");
                 return 1;
@@ -36,8 +36,8 @@ namespace DacTools.Deployment
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             new HostBuilder()
-                .ConfigureAppConfiguration((hostContext, configApp) => { configApp.AddCommandLine(args); })
-                .ConfigureServices((hostContext, services) =>
+                .ConfigureAppConfiguration((_, configApp) => { configApp.AddCommandLine(args); })
+                .ConfigureServices((_, services) =>
                 {
                     services.AddServiceModule<DeploymentCoreServiceModule>();
                     services.AddServiceModule<DeploymentServiceModule>();
