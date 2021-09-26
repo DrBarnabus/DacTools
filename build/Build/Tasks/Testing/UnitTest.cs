@@ -96,8 +96,7 @@ namespace Build.Tasks.Testing
                 CollectCoverage = true,
                 CoverletOutputFormat = CoverletOutputFormat.cobertura,
                 CoverletOutputDirectory = Paths.TestResults,
-                CoverletOutputName = $"{projectName}.coverage.xml",
-                Exclude = new List<string> { "[Way2Pay.Ng.ApiX.Tests.Shared]*" }
+                CoverletOutputName = $"{projectName}.coverage.xml"
             };
 
             context.DotNetCoreTest(project.FullPath, settings, coverletSettings);

@@ -29,7 +29,7 @@ namespace Build.Tasks.Testing
 
         public override void Run(BuildContext context)
         {
-            var coverageFiles = context.GetFiles($"{Paths.TestResults}/*.coverage.xml");
+            var coverageFiles = context.GetFiles($"{Paths.TestResults}/*.coverage.*.xml");
 
             string? token = context.Credentials?.Codecov?.Token;
             if (string.IsNullOrEmpty(token))
