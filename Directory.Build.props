@@ -7,6 +7,7 @@
         <Copyright>Copyright DrBarnabus 2020.</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Company>$(Authors)</Company>
+        <RepositoryUrl>https://github.com/DrBarnabus/DacTools</RepositoryUrl>
 
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
