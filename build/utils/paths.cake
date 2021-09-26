@@ -20,6 +20,7 @@ public class BuildPaths
         var artifactsBinCoreFx21Dir = artifactsBinDir.Combine(parameters.CoreFxVersion21);
         var artifactsBinCoreFx31Dir = artifactsBinDir.Combine(parameters.CoreFxVersion31);
         var artifactsBinNet51Dir = artifactsBinDir.Combine(parameters.NetVersion50);
+        var artifactsBinNet60Dir = artifactsBinDir.Combine(parameters.NetVersion60);
         var artifactsBinFullFx472Dir = artifactsBinDir.Combine(parameters.FullFxVersion472);
 
         var nativeDir = artifactsDir.Combine("native");
@@ -34,6 +35,7 @@ public class BuildPaths
             artifactsBinCoreFx21Dir,
             artifactsBinCoreFx31Dir,
             artifactsBinNet51Dir,
+            artifactsBinNet60Dir,
             artifactsBinFullFx472Dir,
             nativeDir,
             buildArtifactDir,
@@ -55,6 +57,7 @@ public class BuildDirectories
     public DirectoryPath ArtifactsBinCoreFx21 { get; private set; }
     public DirectoryPath ArtifactsBinCoreFx31 { get; private set; }
     public DirectoryPath ArtifactsBinNet50 { get; private set; }
+    public DirectoryPath ArtifactsBinNet60 { get; private set; }
     public DirectoryPath ArtifactsBinFullFx472 { get; private set; }
     public DirectoryPath Native { get; private set; }
     public DirectoryPath BuildArtifact { get; private set; }
@@ -69,6 +72,7 @@ public class BuildDirectories
         DirectoryPath artifactsBinCoreFx21Dir,
         DirectoryPath artifactsBinCoreFx31Dir,
         DirectoryPath artifactsBinNet50,
+        DirectoryPath artifactsBinNet60,
         DirectoryPath artifactsBinFullFx472Dir,
         DirectoryPath nativeDir,
         DirectoryPath buildArtifactDir,
@@ -80,6 +84,7 @@ public class BuildDirectories
         ArtifactsBinCoreFx21 = artifactsBinCoreFx21Dir;
         ArtifactsBinCoreFx31 = artifactsBinCoreFx31Dir;
         ArtifactsBinNet50 = artifactsBinNet50;
+        ArtifactsBinNet60 = artifactsBinNet60;
         ArtifactsBinFullFx472 = artifactsBinFullFx472Dir;
         Native = nativeDir;
         BuildArtifact = buildArtifactDir;
@@ -91,6 +96,7 @@ public class BuildDirectories
             ArtifactsBinCoreFx21,
             ArtifactsBinCoreFx31,
             ArtifactsBinNet50,
+            ArtifactsBinNet60,
             ArtifactsBinFullFx472,
             Native,
             BuildArtifact,

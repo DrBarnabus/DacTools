@@ -14,6 +14,7 @@ public class BuildParameters
     public string CoreFxVersion21 { get; private set; } = "netcoreapp2.1";
     public string CoreFxVersion31 { get; private set; } = "netcoreapp3.1";
     public string NetVersion50 { get; private set; } = "net5.0";
+    public string NetVersion60 { get; private set; } = "net6.0";
     public string FullFxVersion472 { get; private set; } = "net472";
 
     public bool EnabledUnitTests { get; private set; }

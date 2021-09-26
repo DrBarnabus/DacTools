@@ -50,7 +50,7 @@ Task("Test")
     .IsDependentOn("Build")
     .Does<BuildParameters>(parameters =>
     {
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50, parameters.NetVersion60 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -142,7 +142,7 @@ Task("Pack-Prepare")
         {
             var settings = new DotNetCorePublishSettings
             {
-                Framework = parameters.NetVersion50,
+                Framework = parameters.NetVersion60,
                 Runtime = runtime,
                 NoRestore = false,
                 Configuration = parameters.Configuration,
@@ -153,7 +153,7 @@ Task("Pack-Prepare")
             DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50, parameters.NetVersion60 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
@@ -210,7 +210,7 @@ Task("Zip-Files")
             GZipCompress(sourceDir, tarFile, filePaths);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50 };
+        var frameworks = new List<string> { parameters.CoreFxVersion21, parameters.CoreFxVersion31, parameters.NetVersion50, parameters.NetVersion60 };
         if (parameters.IsRunningOnWindows)
             frameworks.Add(parameters.FullFxVersion472);
 
