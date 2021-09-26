@@ -5,7 +5,7 @@ It was originally designed for use in Multi-Tenant scenarios where you may have 
 
 ## Compatibility
 
-DacTools works on Windows, Linux and Mac. It is supported on .NET 5, .NET Core 3.1, .NET Core 2.1 and .NET Framework 4.7.2+.
+DacTools works on Windows, Linux and Mac. It is supported on .NET 6 (Preview/RC), .NET 5 and .NET Core 3.1.
 
 DacTools currently makes use of Microsoft.SqlServer.DacFx v150.x and as such supports the same Microsoft SQL Server versions supported by that package. Currently that includes; Microsoft SQL Server 2008, 2008R2, 2012, 2014, 2016, 2017, 2019 and Microsoft Azure SQL Databases.
 
