@@ -51,8 +51,6 @@ Task("Test")
     .Does<BuildParameters>(parameters =>
     {
         var frameworks = new List<string> { parameters.CoreFxVersion31, parameters.NetVersion50, parameters.NetVersion60 };
-        if (parameters.IsRunningOnWindows)
-            frameworks.Add(parameters.FullFxVersion472);
 
         var testResultsPath = parameters.Paths.Directories.TestResultsOutput;
 
@@ -153,11 +151,8 @@ Task("Pack-Prepare")
             DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
         }
 
-        var frameworks = new List<string> { parameters.CoreFxVersion31, parameters.NetVersion50, parameters.NetVersion60 };
-        if (parameters.IsRunningOnWindows)
-            frameworks.Add(parameters.FullFxVersion472);
-
         // Publish Framework-Dependent Deployment
+        var frameworks = new List<string> { parameters.CoreFxVersion31, parameters.NetVersion50, parameters.NetVersion60 };
         foreach (var framework in frameworks)
         {
             var settings = new DotNetCorePublishSettings
@@ -211,9 +206,6 @@ Task("Zip-Files")
         }
 
         var frameworks = new List<string> { parameters.CoreFxVersion31, parameters.NetVersion50, parameters.NetVersion60 };
-        if (parameters.IsRunningOnWindows)
-            frameworks.Add(parameters.FullFxVersion472);
-
         foreach (var framework in frameworks)
         {
             var sourceDir = parameters.Paths.Directories.ArtifactsBin.Combine(framework);

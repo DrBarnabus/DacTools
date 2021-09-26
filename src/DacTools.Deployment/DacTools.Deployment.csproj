@@ -6,10 +6,6 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(ExcludeFramework)' != 'true' And '$(PackAsTool)' != 'true' ">
-        <TargetFrameworks>net472;$(TargetFrameworks);</TargetFrameworks>
-    </PropertyGroup>
-
     <PropertyGroup Condition=" '$(PackAsTool)' == 'true' ">
         <ToolCommandName>dactools-deployment</ToolCommandName>
         <PackageId>DacTools.Deployment.Tool</PackageId>

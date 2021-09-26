@@ -20,7 +20,6 @@ public class BuildPaths
         var artifactsBinCoreFx31Dir = artifactsBinDir.Combine(parameters.CoreFxVersion31);
         var artifactsBinNet50Dir = artifactsBinDir.Combine(parameters.NetVersion50);
         var artifactsBinNet60Dir = artifactsBinDir.Combine(parameters.NetVersion60);
-        var artifactsBinFullFx472Dir = artifactsBinDir.Combine(parameters.FullFxVersion472);
 
         var nativeDir = artifactsDir.Combine("native");
         var buildArtifactDir = artifactsDir.Combine("build-artifact");
@@ -34,7 +33,6 @@ public class BuildPaths
             artifactsBinCoreFx31Dir,
             artifactsBinNet50Dir,
             artifactsBinNet60Dir,
-            artifactsBinFullFx472Dir,
             nativeDir,
             buildArtifactDir,
             testResultsOutputDir
@@ -56,7 +54,6 @@ public class BuildDirectories
     public DirectoryPath ArtifactsBinCoreFx31 { get; private set; }
     public DirectoryPath ArtifactsBinNet50 { get; private set; }
     public DirectoryPath ArtifactsBinNet60 { get; private set; }
-    public DirectoryPath ArtifactsBinFullFx472 { get; private set; }
     public DirectoryPath Native { get; private set; }
     public DirectoryPath BuildArtifact { get; private set; }
     public DirectoryPath TestResultsOutput { get; private set; }
@@ -70,7 +67,6 @@ public class BuildDirectories
         DirectoryPath artifactsBinCoreFx31Dir,
         DirectoryPath artifactsBinNet50,
         DirectoryPath artifactsBinNet60,
-        DirectoryPath artifactsBinFullFx472Dir,
         DirectoryPath nativeDir,
         DirectoryPath buildArtifactDir,
         DirectoryPath testResultsOutputDir)
@@ -81,7 +77,6 @@ public class BuildDirectories
         ArtifactsBinCoreFx31 = artifactsBinCoreFx31Dir;
         ArtifactsBinNet50 = artifactsBinNet50;
         ArtifactsBinNet60 = artifactsBinNet60;
-        ArtifactsBinFullFx472 = artifactsBinFullFx472Dir;
         Native = nativeDir;
         BuildArtifact = buildArtifactDir;
         TestResultsOutput = testResultsOutputDir;
@@ -92,7 +87,6 @@ public class BuildDirectories
             ArtifactsBinCoreFx31,
             ArtifactsBinNet50,
             ArtifactsBinNet60,
-            ArtifactsBinFullFx472,
             Native,
             BuildArtifact,
             TestResultsOutput
