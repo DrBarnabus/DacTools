@@ -1,4 +1,5 @@
 <Project>
+
     <PropertyGroup>
         <Authors>DrBarnabus and Contributors</Authors>
         <PackageProjectUrl>https://github.com/DrBarnabus/DacTools</PackageProjectUrl>
@@ -11,12 +12,4 @@
         <WarningsAsErrors />
     </PropertyGroup>
 
-    <PropertyGroup>
-        <PackageVersion_MicrosoftTestSdk>16.10.0</PackageVersion_MicrosoftTestSdk>
-        <PackageVersion_Shouldly>4.0.3</PackageVersion_Shouldly>
-        <PackageVersion_Moq>4.16.1</PackageVersion_Moq>
-        <PackageVersion_XUnit>2.4.1</PackageVersion_XUnit>
-        <PackageVersion_XUnitRunnerVisualStudio>2.4.3</PackageVersion_XUnitRunnerVisualStudio>
-        <PackageVersion_CoverletMsBuild>3.0.3</PackageVersion_CoverletMsBuild>
-    </PropertyGroup>
 </Project>
