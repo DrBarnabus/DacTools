@@ -1,6 +1,7 @@
 // Copyright (c) 2021 DrBarnabus
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,15 +23,15 @@ namespace DacTools.Deployment.Extensions
 
         public static bool IsFalse(this string value) => Falses.Contains(value, StringComparer.OrdinalIgnoreCase);
 
-        public static bool IsValidFilePath(this string filepath) =>
+        public static bool IsValidFilePath(this string? filepath) =>
             !string.IsNullOrEmpty(filepath) && File.Exists(filepath);
 
-        public static bool IsSwitchArgument(this string value) =>
+        public static bool IsSwitchArgument(this string? value) =>
             value != null
             && (value.StartsWith("-") || value.StartsWith("/"))
             && !Regex.Match(value, @"(-/)\w+:").Success;
 
-        public static bool IsSwitch(this string value, string switchName)
+        public static bool IsSwitch(this string? value, string switchName)
         {
             if (value == null)
                 return false;
@@ -44,7 +45,7 @@ namespace DacTools.Deployment.Extensions
             return string.Equals(switchName, value, switchName.Length == 1 ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase);
         }
 
-        public static bool IsVariable(this string value, out string variableName)
+        public static bool IsVariable(this string? value, [NotNullWhen(true)] out string? variableName)
         {
             variableName = null;
 
@@ -62,7 +63,7 @@ namespace DacTools.Deployment.Extensions
             return true;
         }
 
-        public static bool IsParameter(this string value, string parameterName)
+        public static bool IsParameter(this string? value, string parameterName)
         {
             if (value == null)
                 return false;

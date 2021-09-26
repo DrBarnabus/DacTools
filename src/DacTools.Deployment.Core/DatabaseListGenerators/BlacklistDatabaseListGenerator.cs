@@ -20,7 +20,7 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
             _arguments = arguments.Value;
         }
 
-        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string> databaseNames = null, CancellationToken cancellationToken = default)
+        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null, CancellationToken cancellationToken = default)
         {
             var allDatabases = await GetAllNonSystemDatabasesAsync(cancellationToken);
 

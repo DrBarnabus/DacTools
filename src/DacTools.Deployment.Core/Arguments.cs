@@ -11,19 +11,20 @@ namespace DacTools.Deployment.Core
         public readonly ISet<string> DatabaseNames = new HashSet<string>();
         public DacDeployOptions DacDeployOptions;
 
-        public string DacPacFilePath;
+        public string? DacPacFilePath;
         public bool IsBlacklist;
         public bool IsHelp;
         public bool IsVersion;
         public LogLevel LogLevel = LogLevel.Info;
-        public string LogFilePath = null;
-        public string MasterConnectionString;
+        public string? LogFilePath = null;
+        public string? MasterConnectionString;
         public int Threads;
 
         public bool AzPipelines;
 
         public Arguments()
         {
+            DacDeployOptions = new DacDeployOptions();
             SetDefaultDacDeployOptions();
         }
 

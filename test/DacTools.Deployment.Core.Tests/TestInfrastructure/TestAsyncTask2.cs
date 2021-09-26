@@ -17,7 +17,7 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 
         public Arguments PublicArguments => Arguments;
 
-        public Action<IAsyncTask, bool, long> PublicProgressUpdate => ProgressUpdate;
+        public Action<IAsyncTask, bool, long>? PublicProgressUpdate => ProgressUpdate;
 
         public override Task Run(CancellationToken cancellationToken)
         {
@@ -26,7 +26,7 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
             LogWarning("Internal", "Test");
             LogError("Internal", "Test");
 
-            ProgressUpdate(this, true, 100);
+            ProgressUpdate?.Invoke(this, true, 100);
 
             return Task.CompletedTask;
         }

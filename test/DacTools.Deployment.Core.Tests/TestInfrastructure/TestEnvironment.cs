@@ -14,7 +14,7 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
             _variableDictionary = new Dictionary<string, string>();
         }
 
-        public string GetEnvironmentVariable(string variableName) => _variableDictionary.TryGetValue(variableName, out string value) ? value : null;
+        public string? GetEnvironmentVariable(string variableName) => _variableDictionary.TryGetValue(variableName, out string? value) ? value : null;
 
         public void SetEnvironmentVariable(string variableName, string value) => _variableDictionary[variableName] = value;
     }

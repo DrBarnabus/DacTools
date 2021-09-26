@@ -32,10 +32,10 @@ namespace DacTools.Deployment
 
             var switchesAndValues = CollectSwitchesAndValuesFromArguments(commandLineArguments);
 
-            foreach (string name in switchesAndValues.AllKeys)
+            foreach (string? name in switchesAndValues.AllKeys)
             {
-                string[] values = switchesAndValues.GetValues(name);
-                string value = values?.FirstOrDefault();
+                string[]? values = switchesAndValues.GetValues(name);
+                string? value = values?.FirstOrDefault();
 
                 if (name.IsSwitch("version"))
                 {
@@ -127,7 +127,7 @@ namespace DacTools.Deployment
                     continue;
                 }
 
-                if (name.IsVariable(out string variableName))
+                if (name.IsVariable(out string? variableName))
                 {
                     if (values != null && values.Length > 1)
                         throw new ArgumentParsingException($"A value for Variable named '{variableName}' has been defined more than once.");
@@ -212,10 +212,10 @@ namespace DacTools.Deployment
             return arguments;
         }
 
-        private static bool ParseBooleanParameter(IReadOnlyList<string> values, bool defaultValue)
+        private static bool ParseBooleanParameter(IReadOnlyList<string>? values, bool defaultValue)
         {
             EnsureArgumentValueCount(values);
-            string value = values?.FirstOrDefault();
+            string? value = values?.FirstOrDefault();
 
             if (value is null)
                 return defaultValue;
@@ -229,7 +229,7 @@ namespace DacTools.Deployment
             throw new InvalidOperationException($"Could not parse Boolean Parameter Value of '{value}'.");
         }
 
-        private static void EnsureArgumentValueCount(IReadOnlyList<string> values, int maxArguments = 1)
+        private static void EnsureArgumentValueCount(IReadOnlyList<string>? values, int maxArguments = 1)
         {
             if (values != null && values.Count > maxArguments)
                 throw new ArgumentParsingException($"Could not parse command line parameter '{values[maxArguments]}'.");
@@ -238,7 +238,7 @@ namespace DacTools.Deployment
         private static NameValueCollection CollectSwitchesAndValuesFromArguments(IReadOnlyList<string> namedArguments)
         {
             var switchesAndValues = new NameValueCollection(StringComparer.Ordinal);
-            string currentKey = null;
+            string? currentKey = null;
             bool argumentRequiresValue = false;
 
             for (int i = 0; i < namedArguments.Count; i++)

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace DacTools.Deployment.Core.DatabaseListGenerators
 {
@@ -20,7 +21,7 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
             _arguments = arguments.Value;
         }
 
-        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string> databaseNames = null, CancellationToken cancellationToken = default)
+        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null, CancellationToken cancellationToken = default)
         {
             if (databaseNames is null || !databaseNames.Any())
                 return new List<DatabaseInfo>();
@@ -45,7 +46,7 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
                 if (await reader.ReadAsync(cancellationToken))
                     return new DatabaseInfo(reader.GetInt32(0), reader.GetString(1));
 
-                return null;
+                throw new InvalidOperationException($"Failed to get database info for '{databaseName}'.");
             }
         }
     }

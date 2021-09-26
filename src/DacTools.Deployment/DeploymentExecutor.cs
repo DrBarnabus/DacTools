@@ -51,6 +51,9 @@ namespace DacTools.Deployment
             if (arguments.LogFilePath != null)
                 _log.AddLogAppender(new FileAppender(arguments.LogFilePath));
 
+            if (string.IsNullOrEmpty(arguments.DacPacFilePath))
+                throw new FatalException("DacPac FilePath was null or empty!", true);
+
             if (!File.Exists(arguments.DacPacFilePath))
                 throw new FatalException($"DacPac FilePath '{arguments.DacPacFilePath}' does not exist!", true);
 

@@ -9,9 +9,10 @@ namespace DacTools.Deployment.Core.AsyncTasks
 {
     public interface IAsyncTask
     {
-        DatabaseInfo DatabaseInfo { get; }
+        DatabaseInfo? DatabaseInfo { get; }
 
         void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long>  progressUpdate);
+        
         Task Run(CancellationToken cancellationToken);
     }
 }

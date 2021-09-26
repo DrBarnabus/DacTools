@@ -21,7 +21,7 @@ namespace DacTools.Deployment
             if (assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false).FirstOrDefault() is AssemblyInformationalVersionAttribute attribute)
                 return attribute.InformationalVersion;
 
-            return assembly.GetName().Version.ToString();
+            return assembly.GetName().Version?.ToString() ?? "Unknown";
         }
     }
 }

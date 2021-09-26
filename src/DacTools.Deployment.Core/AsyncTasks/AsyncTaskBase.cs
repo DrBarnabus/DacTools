@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.DatabaseListGenerators;
+using DacTools.Deployment.Core.Exceptions;
 using DacTools.Deployment.Core.Logging;
 
 namespace DacTools.Deployment.Core.AsyncTasks
@@ -22,9 +23,10 @@ namespace DacTools.Deployment.Core.AsyncTasks
         }
 
         protected Arguments Arguments { get; }
-        protected Action<IAsyncTask, bool, long> ProgressUpdate { get; private set; }
 
-        public DatabaseInfo DatabaseInfo { get; private set; }
+        protected Action<IAsyncTask, bool, long>? ProgressUpdate { get; private set; }
+
+        public DatabaseInfo? DatabaseInfo { get; private set; }
 
         public void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long> progressUpdate)
         {
@@ -38,7 +40,7 @@ namespace DacTools.Deployment.Core.AsyncTasks
         {
             _log.Error($"'{DatabaseInfo}' {source} - {formatString}", args);
 
-            if (_buildServer.IsActive)
+            if (_buildServer.IsActive && _buildServer.Instance is not null)
                 _log.WriteRaw(LogLevel.Error, _buildServer.Instance.GenerateLogIssueErrorMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
         }
 
@@ -46,7 +48,7 @@ namespace DacTools.Deployment.Core.AsyncTasks
         {
             _log.Warning($"'{DatabaseInfo}' {source} - {formatString}", args);
 
-            if (_buildServer.IsActive)
+            if (_buildServer.IsActive && _buildServer.Instance is not null)
                 _log.WriteRaw(LogLevel.Warn, _buildServer.Instance.GenerateLogIssueWarningMessage(string.Format($"'{DatabaseInfo}' {source} - {formatString}", args)));
         }
 

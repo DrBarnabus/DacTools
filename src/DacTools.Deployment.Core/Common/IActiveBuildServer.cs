@@ -6,6 +6,6 @@ namespace DacTools.Deployment.Core.Common
     {
         bool IsActive { get; }
 
-        IBuildServer Instance { get; }
+        IBuildServer? Instance { get; }
     }
 }

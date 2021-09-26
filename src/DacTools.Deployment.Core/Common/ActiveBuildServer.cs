@@ -13,11 +13,11 @@ namespace DacTools.Deployment.Core.Common
         private readonly ILog _log;
 
         private int _isResolved;
-        private IBuildServer _resolvedBuildServer;
+        private IBuildServer? _resolvedBuildServer;
 
         public bool IsActive => Instance != null;
 
-        public IBuildServer Instance
+        public IBuildServer? Instance
         {
             get
             {
@@ -35,7 +35,7 @@ namespace DacTools.Deployment.Core.Common
             _log = log;
         }
 
-        public IBuildServer ResolveBuildServer()
+        private IBuildServer? ResolveBuildServer()
         {
             foreach (var buildServer in _buildServers)
                 try

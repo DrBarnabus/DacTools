@@ -33,7 +33,7 @@ namespace DacTools.Deployment.Tests
             };
 
             // Act
-            string helpText = null;
+            string? helpText = null;
             helpWriter.WriteTo(s => helpText = s);
             helpText.ShouldNotBeNull();
 

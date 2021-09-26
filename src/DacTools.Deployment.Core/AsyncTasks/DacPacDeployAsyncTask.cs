@@ -23,6 +23,9 @@ namespace DacTools.Deployment.Core.AsyncTasks
         {
             cancellationToken.ThrowIfCancellationRequested();
 
+            if (DatabaseInfo is null)
+                throw new InvalidOperationException("DatabaseInfo was null unable to process task.");
+
             var stopwatch = Stopwatch.StartNew();
 
             try
@@ -31,7 +34,7 @@ namespace DacTools.Deployment.Core.AsyncTasks
 
                 var dacPackage = DacPackage.Load(Arguments.DacPacFilePath);
 
-                var dacServices = new DacServices(GetConnectionString());
+                var dacServices = new DacServices(GetConnectionString(DatabaseInfo.Name));
 
                 dacServices.Message += (_, args) =>
                 {
@@ -59,21 +62,21 @@ namespace DacTools.Deployment.Core.AsyncTasks
             {
                 LogError("Internal", "DacPac Deployment AsyncTask failed after {0}ms with the following error: {1}\n{2}", stopwatch.ElapsedMilliseconds, ex.Message, ex.StackTrace);
 
-                ProgressUpdate(this, false, stopwatch.ElapsedMilliseconds);
+                ProgressUpdate?.Invoke(this, false, stopwatch.ElapsedMilliseconds);
                 return Task.CompletedTask;
             }
 
             LogInfo("Internal", "DacPac Deployment AsyncTask completed successfully in {0}ms.", stopwatch.ElapsedMilliseconds);
 
-            ProgressUpdate(this, true, stopwatch.ElapsedMilliseconds);
+            ProgressUpdate?.Invoke(this, true, stopwatch.ElapsedMilliseconds);
             return Task.CompletedTask;
         }
 
-        private string GetConnectionString()
+        private string GetConnectionString(string databaseName)
         {
             var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(Arguments.MasterConnectionString)
             {
-                InitialCatalog = DatabaseInfo.Name
+                InitialCatalog = databaseName
             };
 
             return sqlConnectionStringBuilder.ConnectionString;

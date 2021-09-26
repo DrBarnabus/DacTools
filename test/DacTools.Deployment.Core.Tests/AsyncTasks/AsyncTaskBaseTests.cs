@@ -24,7 +24,7 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             var mockLog = new Mock<ILog>();
             var mockBuildServer = new Mock<IActiveBuildServer>();
             var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
-            sut.Setup(new DatabaseInfo(1, "Test"), (_, __, ___) => { });
+            sut.Setup(new DatabaseInfo(1, "Test"), (_, _, _) => { });
 
             // Act
             await sut.Run(CancellationToken.None);
@@ -76,7 +76,7 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => sut.Setup(null, (_, __, ___) => { }));
+            Assert.Throws<ArgumentNullException>(() => sut.Setup(null!, (_, __, ___) => { }));
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace DacTools.Deployment.Core.Tests.AsyncTasks
             var sut = new TestAsyncTask2(arguments, mockLog.Object, mockBuildServer.Object);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => sut.Setup(new DatabaseInfo(1, "Test"), null));
+            Assert.Throws<ArgumentNullException>(() => sut.Setup(new DatabaseInfo(1, "Test"), null!));
         }
     }
 }

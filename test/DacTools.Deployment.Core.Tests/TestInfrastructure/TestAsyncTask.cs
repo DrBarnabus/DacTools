@@ -20,7 +20,7 @@ namespace DacTools.Deployment.Core.Tests.TestInfrastructure
 
         public int TaskId { get; }
 
-        public DatabaseInfo DatabaseInfo { get; } = null;
+        public DatabaseInfo? DatabaseInfo { get; } = null;
 
         public void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long> progressUpdate)
         {

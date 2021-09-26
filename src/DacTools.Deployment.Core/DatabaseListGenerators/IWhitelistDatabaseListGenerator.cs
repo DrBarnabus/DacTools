@@ -8,6 +8,6 @@ namespace DacTools.Deployment.Core.DatabaseListGenerators
 {
     public interface IWhitelistDatabaseListGenerator
     {
-        Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string> databaseNames = null, CancellationToken cancellationToken = default);
+        Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null, CancellationToken cancellationToken = default);
     }
 }

@@ -1,6 +1,9 @@
 <Project>
     <PropertyGroup>
         <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors />
 
         <IsPackable>false</IsPackable>
         <DebugType>full</DebugType>
