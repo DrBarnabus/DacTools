@@ -356,7 +356,11 @@ MigrationBackup/
 .ionide/
 
 # Cake
-tools/*
+tools
+run
+artifacts
+!build/Publish
+!build/Release
 
 # Ignore Launch Settings
 launchsettings.json

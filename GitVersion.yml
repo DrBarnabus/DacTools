@@ -1,4 +1,6 @@
 branches:
+  hotfix:
+    tag: preview
   release:
     tag: preview
   develop:
