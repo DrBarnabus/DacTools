@@ -20,7 +20,7 @@ namespace Build.Tasks.Testing
         {
             bool shouldRun = true;
 
-            shouldRun &= context.ShouldRun(context.IsOnWindows, $"{nameof(PublishCoverage)} works only on Windows agents.");
+            shouldRun &= context.ShouldRun(context.IsOnLinux, $"{nameof(PublishCoverage)} works only on Linux agents.");
             shouldRun &= context.ShouldRun(context.IsOriginalRepo, $"{nameof(PublishCoverage)} works only on original repository.");
             shouldRun &= context.ShouldRun(!string.IsNullOrEmpty(context.Credentials?.Codecov?.Token), $"{nameof(PublishCoverage)} works only when 'CODECOV_TOKEN' is supplied.");
 
