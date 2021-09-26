@@ -8,6 +8,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <Company>$(Authors)</Company>
 
+        <LangVersion>latest</LangVersion>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <WarningsAsErrors />
     </PropertyGroup>
