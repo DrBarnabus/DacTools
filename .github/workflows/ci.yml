@@ -250,19 +250,19 @@ jobs:
         path: ${{ github.workspace }}/artifacts/packages/framework-dependent
     -
       name: Download Native Linux Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/download-artifact@v2
       with:
         name: native-Linux
         path: ${{ github.workspace }}/artifacts/packages/native
     -
       name: Download Native Windows Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/download-artifact@v2
       with:
         name: native-Windows
         path: ${{ github.workspace }}/artifacts/packages/native
     -
       name: Download Native macOS Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/download-artifact@v2
       with:
         name: native-macOS
         path: ${{ github.workspace }}/artifacts/packages/native
