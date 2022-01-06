@@ -3,25 +3,28 @@
 using System;
 using System.Reflection;
 
-namespace DacTools.Deployment
+namespace DacTools.Deployment;
+
+public class HelpWriter : IHelpWriter
 {
-    public class HelpWriter : IHelpWriter
+    private readonly IVersionWriter _versionWriter;
+
+    public HelpWriter(IVersionWriter versionWriter)
     {
-        private readonly IVersionWriter _versionWriter;
+        _versionWriter = versionWriter ?? throw new ArgumentNullException(nameof(versionWriter));
+    }
 
-        public HelpWriter(IVersionWriter versionWriter)
-        {
-            _versionWriter = versionWriter ?? throw new ArgumentNullException(nameof(versionWriter));
-        }
+    public void Write()
+    {
+        WriteTo(Console.WriteLine);
+    }
 
-        public void Write() => WriteTo(Console.WriteLine);
+    public void WriteTo(Action<string> writeAction)
+    {
+        string version = string.Empty;
+        _versionWriter.WriteTo(Assembly.GetExecutingAssembly(), v => version = v);
 
-        public void WriteTo(Action<string> writeAction)
-        {
-            string version = string.Empty;
-            _versionWriter.WriteTo(Assembly.GetExecutingAssembly(), v => version = v);
-
-            string message = "DacTools.Deployment v" + version + @"
+        string message = "DacTools.Deployment v" + version + @"
 DacTools.Deployment is a tool that can be used to deploy DacPac files to Microsoft SQL Server. This tool expands upon DacFx by providing the ability to run multiple deployments to multiple databases simultaniously in parallel.
 
 <Application> [options...]
@@ -51,7 +54,6 @@ DacTools.Deployment is a tool that can be used to deploy DacPac files to Microso
                                     This should only be used if the tool is being run by an Azure Pipelines build or release pipeline.
 ";
 
-            writeAction(message);
-        }
+        writeAction(message);
     }
 }

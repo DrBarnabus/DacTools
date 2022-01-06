@@ -12,7 +12,7 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningsAsErrors />
+        <WarningsAsErrors/>
     </PropertyGroup>
 
 </Project>

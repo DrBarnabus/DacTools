@@ -1,52 +1,53 @@
 // Copyright (c) 2022 DrBarnabus
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
-using System;
 
-namespace DacTools.Deployment.Core.DatabaseListGenerators
+namespace DacTools.Deployment.Core.DatabaseListGenerators;
+
+public class WhitelistDatabaseListGenerator : IWhitelistDatabaseListGenerator
 {
-    public class WhitelistDatabaseListGenerator : IWhitelistDatabaseListGenerator
+    private const string QueryText = "SELECT database_id, name FROM sys.databases WHERE database_id > 4 AND name = @DB";
+
+    private readonly Arguments _arguments;
+
+    public WhitelistDatabaseListGenerator(IOptions<Arguments> arguments)
     {
-        private const string QueryText = "SELECT database_id, name FROM sys.databases WHERE database_id > 4 AND name = @DB";
+        _arguments = arguments.Value;
+    }
 
-        private readonly Arguments _arguments;
+    public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null,
+        CancellationToken cancellationToken = default)
+    {
+        if (databaseNames is null || !databaseNames.Any())
+            return new List<DatabaseInfo>();
 
-        public WhitelistDatabaseListGenerator(IOptions<Arguments> arguments)
-        {
-            _arguments = arguments.Value;
-        }
+        var databaseInfos = new List<DatabaseInfo>();
 
-        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null, CancellationToken cancellationToken = default)
-        {
-            if (databaseNames is null || !databaseNames.Any())
-                return new List<DatabaseInfo>();
+        foreach (string databaseName in databaseNames)
+            databaseInfos.Add(await GetDatabaseInfoFromNameAsync(databaseName, cancellationToken));
 
-            var databaseInfos = new List<DatabaseInfo>();
+        return databaseInfos;
+    }
 
-            foreach (string databaseName in databaseNames)
-                databaseInfos.Add(await GetDatabaseInfoFromNameAsync(databaseName, cancellationToken));
+    private async Task<DatabaseInfo> GetDatabaseInfoFromNameAsync(string databaseName,
+        CancellationToken cancellationToken)
+    {
+        await using var connection = new SqlConnection(_arguments.MasterConnectionString);
+        await connection.OpenAsync(cancellationToken);
 
-            return databaseInfos;
-        }
+        await using var command = new SqlCommand(QueryText, connection);
+        command.Parameters.AddWithValue("@DB", databaseName);
 
-        private async Task<DatabaseInfo> GetDatabaseInfoFromNameAsync(string databaseName, CancellationToken cancellationToken)
-        {
-            await using var connection = new SqlConnection(_arguments.MasterConnectionString);
-            await connection.OpenAsync(cancellationToken);
+        var reader = await command.ExecuteReaderAsync(cancellationToken);
+        if (await reader.ReadAsync(cancellationToken))
+            return new DatabaseInfo(reader.GetInt32(0), reader.GetString(1));
 
-            await using var command = new SqlCommand(QueryText, connection);
-            command.Parameters.AddWithValue("@DB", databaseName);
-
-            var reader = await command.ExecuteReaderAsync(cancellationToken);
-            if (await reader.ReadAsync(cancellationToken))
-                return new DatabaseInfo(reader.GetInt32(0), reader.GetString(1));
-
-            throw new InvalidOperationException($"Failed to get database info for '{databaseName}'.");
-        }
+        throw new InvalidOperationException($"Failed to get database info for '{databaseName}'.");
     }
 }

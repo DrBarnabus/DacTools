@@ -3,10 +3,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DacTools.Deployment
+namespace DacTools.Deployment;
+
+public interface IExecCommand
 {
-    public interface IExecCommand
-    {
-        Task Execute(CancellationToken cancellationToken);
-    }
+    Task Execute(CancellationToken cancellationToken);
 }

@@ -1,9 +1,11 @@
 // Copyright (c) 2022 DrBarnabus
 
-namespace DacTools.Deployment.Core.DatabaseListGenerators
+namespace DacTools.Deployment.Core.DatabaseListGenerators;
+
+public record DatabaseInfo(int Id, string Name)
 {
-    public record DatabaseInfo(int Id, string Name)
+    public override string ToString()
     {
-        public override string ToString() => $"{Name}:{Id}";
-    };
+        return $"{Name}:{Id}";
+    }
 }

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DacTools.Deployment.Core.DatabaseListGenerators
+namespace DacTools.Deployment.Core.DatabaseListGenerators;
+
+public interface IBlacklistDatabaseListGenerator
 {
-    public interface IBlacklistDatabaseListGenerator
-    {
-        Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null, CancellationToken cancellationToken = default);
-    }
+    Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null,
+        CancellationToken cancellationToken = default);
 }

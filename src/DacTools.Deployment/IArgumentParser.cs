@@ -2,11 +2,10 @@
 
 using DacTools.Deployment.Core;
 
-namespace DacTools.Deployment
+namespace DacTools.Deployment;
+
+public interface IArgumentParser
 {
-    public interface IArgumentParser
-    {
-        Arguments ParseArguments(string commandLineArguments);
-        Arguments ParseArguments(string[] commandLineArguments);
-    }
+    Arguments ParseArguments(string commandLineArguments);
+    Arguments ParseArguments(string[] commandLineArguments);
 }

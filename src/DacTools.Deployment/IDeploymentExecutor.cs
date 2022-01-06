@@ -4,10 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core;
 
-namespace DacTools.Deployment
+namespace DacTools.Deployment;
+
+public interface IDeploymentExecutor
 {
-    public interface IDeploymentExecutor
-    {
-        Task Execute(Arguments arguments, CancellationToken cancellationToken);
-    }
+    Task Execute(Arguments arguments, CancellationToken cancellationToken);
 }

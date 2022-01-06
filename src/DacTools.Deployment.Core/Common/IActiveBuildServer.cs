@@ -1,11 +1,10 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
-namespace DacTools.Deployment.Core.Common
-{
-    public interface IActiveBuildServer
-    {
-        bool IsActive { get; }
+namespace DacTools.Deployment.Core.Common;
 
-        IBuildServer? Instance { get; }
-    }
+public interface IActiveBuildServer
+{
+    bool IsActive { get; }
+
+    IBuildServer? Instance { get; }
 }

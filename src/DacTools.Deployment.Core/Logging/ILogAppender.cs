@@ -1,9 +1,8 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
-namespace DacTools.Deployment.Core.Logging
+namespace DacTools.Deployment.Core.Logging;
+
+public interface ILogAppender
 {
-    public interface ILogAppender
-    {
-        void WriteTo(LogLevel logLevel, string message);
-    }
+    void WriteTo(LogLevel logLevel, string message);
 }

@@ -3,17 +3,16 @@
 using DacTools.Deployment.Core.Common;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DacTools.Deployment
+namespace DacTools.Deployment;
+
+public class DeploymentServiceModule : IServiceModule
 {
-    public class DeploymentServiceModule : IServiceModule
+    public void RegisterTypes(IServiceCollection services)
     {
-        public void RegisterTypes(IServiceCollection services)
-        {
-            services.AddSingleton<IArgumentParser, ArgumentParser>();
-            services.AddSingleton<IHelpWriter, HelpWriter>();
-            services.AddSingleton<IVersionWriter, VersionWriter>();
-            services.AddSingleton<IDeploymentExecutor, DeploymentExecutor>();
-            services.AddSingleton<IExecCommand, ExecCommand>();
-        }
+        services.AddSingleton<IArgumentParser, ArgumentParser>();
+        services.AddSingleton<IHelpWriter, HelpWriter>();
+        services.AddSingleton<IVersionWriter, VersionWriter>();
+        services.AddSingleton<IDeploymentExecutor, DeploymentExecutor>();
+        services.AddSingleton<IExecCommand, ExecCommand>();
     }
 }

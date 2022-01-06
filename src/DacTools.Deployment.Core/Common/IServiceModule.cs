@@ -2,10 +2,9 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DacTools.Deployment.Core.Common
+namespace DacTools.Deployment.Core.Common;
+
+public interface IServiceModule
 {
-    public interface IServiceModule
-    {
-        void RegisterTypes(IServiceCollection services);
-    }
+    void RegisterTypes(IServiceCollection services);
 }

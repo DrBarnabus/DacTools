@@ -1,18 +1,17 @@
 // Copyright (c) 2022 DrBarnabus
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.DatabaseListGenerators;
-using System;
 
-namespace DacTools.Deployment.Core.AsyncTasks
+namespace DacTools.Deployment.Core.AsyncTasks;
+
+public interface IAsyncTask
 {
-    public interface IAsyncTask
-    {
-        DatabaseInfo? DatabaseInfo { get; }
+    DatabaseInfo? DatabaseInfo { get; }
 
-        void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long>  progressUpdate);
+    void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long> progressUpdate);
 
-        Task Run(CancellationToken cancellationToken);
-    }
+    Task Run(CancellationToken cancellationToken);
 }

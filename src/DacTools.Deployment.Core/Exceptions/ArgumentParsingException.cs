@@ -2,13 +2,12 @@
 
 using System;
 
-namespace DacTools.Deployment.Core.Exceptions
+namespace DacTools.Deployment.Core.Exceptions;
+
+public class ArgumentParsingException : Exception
 {
-    public class ArgumentParsingException : Exception
+    public ArgumentParsingException(string message)
+        : base(message)
     {
-        public ArgumentParsingException(string message)
-            : base(message)
-        {
-        }
     }
 }

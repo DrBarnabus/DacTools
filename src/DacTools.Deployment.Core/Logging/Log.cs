@@ -6,54 +6,59 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace DacTools.Deployment.Core.Logging
+namespace DacTools.Deployment.Core.Logging;
+
+public sealed class Log : ILog
 {
-    public sealed class Log : ILog
+    private readonly StringBuilder _stringBuilder;
+
+    public Log() : this(Array.Empty<ILogAppender>())
     {
-        private readonly StringBuilder _stringBuilder;
+    }
 
-        public Log() : this(Array.Empty<ILogAppender>())
-        {
-        }
+    public Log(params ILogAppender[] logAppenders)
+    {
+        LogAppenders = logAppenders;
+        _stringBuilder = new StringBuilder();
+        LogLevel = LogLevel.Info;
+    }
 
-        public Log(params ILogAppender[] logAppenders)
-        {
-            LogAppenders = logAppenders;
-            _stringBuilder = new StringBuilder();
-            LogLevel = LogLevel.Info;
-        }
+    public IEnumerable<ILogAppender> LogAppenders { get; private set; }
 
-        public IEnumerable<ILogAppender> LogAppenders { get; private set; }
+    public LogLevel LogLevel { get; set; }
 
-        public LogLevel LogLevel { get; set; }
+    public void Write(LogLevel logLevel, string format, params object[] args)
+    {
+        if (logLevel > LogLevel)
+            return;
 
-        public void Write(LogLevel logLevel, string format, params object[] args)
-        {
-            if (logLevel > LogLevel)
-                return;
+        string formattedMessage = FormatMessage(string.Format(format, args), logLevel.ToString().ToUpperInvariant());
 
-            string formattedMessage = FormatMessage(string.Format(format, args), logLevel.ToString().ToUpperInvariant());
+        foreach (var logAppender in LogAppenders)
+            logAppender.WriteTo(logLevel, formattedMessage);
 
-            foreach (var logAppender in LogAppenders)
-                logAppender.WriteTo(logLevel, formattedMessage);
+        _stringBuilder.Append(formattedMessage);
+    }
 
-            _stringBuilder.Append(formattedMessage);
-        }
+    public void WriteRaw(LogLevel logLevel, string message)
+    {
+        foreach (var logAppender in LogAppenders)
+            logAppender.WriteTo(logLevel, message);
+    }
 
-        public void WriteRaw(LogLevel logLevel, string message)
-        {
-            foreach (var logAppender in LogAppenders)
-                logAppender.WriteTo(logLevel, message);
-        }
+    public void AddLogAppender(ILogAppender logAppender)
+    {
+        LogAppenders = LogAppenders.Concat(new[] { logAppender });
+    }
 
-        public void AddLogAppender(ILogAppender logAppender)
-        {
-            LogAppenders = LogAppenders.Concat(new[] { logAppender });
-        }
+    public override string ToString()
+    {
+        return _stringBuilder.ToString();
+    }
 
-        public override string ToString() => _stringBuilder.ToString();
-
-        private static string FormatMessage(string message, string level) =>
-            string.Format(CultureInfo.InvariantCulture, "{0} [{1:MM/dd/yy HH:mm:ss.fff}] {2}", level, DateTime.Now, message);
+    private static string FormatMessage(string message, string level)
+    {
+        return string.Format(CultureInfo.InvariantCulture, "{0} [{1:MM/dd/yy HH:mm:ss.fff}] {2}", level, DateTime.Now,
+            message);
     }
 }

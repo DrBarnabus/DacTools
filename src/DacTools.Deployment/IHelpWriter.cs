@@ -2,11 +2,10 @@
 
 using System;
 
-namespace DacTools.Deployment
+namespace DacTools.Deployment;
+
+public interface IHelpWriter
 {
-    public interface IHelpWriter
-    {
-        void Write();
-        void WriteTo(Action<string> writeAction);
-    }
+    void Write();
+    void WriteTo(Action<string> writeAction);
 }

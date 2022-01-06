@@ -7,43 +7,43 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 
-namespace DacTools.Deployment.Core.DatabaseListGenerators
+namespace DacTools.Deployment.Core.DatabaseListGenerators;
+
+public class BlacklistDatabaseListGenerator : IBlacklistDatabaseListGenerator
 {
-    public class BlacklistDatabaseListGenerator : IBlacklistDatabaseListGenerator
+    private const string QueryText = "SELECT database_id, name FROM sys.databases WHERE database_id > 4";
+
+    private readonly Arguments _arguments;
+
+    public BlacklistDatabaseListGenerator(IOptions<Arguments> arguments)
     {
-        private const string QueryText = "SELECT database_id, name FROM sys.databases WHERE database_id > 4";
+        _arguments = arguments.Value;
+    }
 
-        private readonly Arguments _arguments;
+    public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null,
+        CancellationToken cancellationToken = default)
+    {
+        var allDatabases = await GetAllNonSystemDatabasesAsync(cancellationToken);
 
-        public BlacklistDatabaseListGenerator(IOptions<Arguments> arguments)
-        {
-            _arguments = arguments.Value;
-        }
-
-        public async Task<List<DatabaseInfo>> GetDatabaseInfoListAsync(IReadOnlyList<string>? databaseNames = null, CancellationToken cancellationToken = default)
-        {
-            var allDatabases = await GetAllNonSystemDatabasesAsync(cancellationToken);
-
-            if (databaseNames is null || !databaseNames.Any())
-                return allDatabases;
-
-            allDatabases.RemoveAll(d => databaseNames.Contains(d.Name));
+        if (databaseNames is null || !databaseNames.Any())
             return allDatabases;
-        }
 
-        private async Task<List<DatabaseInfo>> GetAllNonSystemDatabasesAsync(CancellationToken cancellationToken)
-        {
-            await using var connection = new SqlConnection(_arguments.MasterConnectionString);
-            await connection.OpenAsync(cancellationToken);
+        allDatabases.RemoveAll(d => databaseNames.Contains(d.Name));
+        return allDatabases;
+    }
 
-            await using var command = new SqlCommand(QueryText, connection);
-            var reader = await command.ExecuteReaderAsync(cancellationToken);
+    private async Task<List<DatabaseInfo>> GetAllNonSystemDatabasesAsync(CancellationToken cancellationToken)
+    {
+        await using var connection = new SqlConnection(_arguments.MasterConnectionString);
+        await connection.OpenAsync(cancellationToken);
 
-            var databaseInfos = new List<DatabaseInfo>();
-            while (await reader.ReadAsync(cancellationToken))
-                databaseInfos.Add(new DatabaseInfo(reader.GetInt32(0), reader.GetString(1)));
+        await using var command = new SqlCommand(QueryText, connection);
+        var reader = await command.ExecuteReaderAsync(cancellationToken);
 
-            return databaseInfos;
-        }
+        var databaseInfos = new List<DatabaseInfo>();
+        while (await reader.ReadAsync(cancellationToken))
+            databaseInfos.Add(new DatabaseInfo(reader.GetInt32(0), reader.GetString(1)));
+
+        return databaseInfos;
     }
 }

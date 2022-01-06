@@ -5,10 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using DacTools.Deployment.Core.DatabaseListGenerators;
 
-namespace DacTools.Deployment.Core
+namespace DacTools.Deployment.Core;
+
+public interface IDacPacDeployer
 {
-    public interface IDacPacDeployer
-    {
-        Task DeployDacPac(IReadOnlyCollection<DatabaseInfo> databases, CancellationToken cancellationToken);
-    }
+    Task DeployDacPac(IReadOnlyCollection<DatabaseInfo> databases, CancellationToken cancellationToken);
 }

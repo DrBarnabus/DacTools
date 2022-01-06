@@ -3,35 +3,36 @@
 using System;
 using System.IO;
 
-namespace DacTools.Deployment.Core.Logging
+namespace DacTools.Deployment.Core.Logging;
+
+public class FileAppender : ILogAppender
 {
-    public class FileAppender : ILogAppender
+    private readonly string _filePath;
+
+    public FileAppender(string filePath)
     {
-        private readonly string _filePath;
+        _filePath = filePath;
 
-        public FileAppender(string filePath)
+        var logFile = new FileInfo(Path.GetFullPath(filePath));
+        logFile.Directory?.Create();
+        if (logFile.Exists)
+            return;
+
+        using (logFile.CreateText())
         {
-            _filePath = filePath;
-
-            var logFile = new FileInfo(Path.GetFullPath(filePath));
-            logFile.Directory?.Create();
-            if (logFile.Exists)
-                return;
-
-            using (logFile.CreateText()) {}
         }
+    }
 
-        public void WriteTo(LogLevel logLevel, string message)
+    public void WriteTo(LogLevel logLevel, string message)
+    {
+        try
         {
-            try
-            {
-                string contents = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}\t\t{message}{Environment.NewLine}";
-                File.AppendAllText(_filePath, contents);
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
+            string contents = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}\t\t{message}{Environment.NewLine}";
+            File.AppendAllText(_filePath, contents);
+        }
+        catch (Exception)
+        {
+            // ignored
         }
     }
 }

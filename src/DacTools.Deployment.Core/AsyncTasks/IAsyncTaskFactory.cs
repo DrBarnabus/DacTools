@@ -1,10 +1,9 @@
 // Copyright (c) 2022 DrBarnabus
 
-namespace DacTools.Deployment.Core.AsyncTasks
+namespace DacTools.Deployment.Core.AsyncTasks;
+
+public interface IAsyncTaskFactory<out TAsyncTask>
+    where TAsyncTask : IAsyncTask
 {
-    public interface IAsyncTaskFactory<out TAsyncTask>
-        where TAsyncTask : IAsyncTask
-    {
-        TAsyncTask CreateAsyncTask();
-    }
+    TAsyncTask CreateAsyncTask();
 }

@@ -9,25 +9,24 @@ using Moq;
 using Shouldly;
 using Xunit;
 
-namespace DacTools.Deployment.Core.Tests.AsyncTasks
+namespace DacTools.Deployment.Core.Tests.AsyncTasks;
+
+public class AsyncTaskFactoryTests
 {
-    public class AsyncTaskFactoryTests
+    [Fact]
+    public void ShouldReturnTheCorrectInstance()
     {
-        [Fact]
-        public void ShouldReturnTheCorrectInstance()
-        {
-            // Setup
-            var arguments = new Arguments();
-            var argumentsOptions = Options.Create(arguments);
-            var log = new Mock<ILog>().Object;
-            var buildServer = new Mock<IActiveBuildServer>().Object;
-            var sut = new AsyncTaskFactory<TestAsyncTask2>(argumentsOptions, log, buildServer);
+        // Setup
+        var arguments = new Arguments();
+        var argumentsOptions = Options.Create(arguments);
+        var log = new Mock<ILog>().Object;
+        var buildServer = new Mock<IActiveBuildServer>().Object;
+        var sut = new AsyncTaskFactory<TestAsyncTask2>(argumentsOptions, log, buildServer);
 
-            // Act
-            var result = sut.CreateAsyncTask();
+        // Act
+        var result = sut.CreateAsyncTask();
 
-            // Assert
-            result.PublicArguments.ShouldBe(arguments);
-        }
+        // Assert
+        result.PublicArguments.ShouldBe(arguments);
     }
 }

@@ -3,7 +3,7 @@
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <WarningsAsErrors />
+        <WarningsAsErrors/>
 
         <IsPackable>false</IsPackable>
         <DebugType>full</DebugType>
