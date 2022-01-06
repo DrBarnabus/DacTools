@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021 DrBarnabus
+﻿// Copyright (c) 2022 DrBarnabus
 
 using Cake.Common.IO;
 using Common;

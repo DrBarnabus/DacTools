@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021 DrBarnabus
+﻿// Copyright (c) 2022 DrBarnabus
 
 using DacTools.Deployment.Core.Common;
 using Microsoft.Extensions.DependencyInjection;

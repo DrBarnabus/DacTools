@@ -10,9 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{995A82DE-7DA0-4E09-AAB5-FA03286494E5}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		azure-pipelines.yml = azure-pipelines.yml
-		build.cake = build.cake
-		build.ps1 = build.ps1
 		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
 		NuGet.config = NuGet.config

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2021 DrBarnabus
+﻿// Copyright (c) 2022 DrBarnabus
 
 using System;
 
@@ -10,7 +10,7 @@ namespace Common.Attributes
         public string Name { get; set; }
 
         public string[] PossibleValues { get; set; }
-        
+
         public TaskArgumentAttribute(string name, params string[] possibleValues)
         {
             Name = name;

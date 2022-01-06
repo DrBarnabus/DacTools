@@ -1,4 +1,4 @@
-// Copyright (c) 2021 DrBarnabus
+// Copyright (c) 2022 DrBarnabus
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +12,7 @@ namespace DacTools.Deployment.Core.AsyncTasks
         DatabaseInfo? DatabaseInfo { get; }
 
         void Setup(DatabaseInfo databaseInfo, Action<IAsyncTask, bool, long>  progressUpdate);
-        
+
         Task Run(CancellationToken cancellationToken);
     }
 }

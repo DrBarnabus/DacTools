@@ -3,7 +3,7 @@
 All notable changes to this project will be automatically documented in this file.
 
 
-## [0.4.0](https://github.com/DrBarnabus/DacTools/compare/v0.3.0...v0.4.0) (2021-07-12)
+## [0.4.0](https://github.com/DrBarnabus/DacTools/compare/v0.3.0...v0.4.0) (2022-07-12)
 
 
 ### Features
@@ -19,7 +19,7 @@ All notable changes to this project will be automatically documented in this fil
 * **deployment:** change to fix case sensitive command line arguments ([602dae2](https://github.com/DrBarnabus/DacTools/commit/602dae20965a9b20194e09fd844261ce58659ac9))
 * **deployment:** fixes issue with active build server ([bad6570](https://github.com/DrBarnabus/DacTools/commit/bad65707dbe9f59059e2ebec8dd998b597616e6d))
 
-## [0.3.0](https://github.com/DrBarnabus/DacTools/compare/v0.2.0...v0.3.0) (2021-01-10)
+## [0.3.0](https://github.com/DrBarnabus/DacTools/compare/v0.2.0...v0.3.0) (2022-01-10)
 
 
 ### ⚠ BREAKING CHANGES
