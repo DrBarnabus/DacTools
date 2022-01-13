@@ -3,6 +3,26 @@
 All notable changes to this project will be automatically documented in this file.
 
 
+## [0.5.0](https://github.com/DrBarnabus/DacTools/compare/v0.4.0...v0.5.0) (2022-01-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** upgrade to netstandard2.1
+* **deployment:** remove support for dotnet framework runtime
+* **deployment:** remove support for netcoreapp2.1
+
+### Bug Fixes
+
+* **deployment:** fix issue with database list generation and owner_sid ([66cde19](https://github.com/DrBarnabus/DacTools/commit/66cde19cda56da8f879e63321fa6bf259ca37a6b))
+
+
+### build
+
+* **core:** upgrade to netstandard2.1 ([21a214a](https://github.com/DrBarnabus/DacTools/commit/21a214a91cc86d3b4b969921b1d29363e02d6e0c))
+* **deployment:** remove support for dotnet framework runtime ([4a9a8bb](https://github.com/DrBarnabus/DacTools/commit/4a9a8bb2abf8f33bb4dcde745e86618b0afffb89))
+* **deployment:** remove support for netcoreapp2.1 ([3a5faed](https://github.com/DrBarnabus/DacTools/commit/3a5faed55a23ac4a2538b705c5dc69dc58d56a1c))
+
 ## [0.4.0](https://github.com/DrBarnabus/DacTools/compare/v0.3.0...v0.4.0) (2022-07-12)
 
 
@@ -78,6 +98,3 @@ Ensure you are using .NET Core 2.1 or preferably .NET Core 3.1 if you are curren
 * **deployment:** setup DacTools.Deployment project ([3c23f3a](https://github.com/DrBarnabus/DacTools/commit/3c23f3a9d750ac336688034ad16c4125e5e0d115))
 * **deployment:** started the groundwork for Build Server detection ([d92fb8f](https://github.com/DrBarnabus/DacTools/commit/d92fb8f6cb7de4a6e21170b45c8134083990d222))
 * implemented a basic logging system ([945acf8](https://github.com/DrBarnabus/DacTools/commit/945acf83a25df4997cff33ff9c3c2537a817791e))
-
-
-
