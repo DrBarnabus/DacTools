@@ -101,6 +101,13 @@ public static class StringExtensions
             "b"
         };
 
-        return !booleanArguments.Contains(argument, StringComparer.OrdinalIgnoreCase);
+        if (argument.StartsWith("-"))
+            argument = argument[1..];
+
+        if (argument.StartsWith("/"))
+            argument = argument[1..];
+
+        var stringComparer = argument.Length == 1 ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase;
+        return !booleanArguments.Contains(argument, stringComparer);
     }
 }

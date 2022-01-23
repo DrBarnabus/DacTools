@@ -204,6 +204,32 @@ public class ArgumentParserTests
         result.DatabaseNames.ShouldBeEmpty();
     }
 
+    [Theory]
+    [InlineData("/blacklist /t 1", true)]
+    [InlineData("/blacklist true /t 1", true)]
+    [InlineData("/blacklist false /t 1", false)]
+    [InlineData("/b /t 1", true)]
+    [InlineData("/b true /t 1", true)]
+    [InlineData("/b false /t 1", false)]
+    [InlineData("-blacklist /t 1", true)]
+    [InlineData("-blacklist true /t 1", true)]
+    [InlineData("-blacklist false /t 1", false)]
+    [InlineData("-b /t 1", true)]
+    [InlineData("-b true /t 1", true)]
+    [InlineData("-b false /t 1", false)]
+    public void ShouldSetIsBlacklistWhenFollowedByAnotherParameter(string arguments, bool expectedValue)
+    {
+        var argumentParser = new ArgumentParser();
+        var result = argumentParser.ParseArguments(arguments);
+        result.IsHelp.ShouldBeFalse();
+        result.IsVersion.ShouldBeFalse();
+        result.DacPacFilePath.ShouldBeNull();
+        result.MasterConnectionString.ShouldBeNull();
+        result.IsBlacklist.ShouldBe(expectedValue);
+        result.Threads.ShouldBe(1);
+        result.DatabaseNames.ShouldBeEmpty();
+    }
+
     public static IEnumerable<object[]> CorrectThreadsTestData(string switchStart)
     {
         return new List<object[]>
