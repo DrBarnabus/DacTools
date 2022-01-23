@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\DacTools.Deployment\DacTools.Deployment.csproj"/>
+        <ProjectReference Include="..\..\src\DacTools.Deployment\DacTools.Deployment.csproj" />
     </ItemGroup>
 
 </Project>
