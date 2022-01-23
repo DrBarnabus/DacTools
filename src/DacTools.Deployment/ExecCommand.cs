@@ -36,16 +36,14 @@ public class ExecCommand : IExecCommand
     {
         _log.Info($"Running on {GetCurrentPlatform()}.");
 
-        List<DatabaseInfo> databases;
-        if (_arguments.IsBlacklist)
-            databases = await _blacklistDatabaseListGenerator.GetDatabaseInfoListAsync(
-                _arguments.DatabaseNames.ToList(), cancellationToken);
-        else
-            databases = await _whitelistDatabaseListGenerator.GetDatabaseInfoListAsync(
+        var databases = _arguments.IsBlacklist
+            ? await _blacklistDatabaseListGenerator.GetDatabaseInfoListAsync(
+                _arguments.DatabaseNames.ToList(), cancellationToken)
+            : await _whitelistDatabaseListGenerator.GetDatabaseInfoListAsync(
                 _arguments.DatabaseNames.ToList(), cancellationToken);
 
         if (databases is null || !databases.Any())
-            throw new FatalException($"{nameof(databases)} was null or empty.");
+            throw new FatalException($"{nameof(databases)} was null or empty.", true);
 
         _log.Info("Generated Database List: {0}", string.Join(", ", databases.Select(d => d.Name)));
 
