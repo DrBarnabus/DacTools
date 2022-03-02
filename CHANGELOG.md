@@ -3,6 +3,15 @@
 All notable changes to this project will be automatically documented in this file.
 
 
+## [0.6.0](https://github.com/DrBarnabus/DacTools/compare/v0.5.0...v0.6.0) (2022-03-02)
+
+
+### Bug Fixes
+
+* **deployment:** change exception on empty database list to log ([3027a82](https://github.com/DrBarnabus/DacTools/commit/3027a8207480893e640a052437edcfa3c19f4313))
+* **deployment:** fix for crash when running on net6.0 ([3f7173c](https://github.com/DrBarnabus/DacTools/commit/3f7173c4361ab225134d54e387d500f7b107eb8d))
+* **deployment:** incorrect parsing of blacklist option ([da239f9](https://github.com/DrBarnabus/DacTools/commit/da239f9fc8ceefdac04d9a822acee7f6ca8194bb))
+
 ## [0.5.0](https://github.com/DrBarnabus/DacTools/compare/v0.4.0...v0.5.0) (2022-01-13)
 
 
