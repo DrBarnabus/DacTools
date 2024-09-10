@@ -65,7 +65,7 @@ namespace Build.Tasks.Packaging
 
             var settings = new DotNetPublishSettings
             {
-                Framework = Constants.NetVersion60,
+                Framework = Constants.NetVersion80,
                 Runtime = runtime,
                 SelfContained = true,
                 PublishSingleFile = false,
