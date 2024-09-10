@@ -1,8 +1,8 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Publish;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Publish;
 using Cake.Core.IO;
 using Cake.Frosting;
 using Common.Constants;
@@ -31,7 +31,7 @@ namespace Build.Tasks.Packaging
             foreach (string framework in Constants.VersionsToBuild)
             {
                 var outputDirectory = Paths.FrameworkDependent.Combine(framework);
-                var settings = new DotNetCorePublishSettings
+                var settings = new DotNetPublishSettings
                 {
                     Framework = framework,
                     NoRestore = false,
@@ -40,7 +40,7 @@ namespace Build.Tasks.Packaging
                     MSBuildSettings = context.MsBuildSettings
                 };
 
-                context.DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
+                context.DotNetPublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
 
                 context.Information("Framework-Dependent Build for {0} created in {1}", framework, outputDirectory);
             }
@@ -63,7 +63,7 @@ namespace Build.Tasks.Packaging
             var platform = context.Environment.Platform.Family;
             var outputDirectory = Paths.Native.Combine(platform.ToString().ToLowerInvariant()).Combine(runtime);
 
-            var settings = new DotNetCorePublishSettings
+            var settings = new DotNetPublishSettings
             {
                 Framework = Constants.NetVersion60,
                 Runtime = runtime,
@@ -75,7 +75,7 @@ namespace Build.Tasks.Packaging
                 MSBuildSettings = context.MsBuildSettings
             };
 
-            context.DotNetCorePublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
+            context.DotNetPublish("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
 
             return outputDirectory;
         }

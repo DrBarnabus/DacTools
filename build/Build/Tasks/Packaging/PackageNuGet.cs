@@ -2,9 +2,10 @@
 
 
 using Cake.Common.IO;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Pack;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Pack;
 using Cake.Core;
+using Cake.Core.IO.Arguments;
 using Cake.Frosting;
 using Common.Models;
 
@@ -21,7 +22,7 @@ namespace Build.Tasks.Packaging
         {
             context.EnsureDirectoryExists(Paths.NuGet);
 
-            var settings = new DotNetCorePackSettings
+            var settings = new DotNetPackSettings
             {
                 Configuration = context.MsBuildConfiguration,
                 NoRestore = true,
@@ -29,10 +30,10 @@ namespace Build.Tasks.Packaging
                 MSBuildSettings = context.MsBuildSettings
             };
 
-            context.DotNetCorePack("./src/DacTools.Deployment.Core/DacTools.Deployment.Core.csproj", settings);
+            context.DotNetPack("./src/DacTools.Deployment.Core/DacTools.Deployment.Core.csproj", settings);
 
             settings.ArgumentCustomization = arg => arg.Append("/p:PackAsTool=true");
-            context.DotNetCorePack("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
+            context.DotNetPack("./src/DacTools.Deployment/DacTools.Deployment.csproj", settings);
         }
     }
 }

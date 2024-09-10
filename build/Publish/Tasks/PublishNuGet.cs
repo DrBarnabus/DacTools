@@ -1,12 +1,12 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.NuGet.Push;
 using Cake.Frosting;
 using Common.Constants;
 using Common.Extensions;
 using System;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.NuGet.Push;
 
 // ReSharper disable UnusedType.Global
 
@@ -67,7 +67,7 @@ namespace Publish.Tasks
             foreach ((string packageName, var filePath) in context.Packages)
             {
                 context.Information($"NuGet Package {packageName} with version {version} is being published to {apiUrl}.");
-                context.DotNetCoreNuGetPush(filePath.FullPath, new DotNetCoreNuGetPushSettings
+                context.DotNetNuGetPush(filePath.FullPath, new DotNetNuGetPushSettings
                 {
                     ApiKey = apiKey,
                     Source = apiUrl,

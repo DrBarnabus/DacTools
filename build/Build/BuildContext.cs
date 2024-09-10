@@ -1,10 +1,10 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
 using Build.Setup;
-using Cake.Common.Tools.DotNetCore.MSBuild;
 using Cake.Core;
 using Common;
 using System.Collections.Generic;
+using Cake.Common.Tools.DotNet.MSBuild;
 
 namespace Build
 {
@@ -28,6 +28,6 @@ namespace Build
 
         public string MsBuildConfiguration { get; set; } = "Release";
 
-        public DotNetCoreMSBuildSettings MsBuildSettings { get; } = new();
+        public DotNetMSBuildSettings MsBuildSettings { get; } = new();
     }
 }

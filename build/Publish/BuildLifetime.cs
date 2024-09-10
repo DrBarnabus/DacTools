@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
 using Cake.Common.IO;
+using Cake.Core;
 using Common;
 using Common.Extensions;
 using Common.Models;
@@ -10,9 +11,9 @@ namespace Publish
 {
     public class BuildLifetime : BuildLifetimeBase<BuildContext>
     {
-        public override void Setup(BuildContext context)
+        public override void Setup(BuildContext context, ISetupContext setupContext)
         {
-            base.Setup(context);
+            base.Setup(context, setupContext);
 
             context.Credentials = Credentials.GetCredentials(context);
 

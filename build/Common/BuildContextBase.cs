@@ -43,8 +43,6 @@ namespace Common
 
         public bool IsLocalBuild { get; set; }
 
-        public bool IsAzurePipelinesBuild { get; set; }
-
         public bool IsGitHubActionsBuild { get; set; }
 
         public bool IsOnWindows { get; set; }

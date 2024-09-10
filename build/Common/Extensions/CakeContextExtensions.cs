@@ -40,8 +40,6 @@ namespace Common.Extensions
         {
             var buildSystem = context.BuildSystem();
 
-            if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-                return buildSystem.AzurePipelines.Environment.Repository.RepoName;
             if (buildSystem.IsRunningOnGitHubActions)
                 return buildSystem.GitHubActions.Environment.Workflow.Repository;
 
@@ -64,8 +62,6 @@ namespace Common.Extensions
         {
             var buildSystem = context.BuildSystem();
 
-            if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-                return buildSystem.AzurePipelines.Environment.Repository.SourceBranch.Replace("refs/heads/", string.Empty);
             if (buildSystem.IsRunningOnGitHubActions)
                 return buildSystem.GitHubActions.Environment.Workflow.Ref.Replace("refs/heads/", string.Empty);
 
@@ -106,9 +102,6 @@ namespace Common.Extensions
             return buildSystem.Provider switch
             {
                 BuildProvider.Local => "Local",
-                BuildProvider.AppVeyor => "AppVeyor",
-                BuildProvider.AzurePipelines => "AzurePipelines",
-                BuildProvider.AzurePipelinesHosted => "AzurePipelines",
                 BuildProvider.GitHubActions => "GitHubActions",
                 _ => string.Empty
             };
@@ -119,9 +112,7 @@ namespace Common.Extensions
             var buildSystem = context.BuildSystem();
 
             string startGroup = "[group]";
-            if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-                startGroup = "##[group]";
-            else if (buildSystem.IsRunningOnGitHubActions)
+            if (buildSystem.IsRunningOnGitHubActions)
                 startGroup = "::group::";
 
             context.Information($"{startGroup}{title}");
@@ -132,9 +123,7 @@ namespace Common.Extensions
             var buildSystem = context.BuildSystem();
 
             string endgroup = "[endgroup]";
-            if (buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted)
-                endgroup = "##[endgroup]";
-            else if (buildSystem.IsRunningOnGitHubActions)
+            if (buildSystem.IsRunningOnGitHubActions)
                 endgroup = "::endgroup::";
 
             context.Information($"{endgroup}");

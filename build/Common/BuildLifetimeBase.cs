@@ -17,7 +17,7 @@ namespace Common
     public class BuildLifetimeBase<TContext> : FrostingLifetime<TContext>
         where TContext : BuildContextBase
     {
-        public override void Setup(TContext context)
+        public override void Setup(TContext context, ISetupContext setupContext)
         {
             context.Version = BuildVersion.Calculate(context.GitVersion(new GitVersionSettings
             {
@@ -38,15 +38,11 @@ namespace Common
             context.IsDevelopBranch = context.IsBranch("develop");
 
             context.IsLocalBuild = buildSystem.IsLocalBuild;
-            context.IsAzurePipelinesBuild = buildSystem.IsRunningOnAzurePipelines || buildSystem.IsRunningOnAzurePipelinesHosted;
             context.IsGitHubActionsBuild = buildSystem.IsRunningOnGitHubActions;
 
             context.IsOnWindows = context.IsRunningOnWindows();
             context.IsOnLinux = context.IsRunningOnLinux();
             context.IsOnMacOs = context.IsRunningOnMacOs();
-
-            if (context.IsAzurePipelinesBuild)
-                buildSystem.AzurePipelines.Commands.UpdateBuildNumber(context.Version?.SemVersion);
         }
 
         public override void Teardown(TContext context, ITeardownContext info)

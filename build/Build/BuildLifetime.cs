@@ -2,7 +2,8 @@
 
 using Build.Setup;
 using Cake.Common;
-using Cake.Common.Tools.DotNetCore.MSBuild;
+using Cake.Common.Tools.DotNet.MSBuild;
+using Cake.Core;
 using Common;
 using Common.Constants;
 using Common.Extensions;
@@ -12,9 +13,9 @@ namespace Build
 {
     public class BuildLifetime : BuildLifetimeBase<BuildContext>
     {
-        public override void Setup(BuildContext context)
+        public override void Setup(BuildContext context, ISetupContext setupContext)
         {
-            base.Setup(context);
+            base.Setup(context, setupContext);
 
             context.MsBuildConfiguration = context.Argument(Arguments.Configuration, "Release");
             context.EnableUnitTests = context.IsEnabled(EnvVars.EnableUnitTests);
@@ -28,7 +29,7 @@ namespace Build
             context.EndGroup();
         }
 
-        private static void SetMsBuildSettingsVersion(DotNetCoreMSBuildSettings msBuildSettings, BuildVersion version)
+        private static void SetMsBuildSettingsVersion(DotNetMSBuildSettings msBuildSettings, BuildVersion version)
         {
             msBuildSettings.WithProperty("Version", version.SemVersion);
             msBuildSettings.WithProperty("AssemblyVersion", version.Version);

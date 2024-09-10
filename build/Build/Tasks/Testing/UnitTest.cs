@@ -1,11 +1,8 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
 using Cake.Common;
-using Cake.Common.Build;
-using Cake.Common.Build.AzurePipelines.Data;
 using Cake.Common.Diagnostics;
 using Cake.Common.IO;
-using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Core.IO;
 using Cake.Coverlet;
 using Cake.Frosting;
@@ -14,8 +11,8 @@ using Common.Attributes;
 using Common.Constants;
 using Common.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Cake.Common.Tools.DotNet.Test;
 
 namespace Build.Tasks.Testing
 {
@@ -57,31 +54,12 @@ namespace Build.Tasks.Testing
             throw exception;
         }
 
-        public override void Finally(BuildContext context)
-        {
-            var testResultsFiles = context.GetFiles($"{Paths.TestResults}/*.results.xml");
-            if (!context.IsAzurePipelinesBuild || !testResultsFiles.Any())
-                return;
-
-            context.Information("Found Test Files: {0}", string.Join(",", testResultsFiles));
-
-            var data = new AzurePipelinesPublishTestResultsData
-            {
-                TestRunTitle = $"Tests_{context.Environment.Platform.Family.ToString()}",
-                Platform = context.Environment.Platform.Family.ToString(),
-                TestRunner = AzurePipelinesTestRunnerType.VSTest,
-                TestResultsFiles = testResultsFiles.ToArray()
-            };
-
-            context.BuildSystem().AzurePipelines.Commands.PublishTestResults(data);
-        }
-
         private static void TestProjectForTarget(BuildContext context, FilePath project, string framework)
         {
             string projectName = $"{project.GetFilenameWithoutExtension()}.{framework}";
             var resultsPath = context.MakeAbsolute(Paths.TestResults.CombineWithFilePath($"{projectName}.results.xml"));
 
-            var settings = new DotNetCoreTestSettings
+            var settings = new DotNetTestSettings
             {
                 Framework = framework,
                 NoBuild = true,
@@ -99,7 +77,7 @@ namespace Build.Tasks.Testing
                 CoverletOutputName = $"{projectName}.coverage.xml"
             };
 
-            context.DotNetCoreTest(project.FullPath, settings, coverletSettings);
+            context.DotNetTest(project.FullPath, settings, coverletSettings);
         }
     }
 }

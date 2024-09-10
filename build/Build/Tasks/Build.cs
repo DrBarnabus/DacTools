@@ -1,9 +1,9 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Build;
-using Cake.Common.Tools.DotNetCore.Restore;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Build;
+using Cake.Common.Tools.DotNet.Restore;
 using Cake.Frosting;
 using Common.Constants;
 
@@ -21,16 +21,16 @@ namespace Build.Tasks
             context.Information("Building Solution...");
 
             const string sln = "./DacTools.sln";
-            context.DotNetCoreRestore(sln, new DotNetCoreRestoreSettings
+            context.DotNetRestore(sln, new DotNetRestoreSettings
             {
-                Verbosity = DotNetCoreVerbosity.Minimal,
+                Verbosity = DotNetVerbosity.Minimal,
                 Sources = new[] { Constants.NuGetUrl },
                 MSBuildSettings = context.MsBuildSettings
             });
 
-            context.DotNetCoreBuild(sln, new DotNetCoreBuildSettings
+            context.DotNetBuild(sln, new DotNetBuildSettings
             {
-                Verbosity = DotNetCoreVerbosity.Minimal,
+                Verbosity = DotNetVerbosity.Minimal,
                 Configuration = context.MsBuildConfiguration,
                 NoRestore = true,
                 MSBuildSettings = context.MsBuildSettings
