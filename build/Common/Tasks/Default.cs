@@ -1,12 +1,12 @@
 ﻿// Copyright (c) 2022 DrBarnabus
 
+using System;
+using System.Linq;
+using System.Reflection;
 using Cake.Common.Diagnostics;
 using Cake.Core;
 using Cake.Frosting;
 using Common.Extensions;
-using System;
-using System.Linq;
-using System.Reflection;
 
 // ReSharper disable UnusedType.Global
 
@@ -22,7 +22,7 @@ namespace Common.Tasks
             var tasks = entryAssembly?.FindAllDerivedTypes(typeof(IFrostingTask)).Where(x => !x.Name.Contains("Internal")).ToList();
             if (tasks == null) return;
 
-            var defaultTask = tasks.Find(x => x.Name.Contains(nameof(Default)));
+            var defaultTask = tasks.First(x => x.Name.Contains(nameof(Default)));
             if (tasks.Remove(defaultTask))
             {
                 tasks.Insert(0, defaultTask);
