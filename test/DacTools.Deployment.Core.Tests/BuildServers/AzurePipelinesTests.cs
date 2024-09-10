@@ -15,14 +15,14 @@ public class AzurePipelinesTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    public void CanApplyToCurrentContextShouldReturnFalseWhenVariableIsNullOrEmpty(string variableValue)
+    public void CanApplyToCurrentContextShouldReturnFalseWhenVariableIsNullOrEmpty(string? variableValue)
     {
         // Setup
         var environment = new TestEnvironment();
         var log = new Mock<ILog>().Object;
         var azurePipelines = new AzurePipelines(environment, log, GetMockArguments(false));
 
-        environment.SetEnvironmentVariable("TF_BUILD", variableValue);
+        environment.SetEnvironmentVariable("TF_BUILD", variableValue!);
 
         // Act & Assert
         azurePipelines.CanApplyToCurrentContext().ShouldBe(false);
@@ -45,14 +45,14 @@ public class AzurePipelinesTests
     [Theory]
     [InlineData(null)]
     [InlineData("")]
-    public void CanApplyToCurrentContextShouldReturnTrueWhenArgumentIsTrue(string variableValue)
+    public void CanApplyToCurrentContextShouldReturnTrueWhenArgumentIsTrue(string? variableValue)
     {
         // Setup
         var environment = new TestEnvironment();
         var log = new Mock<ILog>().Object;
         var azurePipelines = new AzurePipelines(environment, log, GetMockArguments());
 
-        environment.SetEnvironmentVariable("TF_BUILD", variableValue);
+        environment.SetEnvironmentVariable("TF_BUILD", variableValue!);
 
         // Act & Assert
         azurePipelines.CanApplyToCurrentContext().ShouldBe(true);

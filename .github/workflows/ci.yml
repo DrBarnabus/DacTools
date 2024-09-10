@@ -30,21 +30,25 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
       fail-fast: false
-    
+
     steps:
     -
       name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+    -
+      name: 'Setup .NET 8.0.x SDK'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
     -
       name: 'Setup .NET 6.0.x SDK'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
-        include-prerelease: true
     -
       name: Cache Cake Frosting
       id: cache-cake
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: run
         key: run-${{ runner.os }}-${{ hashFiles('./build/**') }}
@@ -61,31 +65,35 @@ jobs:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
       fail-fast: false
-    
+
     steps:
     -
       name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     -
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
     -
+      name: 'Setup .NET 8.0.x SDK'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    -
       name: 'Setup .NET 6.0.x SDK'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
-        include-prerelease: true
     -
       name: Use Cached Cake Frosting
       id: cache-cake
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: run
         key: run-${{ runner.os }}-${{ hashFiles('./build/**') }}
     -
       name: Use Cached Cake Tools
       id: cache-tools
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: tools
         key: tools-${{ runner.os }}-${{ hashFiles('./build/**') }}
@@ -95,21 +103,21 @@ jobs:
       run: dotnet run/build.dll --target=Package
     -
       name: Upload NuGet Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: matrix.os == 'ubuntu-latest'
       with:
         name: nuget
         path: ${{ github.workspace }}/artifacts/packages/nuget
     -
       name: Upload Framework-Dependent Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       if: matrix.os == 'ubuntu-latest'
       with:
         name: framework-dependent
         path: ${{ github.workspace }}/artifacts/packages/framework-dependent/*.tar.gz
     -
       name: Upload Native Packages
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: native-${{ runner.os }}
         path: ${{ github.workspace }}/artifacts/packages/native/*.tar.gz
@@ -123,33 +131,37 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
-        targetFramework: [net6.0, net5.0, netcoreapp3.1]
+        targetFramework: [net8.0, net6.0]
       fail-fast: false
 
     steps:
     -
       name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     -
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
     -
+      name: 'Setup .NET 8.0.x SDK'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    -
       name: 'Setup .NET 6.0.x SDK'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
-        include-prerelease: true
     -
       name: Use Cached Cake Frosting
       id: cache-cake
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: run
         key: run-${{ runner.os }}-${{ hashFiles('./build/**') }}
     -
       name: Use Cached Cake Tools
       id: cache-tools
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: tools
         key: tools-${{ runner.os }}-${{ hashFiles('./build/**') }}
@@ -173,33 +185,37 @@ jobs:
     steps:
     -
       name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     -
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
     -
+      name: 'Setup .NET 8.0.x SDK'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    -
       name: 'Setup .NET 6.0.x SDK'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
-        include-prerelease: true
     -
       name: Use Cached Cake Frosting
       id: cache-cake
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: run
         key: run-${{ runner.os }}-${{ hashFiles('./build/**') }}
     -
       name: Use Cached Cake Tools
       id: cache-tools
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: tools
         key: tools-${{ runner.os }}-${{ hashFiles('./build/**') }}
     -
       name: Download NuGet Packages
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: nuget
         path: ${{ github.workspace }}/artifacts/packages/nuget
@@ -214,55 +230,59 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
     steps:
     -
       name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     -
       name: Fetch History for All Tags and Branches
       run: git fetch --prune --unshallow
     -
+      name: 'Setup .NET 8.0.x SDK'
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+    -
       name: 'Setup .NET 6.0.x SDK'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '6.0.x'
-        include-prerelease: true
     -
       name: Use Cached Cake Frosting
       id: cache-cake
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: run
         key: run-${{ runner.os }}-${{ hashFiles('./build/**') }}
     -
       name: Use Cached Cake Tools
       id: cache-tools
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: tools
         key: tools-${{ runner.os }}-${{ hashFiles('./build/**') }}
     -
       name: Download Framework Dependent Packages
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: framework-dependent
         path: ${{ github.workspace }}/artifacts/packages/framework-dependent
     -
       name: Download Native Linux Packages
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: native-Linux
         path: ${{ github.workspace }}/artifacts/packages/native
     -
       name: Download Native Windows Packages
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: native-Windows
         path: ${{ github.workspace }}/artifacts/packages/native
     -
       name: Download Native macOS Packages
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: native-macOS
         path: ${{ github.workspace }}/artifacts/packages/native
