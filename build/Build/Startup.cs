@@ -19,7 +19,7 @@ namespace Build
             services.UseWorkingDirectory(DirectoryPathExtensions.GetRootDirectory());
 
             services.UseTool(new Uri("dotnet:?package=Codecov.Tool&version=1.13.0"));
-            services.UseTool(new Uri("dotnet:?package=GitVersion.Tool&version=5.7.0"));
+            services.UseTool(new Uri("dotnet:?package=GitVersion.Tool&version=5.12.0"));
         }
     }
 }

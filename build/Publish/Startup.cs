@@ -17,7 +17,7 @@ namespace Publish
 
             services.UseWorkingDirectory(DirectoryPathExtensions.GetRootDirectory());
 
-            services.UseTool(new Uri("dotnet:?package=GitVersion.Tool&version=5.7.0"));
+            services.UseTool(new Uri("dotnet:?package=GitVersion.Tool&version=5.12.0"));
         }
     }
 }
