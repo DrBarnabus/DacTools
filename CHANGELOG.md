@@ -3,6 +3,18 @@
 All notable changes to this project will be automatically documented in this file.
 
 
+## [0.7.0](https://github.com/DrBarnabus/DacTools/compare/v0.6.0...v0.7.0) (2024-09-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deployment:** remove support for netcoreapp3.1
+* **deployment:** remove support for net5.0
+
+### Features
+
+* **deployment:** add support for net8.0 and switched native builds to use net8.0
+
 ## [0.6.0](https://github.com/DrBarnabus/DacTools/compare/v0.5.0...v0.6.0) (2022-03-02)
 
 
